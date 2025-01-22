@@ -30,7 +30,7 @@
 
 .png-row  {
   display: flex;
-  gap: 1em;
+  gap: 2em;
 }
 
 li a {
@@ -67,3 +67,6 @@ ul {
 
 }
 
+.cart, .account, .search, [data-interactive="true"]:hover {
+    cursor: pointer;
+}

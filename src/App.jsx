@@ -26,7 +26,7 @@ function App() {
                 </ul>
 
             <div className="png-row">
-                    <FiSearch size={32} alt="Search"/>
+                    <FiSearch className="search" size={32} alt="Search"/>
                     <img
                         className="account"
                         src="../src/img/account.png" alt="account"/>
