@@ -5,16 +5,13 @@ const HeaderTop = () => {
     return (
         <div className="header-top">
             <div className="container">
-                <div className="header-top-row">
-                    <a href="">
-                        <img className="burger"  src="../src/img/burger.svg" alt="burger"/>
-                    </a>
-                </div>
                 <div className="center">
                     <a href="">
                         <img className="logo"  src="../src/img/logo.png" alt="logo"/>
                     </a>
                 </div>
+
+
 
                 <ul className="nav">
                     <li><a href="">New Arrival</a></li>
@@ -31,6 +28,11 @@ const HeaderTop = () => {
                     <img
                         className="cart"
                         src="../src/img/cart.png" alt="cart"/>
+                </div>
+                <div className="header-top-row">
+                    <a href="">
+                        <img className="burger"  src="../src/img/burger.svg" alt="burger"/>
+                    </a>
                 </div>
 
             </div>
