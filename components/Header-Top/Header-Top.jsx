@@ -7,11 +7,9 @@ const HeaderTop = () => {
             <div className="container">
                 <div className="center">
                     <a href="">
-                        <img className="logo"  src="../src/img/logo.png" alt="logo"/>
+                        <img className="logo"  src="../../src/img/logo.png" alt="logo"/>
                     </a>
                 </div>
-
-
 
                 <ul className="nav">
                     <li><a href="">New Arrival</a></li>
@@ -25,13 +23,13 @@ const HeaderTop = () => {
                     <FiSearch className="search" size={32} alt="Search"/>
                     <img
                         className="account"
-                        src="../src/img/account.png" alt="account"/>
+                        src="../../src/img/account.png" alt="account"/>
                     <img
                         className="cart"
-                        src="../src/img/cart.png" alt="cart"/>
+                        src="../../src/img/cart.png" alt="cart"/>
                     <div className="header-top-row">
                         <a href="">
-                            <img className="burger"  src="../src/img/burger.svg" alt="burger"/>
+                            <img className="burger"  src="../../src/img/burger.svg" alt="burger"/>
                         </a>
                     </div>
                 </div>
