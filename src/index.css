@@ -1,41 +1,69 @@
 * {
   margin: 0;
   padding: 0;
-}
-body {
-  background: #dfdede;
-}
-
-
-.header-top-row {
-  display: flex;
-  justify-content: space-between;
+  color: black;
+  font-family: "Andale Mono", monospace ;
+  box-sizing: border-box;
 }
 
 .container {
-
-  max-width: 1390px;
+  display: flex;
+  align-items: center;
   margin: 0 auto;
-  padding: 0 1rem;
-  background-color: white;
-  min-height: 100vh;
+  padding:  2rem;
+  justify-content: space-between;
+
+}
+
+.header-top-row {
+  display: flex;
+
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  align-items: center;
+  justify-content: left;
+}
+
+.png-row  {
+  display: flex;
+  gap: 1em;
+}
+
+li a {
+  text-decoration: none;
+  font-size: 1.2rem;
+
+}
+
+ul {
+  display: flex;
+  gap: 1.8em;
 }
 
 
+.burger {
+  flex: 1;
+  max-width: 90px;
+  height: 40px;
+}
 .logo {
-  width: 80px;
-  height: 30px;
-}
-.search {
-  width: 1.6em;
-  height: 1.7em;
+  max-width: 5em;
+  height: auto;
+
 }
 .account {
-  width: 1.5em;
-  height: 1.5em;
+  width: 2em;
+  height: 2em;
 
 }
 .cart {
-  width: 1.4em;
-  height: 1.4em;
+  width: 1.87em;
+  height: 1.87em;
+  margin-top: .06em;
+
 }
+
