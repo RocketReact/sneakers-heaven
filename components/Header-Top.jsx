@@ -21,6 +21,7 @@ const HeaderTop = () => {
                 </ul>
 
                 <div className="png-row">
+
                     <FiSearch className="search" size={32} alt="Search"/>
                     <img
                         className="account"
@@ -28,12 +29,13 @@ const HeaderTop = () => {
                     <img
                         className="cart"
                         src="../src/img/cart.png" alt="cart"/>
+                    <div className="header-top-row">
+                        <a href="">
+                            <img className="burger"  src="../src/img/burger.svg" alt="burger"/>
+                        </a>
+                    </div>
                 </div>
-                <div className="header-top-row">
-                    <a href="">
-                        <img className="burger"  src="../src/img/burger.svg" alt="burger"/>
-                    </a>
-                </div>
+
 
             </div>
         </div>
