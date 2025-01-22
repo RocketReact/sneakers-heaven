@@ -1,3 +1,4 @@
+import './Header-Top.css';
 import {FiSearch} from "react-icons/fi";
 
 const HeaderTop = () => {

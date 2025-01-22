@@ -1,5 +1,5 @@
-
 import HeaderTop from "../components/Header-Top.jsx";
+import Banner from "../components/Banner.jsx";
 
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
   return (
     <>
         <HeaderTop/>
+        <Banner/>
 
     </>
   )

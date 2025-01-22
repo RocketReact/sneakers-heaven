@@ -1,0 +1,55 @@
+.header-top-row {
+    display: flex;
+
+}
+
+.nav {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    align-items: center;
+    justify-content: left;
+}
+
+.png-row  {
+    display: flex;
+    gap: 2em;
+}
+
+li a {
+    text-decoration: none;
+    font-size: 1.2rem;
+
+}
+
+ul {
+    display: flex;
+    gap: 1.8em;
+}
+
+
+.burger {
+    flex: 1;
+    max-width: 90px;
+    height: 40px;
+}
+.logo {
+    max-width: 5em;
+    height: auto;
+
+}
+.account {
+    width: 2em;
+    height: 2em;
+
+}
+.cart {
+    width: 1.87em;
+    height: 1.87em;
+    margin-top: .06em;
+
+}
+
+.cart, .account, .search, [data-interactive="true"]:hover {
+    cursor: pointer;
+}
