@@ -1,5 +1,6 @@
 
 .banner-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -9,6 +10,7 @@
     background-size: cover;
     padding: 20px;
     transition: height 0.3s ease;
+
 }
 
 .banner-content {
@@ -46,11 +48,34 @@
 
 .banner-button:hover {
     background-color: #0af6a7;
+    transform: scale(1.09);
 }
 .banner-button:active {
     transform: translateY(2px) translateX(2px);
 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.plus {
+    position: marker;
+    margin: 4em 0 0 -13em;
+    background-color: #2dfab5;
+    font-size: 1.5em;
+    color: white;
+    border-radius: 1em;
+    padding: .01em .3em;
+    border: 1px white solid;
+    box-shadow: 0 0 10px 4px rgb(39, 219, 102);
+    transition: box-shadow 0.3s ease, box-shadow 0.3s ease;
+}
+.plus:hover {
+    background-color: #00ffa7;
+    cursor: pointer;
+    transform: scale(1.09);
+
+}
+.plus:active {
+    transform: translateY(1px) translateX(1px);
 }
 
 @media (max-width: 768px) {
