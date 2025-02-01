@@ -9,10 +9,10 @@ export default function ProductsGrid() {
                 <h2 className="sr-only">Products</h2>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
                     {data.map((product) => (
-                        <Link key={product.id} to={`/product/${product.id}`} className="group">
+                        <Link key={product.id} to={`/product/${product.slug}`} className="group">
                             <img
                                 alt={product.model}
-                                src={product.image}
+                                src={Array.isArray(product.image) ? product.image[0] : product.image}
                                 className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8"
                             />
                             <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>

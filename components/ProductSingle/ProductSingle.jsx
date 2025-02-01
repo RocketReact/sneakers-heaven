@@ -2,11 +2,11 @@ import { useParams } from "react-router-dom";
 import data from "../../src/data/data.js";
 
 export default function ProductSingle() {
-    const { id } = useParams();
+    const { slug } = useParams();
 
     // Проверяем localStorage на наличие выбранного товара
-    const savedProduct = localStorage.getItem(id);
-    let product = savedProduct ? JSON.parse(savedProduct) : data.find(product => product.id === id);
+    const savedProduct = localStorage.getItem(slug);
+    let product = savedProduct ? JSON.parse(savedProduct) : data.find(product => product.slug === slug);
 
     // Если товар не найден, показываем сообщение
     if (!product) {
@@ -14,7 +14,7 @@ export default function ProductSingle() {
     }
 
     // Сохраняем товар в localStorage на случай его изменения
-    localStorage.setItem(id, JSON.stringify(product));
+    localStorage.setItem(slug, JSON.stringify(product));
 
     return (
         <div className="container mx-auto px-4 py-12">

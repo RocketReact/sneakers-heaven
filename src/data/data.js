@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
 
-const data = [{
+const products = [{
     id: uuidv4 (),
-        brand: 'KIDS RELIEF EAR RELIEF',
+    brand: 'KIDS RELIEF EAR RELIEF',
     model: 'Infinix Zero 5',
     image: [
         'https://picsum.photos/203',
@@ -208,4 +208,6 @@ const data = [{
         `,
 }]
 
+const data = products.map (product => ({...product, slug: product.brand.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') }))
+console.log(data)
 export default data
