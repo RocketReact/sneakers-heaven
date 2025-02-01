@@ -5,7 +5,9 @@ const data = [{
     id: uuidv4 (),
         brand: 'KIDS RELIEF EAR RELIEF',
     model: 'Infinix Zero 5',
-    image: 'https://picsum.photos/203',
+    image: [
+        'https://picsum.photos/203',
+        'https://picsum.photos/203'],
     price: '$4.02',
     description: `
             <h2 class="text-xl font-bold text-gray-900">Основные характеристики</h2>

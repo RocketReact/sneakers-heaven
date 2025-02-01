@@ -1,12 +1,7 @@
 import './Header-Top.css';
 import {FiSearch} from "react-icons/fi";
-import {Link, Route, Routes} from "react-router-dom";
-import Home from "../Pages/Home/Home.jsx";
-import About from "../Pages/About/About.jsx";
-import Man from "../Pages/Man/Man.jsx";
-import Woman from "../Pages/Woman/Woman.jsx";
-import ShopAll from "../Pages/Shop All/ShopAll.jsx";
-import Contact from "../Pages/Contact/Contact.jsx";
+import {Link} from "react-router-dom";
+
 
 
 const HeaderTop = () => {
@@ -26,7 +21,7 @@ const HeaderTop = () => {
                     <li><Link to="/about">About</Link></li>
                     <li><Link to="/contact">Contact</Link></li>
                     <li><Link to="/man">Man</Link></li>
-                    <li><Link to="/wooman">Woman</Link></li>
+                    <li><Link to="/woman">Woman</Link></li>
                     <li><Link to="/shop-all">Shop All</Link></li>
 
                 </ul>
@@ -47,19 +42,6 @@ const HeaderTop = () => {
                     </div>
                 </div>
             </nav>
-
-
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/man" element={<Man/>} />
-                <Route path="/woman" element={<Woman />} />
-                <Route path="/shop-all" element={<ShopAll/>} />
-
-            </Routes>
-
-
 
         </div>
     ) ;
