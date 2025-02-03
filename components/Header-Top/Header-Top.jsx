@@ -21,7 +21,7 @@ const HeaderTop = () => {
                 </div>
 
                 {/* Основное меню для больших экранов */}
-                <ul className="nav hidden md:flex space-x-8">
+                <ul className="hidden md:flex space-x-8">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About</Link></li>
                     <li><Link to="/contact">Contact</Link></li>
@@ -30,16 +30,19 @@ const HeaderTop = () => {
                     <li><Link to="/shop-all">Shop All</Link></li>
                 </ul>
 
-                <div className=" flex items-center space-x-8">
+                <div className="flex items-center space-x-8 relative">
                     <FiSearch className="text-gray-600" fontSize={32} alt="Search" />
                     <img className="w-6 h-6" src="../../src/img/account.png" alt="account" />
                     <img className="w-6 h-6" src="../../src/img/cart.png" alt="cart" />
 
                     {/* Иконка гамбургера для мобильных устройств */}
-                    <button onClick={toggleMenu} className="md:hidden hover:cursor-pointer">
+                    <button
+                        onClick={toggleMenu}
+                        className="md:hidden hover:cursor-pointer w-9 h-9 flex justify-center items-center"
+                    >
                         {isMenuOpen ? (
-                            <span className=" mb-14 text-4xl text-black hover:text-gray-600 transition-transform transform scale-150">
-                                &times; {/* Кнопка закрытия */}
+                            <span className="absolute -top-1 right-2 text-4xl text-black hover:text-gray-600 transition-transform transform hover:scale-110">
+                                &times;
                             </span>
                         ) : (
                             <img className="w-9 h-9" src="../../src/img/burger.svg" alt="burger" />
@@ -50,7 +53,7 @@ const HeaderTop = () => {
 
             {/* Мобильное меню с фиксированным положением */}
             {isMenuOpen && (
-                <div className="md:hidden fixed  right-0 h-[calc(100%-4rem)] w-[50vw] bg-red-200 z-50 p-4">
+                <div className="md:hidden fixed top-16 right-0 h-[calc(100%-4rem)] w-[50vw] bg-white z-50 p-4 shadow-lg">
                     <ul className="space-y-4 text-black text-lg mt-8">
                         <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
                         <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
