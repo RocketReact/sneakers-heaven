@@ -1,20 +1,27 @@
 import { useParams } from "react-router-dom";
-import data from "../../src/data/data.js";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {fetchProducts} from "../../src/store/productSlice/productSlice.js";
+
 
 export default function ProductSingle() {
-    const { slug } = useParams();
+    const { id } = useParams();
+    const dispatch = useDispatch();
 
-    // Проверяем localStorage на наличие выбранного товара
-    const savedProduct = localStorage.getItem(slug);
-    let product = savedProduct ? JSON.parse(savedProduct) : data.find(product => product.slug === slug);
+    const {products, status} = useSelector((state) => state.products);
 
-    // Если товар не найден, показываем сообщение
+    useEffect(() => {
+        if (status === "idle") {
+            dispatch(fetchProducts());
+        }
+    }, [status, dispatch]);
+
+    const product = products.find(product => product.id === id);
+
+
     if (!product) {
         return <h2 className='text-center text-xl'>Товар не найден</h2>;
     }
-
-    // Сохраняем товар в localStorage на случай его изменения
-    localStorage.setItem(slug, JSON.stringify(product));
 
     return (
         <div className="container mx-auto px-4 py-12">
@@ -43,13 +50,13 @@ export default function ProductSingle() {
 
                 {/* Контент товара справа */}
                 <div>
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-2">{product.model}</h2>
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-2">{product.title}</h2>
 
                     {/* Описание товара */}
                     <div
-                        className="text-gray-700 mb-6"
-                        dangerouslySetInnerHTML={{ __html: product.description }}
-                    />
+                        className="text-gray-700 mb-6"> {product.description}
+                    </div>
+
 
                     <p className="text-2xl font-bold text-gray-900 mb-4">{product.price}</p>
                     <button className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
