@@ -16,7 +16,7 @@ export default function ProductSingle() {
         }
     }, [status, dispatch]);
 
-    const product = products.find(product => product.id === id);
+    const product = products.find(product => String (product.id) === id);
 
 
     if (!product) {
@@ -29,19 +29,19 @@ export default function ProductSingle() {
                 {/* Изображения товара слева */}
                 <div className="mb-6 lg:mb-0">
                     <div className="flex flex-wrap gap-4">
-                        {Array.isArray(product.image) ? (
+                        {Array.isArray(product.image) && product.image.length > 0? (
                             product.image.map((image, index) => (
                                 <img
                                     key={index}
                                     src={image}
-                                    alt={product.model}
+                                    alt={product.title}
                                     className="w-full h-auto rounded-lg object-cover"
                                 />
                             ))
                         ) : (
                             <img
                                 src={product.image}
-                                alt={product.model}
+                                alt={product.title}
                                 className="w-full h-auto rounded-lg object-cover"
                             />
                         )}

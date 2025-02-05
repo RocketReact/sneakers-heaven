@@ -23,7 +23,7 @@ function App() {
                <Route path="/man" element={<Man/>} />
                <Route path="/woman" element={<Woman />} />
                <Route path="/shop-all" element={<ProductsGrid/>} />
-               <Route path="product/:slug" element={<ProductSingle/>}/>
+               <Route path="product/:id" element={<ProductSingle/>}/>
            </Routes>
        </Router>
 
