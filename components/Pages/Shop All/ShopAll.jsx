@@ -1,10 +1,10 @@
-import ProductList from "/components/ProductList/ProductList.jsx";
+import ProductsGrid from "../../ProductsGrid/ProductsGrid.jsx";
 
 
 const ShopAll = () => {
     return (
         <div>
-            <ProductList/>
+            <ProductsGrid/>
 
         </div>
     );

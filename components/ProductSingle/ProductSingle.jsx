@@ -58,7 +58,7 @@ export default function ProductSingle() {
                     </div>
 
 
-                    <p className="text-2xl font-bold text-gray-900 mb-4">{product.price}</p>
+                    <p className="text-2xl font-bold text-gray-900 mb-4">{product.price} $ </p>
                     <button className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
                         Добавить в корзину
                     </button>
