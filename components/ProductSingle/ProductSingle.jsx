@@ -65,7 +65,7 @@ export default function ProductSingle() {
 
                     <p className="text-2xl font-bold text-gray-900 mb-4">{product.price} $ </p>
 
-                    <ProductRating rating={product.rating}/>
+                    <ProductRating rating={product.rating} count={product.count} />
 
                     <button className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
                         Добавить в корзину

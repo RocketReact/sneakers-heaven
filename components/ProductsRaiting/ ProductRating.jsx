@@ -1,4 +1,4 @@
-export default function ProductRating ({rating}) {
+export default function ProductRating ({rating, count}) {
     const maxStars = 5;
 
     return (
@@ -19,7 +19,9 @@ export default function ProductRating ({rating}) {
                     1 0 00.95-.69l1.518-4.674z" />
                 </svg>
             ))}
-            <span className='ml-2 text-grey-700 text-sm'> {rating.rate ? rating.rate.toFixed(1) : 'No Rating'}
+            <span className='ml-2 text-grey-700 text-sm'>
+                {rating.rate ? rating.rate.toFixed(1) : 'No Rating'}
+                <span className='text-grey-500'> ({rating.count || 0} Reviews)</span>
 
             </span>
 
