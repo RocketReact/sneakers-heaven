@@ -14,8 +14,13 @@ const productSlice = createSlice({
             products: [],
             status: "idle",
             error: null,
+            filteredCategory: '',
         },
-        reducers: {},
+        reducers: {
+           setCategoryFilter: (state, action) => {
+                state.filteredCategory = action.payload;
+            }
+        },
         extraReducers: (builder) => {
             builder
                 .addCase(fetchProducts.pending, (state) => {
@@ -33,4 +38,5 @@ const productSlice = createSlice({
     }
 )
 
+export const {setCategoryFilter} = productSlice.actions;
 export default productSlice.reducer;

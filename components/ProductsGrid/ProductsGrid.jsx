@@ -4,9 +4,11 @@ import { useEffect } from 'react';
 import { fetchProducts } from '../../src/store/productSlice/productSlice.js';
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 import generateProductURL from "../../src/generateProductURL/generateProductURL.js";
+import ProductFilter from "../ProductFilter/ProductFilter.jsx";
+
 export default function ProductsGrid() {
     const dispatch = useDispatch();
-    const { products, status, error } = useSelector((state) => state.products);
+    const { products, status, error, filteredCategory } = useSelector((state) => state.products);
 
     useEffect(() => {
         if (status === 'idle') {
@@ -18,12 +20,20 @@ export default function ProductsGrid() {
     if (status === 'failed') return <p>Failed: {error}</p>;
     if (status === 'succeeded' && products.length === 0) return <p>No products found.</p>;
 
+    const categories = [...new Set(products.map((product) => product.category))];
+
+    const filteredProducts = filteredCategory
+        ? products.filter((product) => product.category === filteredCategory)
+        : products;
     return (
         <div className="bg-white">
             <div className="m-0 gap-x-0.5 px-4 py-5 sm:px-6 sm:py-10 lg:px-8">
                 <h2 className="sr-only">Products</h2>
+
+                <ProductFilter categories={categories}/>
+
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
-                    {products.map((product) => (
+                    {filteredProducts.map((product) => (
                         <div key={product.id} className="group">
                             <Link to={generateProductURL(product)} className="block">
                                 <img

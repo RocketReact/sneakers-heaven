@@ -1,4 +1,4 @@
-const Man = () => {
+const Men = () => {
     return (
         <div>
 
@@ -6,4 +6,4 @@ const Man = () => {
     );
 };
 
-export default Man;
+export default Men;

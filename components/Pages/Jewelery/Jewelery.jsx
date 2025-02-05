@@ -1,4 +1,4 @@
-const Woman = () => {
+const Jewelery = () => {
     return (
         <div>
 
@@ -6,4 +6,4 @@ const Woman = () => {
     );
 };
 
-export default Woman;
+export default Jewelery;
