@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProducts } from '../../src/store/productSlice/productSlice.js';
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
+import generateProductURL from "../../src/generateProductURL/generateProductURL.js";
 export default function ProductsGrid() {
     const dispatch = useDispatch();
     const { products, status, error } = useSelector((state) => state.products);
@@ -24,7 +25,7 @@ export default function ProductsGrid() {
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
                     {products.map((product) => (
                         <div key={product.id} className="group">
-                            <Link to={`/product/${product.id}`} className="block">
+                            <Link to={generateProductURL(product)} className="block">
                                 <img
                                     alt={product.title || 'No image available'}
                                     src={Array.isArray(product.image) ? product.image[0] : product.image|| require('../images/no-image.png')}

@@ -6,7 +6,6 @@ import About from "../components/Pages/About/About.jsx";
 import Contact from "../components/Pages/Contact/Contact.jsx";
 import Man from "../components/Pages/Man/Man.jsx";
 import Woman from "../components/Pages/Woman/Woman.jsx";
-import ShopAll from "../components/Pages/Shop All/ShopAll.jsx";
 import ProductsGrid from "../components/ProductsGrid/ProductsGrid.jsx";
 
 
@@ -23,7 +22,7 @@ function App() {
                <Route path="/man" element={<Man/>} />
                <Route path="/woman" element={<Woman />} />
                <Route path="/shop-all" element={<ProductsGrid/>} />
-               <Route path="product/:id" element={<ProductSingle/>}/>
+               <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
            </Routes>
        </Router>
 
