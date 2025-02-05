@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProducts } from '../../src/store/productSlice/productSlice.js';
+import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 
 export default function ProductsGrid() {
     const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export default function ProductsGrid() {
                                     className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8"
                                 />
                                 <h3 className="mt-4 text-sm text-gray-700">{product.title}</h3>
+                                <ProductRating rating={product.rating}/>
                                 <p className="mt-1 text-lg font-medium text-gray-900">{product.price} $</p>
                             </Link>
 

@@ -1,14 +1,12 @@
-
-
 export default function ProductRating ({rating}) {
     const maxStars = 5;
 
     return (
-        <div className="flex items-center">
+        <div className="flex items-center mb-4">
             {[...Array(maxStars)].map((_, i) => (
                 <svg
                     key={i}
-                    className={`w-5 h-5 ${i < Math.round(rating)? 'text-yellow-400' : 'text-gray-300'} `}
+                    className={`w-5 h-5 ${i < Math.round(rating.rate)? 'text-yellow-400' : 'text-gray-300'} `}
                     fill='currentColor'
                     viewBox='0 0 20 20'
                 >
@@ -21,10 +19,10 @@ export default function ProductRating ({rating}) {
                     1 0 00.95-.69l1.518-4.674z" />
                 </svg>
             ))}
-            <span className='ml-2 text-grey-700 text-sm'> {rating ? rating.toFixed(1) : 'No Rating'}
+            <span className='ml-2 text-grey-700 text-sm'> {rating.rate ? rating.rate.toFixed(1) : 'No Rating'}
 
             </span>
 
-        ></div>
+        </div>
     );
 }

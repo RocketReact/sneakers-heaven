@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {fetchProducts} from "../../src/store/productSlice/productSlice.js";
+import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 
 
 export default function ProductSingle() {
@@ -57,8 +58,10 @@ export default function ProductSingle() {
                         className="text-gray-700 mb-6"> {product.description}
                     </div>
 
-
                     <p className="text-2xl font-bold text-gray-900 mb-4">{product.price} $ </p>
+
+                    <ProductRating rating={product.rating}/>
+
                     <button className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
                         Добавить в корзину
                     </button>
