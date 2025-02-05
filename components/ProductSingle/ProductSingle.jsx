@@ -12,12 +12,16 @@ export default function ProductSingle() {
     const {products, status} = useSelector((state) => state.products);
 
     useEffect(() => {
-        if (status === "idle") {
+        if (status === "idle" && products.length === 0) {
             dispatch(fetchProducts());
         }
-    }, [status, dispatch]);
+    }, [status, products.length, dispatch]);
 
-    const product = products.find(product => String (product.id) === id);
+    if (status === "loading") {
+        return <h2 className="text-center text-xl">Loading...</h2>;
+    }
+
+    const product = products.find(product => product.id === Number(id));
 
 
     if (!product) {
@@ -43,7 +47,8 @@ export default function ProductSingle() {
                             <img
                                 src={product.image}
                                 alt={product.title}
-                                className="w-full h-auto rounded-lg object-cover"
+                                className="w-full max-h-96 object-contain rounded-lg "
+
                             />
                         )}
                     </div>
