@@ -5,6 +5,7 @@ import { fetchProducts } from '../../src/store/productSlice/productSlice.js';
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 import generateProductURL from "../../src/generateProductURL/generateProductURL.js";
 import ProductFilter from "../ProductFilter/ProductFilter.jsx";
+import {addToCart, removeFromCart} from "../../src/store/cart/cartSlice.js";
 
 export default function ProductsGrid() {
     const dispatch = useDispatch();
@@ -46,17 +47,16 @@ export default function ProductsGrid() {
                                 <p className="mt-1 text-lg font-medium text-gray-900">{product.price} $</p>
                             </Link>
 
-                            {/* Кнопка для внешнего сайта */}
-                            <a href="https://example.com" target="_blank" rel="noopener noreferrer">
                                 <button
+                                    onClick={() => dispatch(addToCart(product))}
                                     className="
                                         inline-block cursor-pointer px-6 py-3 text-lg font-medium text-red-500
                                         border border-blue-600 rounded hover:bg-blue-600 hover:text-white
                                         focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
                                 >
-                                    Visit Example
+                                    Add to cart
                                 </button>
-                            </a>
+
                         </div>
                     ))}
                 </div>
