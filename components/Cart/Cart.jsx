@@ -5,26 +5,27 @@ function Cart () {
     const dispatch = useDispatch();
     const {cartItems, totalQuantity, totalPrice } = useSelector((state) => state.cart);
 
+
+
     if (!cartItems.length) {
         return <h2 className='text-center'>Cart is empty</h2>
     }
 
     return (
         <div className='cart'>
-            <h2>Cart</h2>
             <ul>
-                {cartItems.map(item => (
-                    <li key={item.id} className='cartItem'>
+                {cartItems.map(product => (
+                    <li key={product.id} className='cartItem'>
 
-                        <img src={item.image} alt={item.title} width="50"/>
-                        <h4>{item.title}</h4>
-                        <p>{item.price} $</p>
-                        <p>Quantity: {item.quantity}</p>
-                        <button onClick={() => dispatch(addToCart(item))}> + </button>
-                        <button onClick={() => dispatch(decreaseQuantity(item))}> - </button>
-                        <button onClick={() => dispatch(removeFromCart(item))}> Delete </button>
+                        <img src={product.image} alt={product.title} width="50"/>
+                        <h4>{product.title}</h4>
+                        <p>{product.price} $</p>
+                        <p>Quantity: {product.quantity}</p>
+                        <button onClick={() => dispatch(addToCart(product))}> + </button>
+                        <button onClick={() => dispatch(decreaseQuantity(product))}> - </button>
+                        <button onClick={() => dispatch(removeFromCart(product))}> Delete </button>
 
-                        </li>
+                    </li>
                 ))}
             </ul>
 

@@ -4,13 +4,12 @@ import {useEffect} from "react";
 import {fetchProducts} from "../../src/store/productSlice/productSlice.js";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 import {addToCart, decreaseQuantity, removeFromCart} from "../../src/store/cart/cartSlice.js";
-import {useNavigate} from "react-router-dom";
 
 
 export default function ProductSingle() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const totalQuantity  = useSelector((state) => state.cart.totalQuantity);
 
 
     const {products, status} = useSelector((state) => state.products);
@@ -33,8 +32,7 @@ export default function ProductSingle() {
     }
 
     const handleAddToCart = () => {
-        dispatch(addToCart(products));
-        navigate("/cart");
+        dispatch(addToCart(product));
     }
 
     return (
@@ -76,11 +74,20 @@ export default function ProductSingle() {
 
                     <ProductRating rating={product.rating} count={product.count} />
 
-                    <div className="flex flex-wrap gap-4 p-3 border-2 border-gray-200 width=50 px-6 py-3">
-                        <button onClick={() => dispatch(addToCart(item))} className='hover:cursor-pointer hover:scale-150 '> + </button>
-                        <button onClick={() => dispatch(decreaseQuantity(item))} className='hover:cursor-pointer hover:scale-150'> - </button>
-                        <button onClick={() => dispatch(removeFromCart(item))} className='hover:cursor-pointer  hover:scale-110'> Delete </button>
+                    <div className='mb-3 mt-3 mr-3 '> Quantity  </div>
+
+                    <div className="flex flex-wrap gap-4 pr-1 border-2 border-gray-200 max-w-50 px-6 py-3 mb-3">
+
+                        <button
+                            onClick={() => dispatch(addToCart(product))} className='hover:cursor-pointer hover:scale-150 '> + </button>
+                        <p>{totalQuantity}</p>
+
+                        <button
+                            onClick={() => dispatch(decreaseQuantity(product.id))} className='hover:cursor-pointer hover:scale-150'> - </button>
+                        <button
+                            onClick={() => dispatch(removeFromCart(product.id))} className='hover:cursor-pointer  hover:scale-150'> Delete </button>
                     </div>
+
                     <button
                         onClick={handleAddToCart}
                         className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition hover:cursor-pointer">
