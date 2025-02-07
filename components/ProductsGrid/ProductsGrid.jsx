@@ -1,15 +1,22 @@
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProducts } from '../../src/store/productSlice/productSlice.js';
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 import generateProductURL from "../../src/generateProductURL/generateProductURL.js";
 import ProductFilter from "../ProductFilter/ProductFilter.jsx";
-import {addToCart, removeFromCart} from "../../src/store/cart/cartSlice.js";
+import {addToCart} from "../../src/store/cart/cartSlice.js";
 
 export default function ProductsGrid() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { products, status, error, filteredCategory } = useSelector((state) => state.products);
+
+    const handleAddToCart = () => {
+        dispatch(addToCart(products));
+        navigate("/cart");
+    }
+
 
     useEffect(() => {
         if (status === 'idle') {
@@ -47,8 +54,9 @@ export default function ProductsGrid() {
                                 <p className="mt-1 text-lg font-medium text-gray-900">{product.price} $</p>
                             </Link>
 
+
                                 <button
-                                    onClick={() => dispatch(addToCart(product))}
+                                    onClick={handleAddToCart}
                                     className="
                                         inline-block cursor-pointer px-6 py-3 text-lg font-medium text-red-500
                                         border border-blue-600 rounded hover:bg-blue-600 hover:text-white
@@ -56,6 +64,7 @@ export default function ProductsGrid() {
                                 >
                                     Add to cart
                                 </button>
+
 
                         </div>
                     ))}

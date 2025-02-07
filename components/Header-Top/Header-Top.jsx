@@ -33,7 +33,7 @@ const HeaderTop = () => {
                 <div className="flex items-center space-x-8 relative">
                     <FiSearch className="text-gray-600" fontSize={32} alt="Search" />
                     <img className="w-6 h-6" src="../../src/img/account.png" alt="account" />
-                    <img className="w-6 h-6" src="../../src/img/cart.png" alt="cart" />
+                    <Link to='/cart'> <img className="w-6 h-6" src="../../src/img/cart.png" alt="cart" />  </Link>
 
                     {/* Иконка гамбургера для мобильных устройств */}
                     <button

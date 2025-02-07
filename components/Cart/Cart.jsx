@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
-import { addToCart, removeFromCart, decreaseQuantity, clearCart } from "../src/store/cart/cartSlice.js";
+import { addToCart, removeFromCart, decreaseQuantity, clearCart } from "../../src/store/cart/cartSlice.js";
 
-export default function Cart () {
+function Cart () {
     const dispatch = useDispatch();
     const {cartItems, totalQuantity, totalPrice } = useSelector((state) => state.cart);
 
@@ -15,6 +15,7 @@ export default function Cart () {
             <ul>
                 {cartItems.map(item => (
                     <li key={item.id} className='cartItem'>
+
                         <img src={item.image} alt={item.title} width="50"/>
                         <h4>{item.title}</h4>
                         <p>{item.price} $</p>
@@ -22,7 +23,8 @@ export default function Cart () {
                         <button onClick={() => dispatch(addToCart(item))}> + </button>
                         <button onClick={() => dispatch(decreaseQuantity(item))}> - </button>
                         <button onClick={() => dispatch(removeFromCart(item))}> Delete </button>
-                    </li>
+
+                        </li>
                 ))}
             </ul>
 
@@ -35,3 +37,5 @@ export default function Cart () {
     )
 
 }
+
+export default Cart

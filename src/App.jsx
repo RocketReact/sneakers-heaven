@@ -7,6 +7,7 @@ import Contact from "../components/Pages/Contact/Contact.jsx";
 import Men from "../components/Pages/Men/Men.jsx";
 import Jewelery from "../components/Pages/Jewelery/Jewelery.jsx";
 import ProductsGrid from "../components/ProductsGrid/ProductsGrid.jsx";
+import CartPage from "../components/Cart/CartPage.jsx";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                <Route path="/woman" element={<Jewelery />} />
                <Route path="/shop-all" element={<ProductsGrid/>} />
                <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
+               <Route path="/cart" element={<CartPage/>} />
            </Routes>
        </Router>
 
