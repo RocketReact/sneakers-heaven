@@ -1,18 +1,16 @@
 import { useParams } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {fetchProducts} from "../../src/store/productSlice/productSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchProducts } from "../../src/store/productSlice/productSlice.js";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
-import {addToCart, decreaseQuantity, removeFromCart} from "../../src/store/cart/cartSlice.js";
-
+import { addToCart, decreaseQuantity, removeFromCart } from "../../src/store/cart/cartSlice.js";
 
 export default function ProductSingle() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const totalQuantity  = useSelector((state) => state.cart.totalQuantity);
+    const cartItems = useSelector((state) => state.cart.cartItems); // Получаем cartItems из Redux
 
-
-    const {products, status} = useSelector((state) => state.products);
+    const { products, status } = useSelector((state) => state.products);
 
     useEffect(() => {
         if (status === "idle" && products.length === 0) {
@@ -24,16 +22,42 @@ export default function ProductSingle() {
         return <h2 className="text-center text-xl">Loading...</h2>;
     }
 
-    const product = products.find(product => product.id === Number(id));
-
+    const product = products.find((product) => product.id === Number(id));
 
     if (!product) {
-        return <h2 className='text-center text-xl'>Товар не найден</h2>;
+        return <h2 className="text-center text-xl">Товар не найден</h2>;
     }
 
+    // Функция для добавления товара в корзину
     const handleAddToCart = () => {
-        dispatch(addToCart(product));
-    }
+        const existingProduct = cartItems.find((item) => item.id === product.id);
+
+        if (existingProduct) {
+            // Если товар уже есть в корзине, увеличиваем количество
+            dispatch(addToCart({ ...existingProduct, quantity: existingProduct.quantity + 1 }));
+        } else {
+            // Если товара нет в корзине, добавляем новый товар с quantity: 1
+            dispatch(addToCart({ ...product, quantity: 1 }));
+        }
+    };
+
+    // Функция для увеличения количества товара в корзине
+    const handleIncreaseQuantity = () => {
+        const existingProduct = cartItems.find((item) => item.id === product.id);
+        if (existingProduct) {
+            dispatch(addToCart({ ...existingProduct, quantity: existingProduct.quantity + 1 }));
+        }
+    };
+
+    // Функция для уменьшения количества товара в корзине
+    const handleDecreaseQuantity = () => {
+        const existingProduct = cartItems.find((item) => item.id === product.id);
+        if (existingProduct) {
+            dispatch(decreaseQuantity({ ...existingProduct, quantity: existingProduct.quantity - 1 }));
+        }
+    };
+
+    const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0); // Вычисляем общее количество товаров в корзине
 
     return (
         <div className="container mx-auto px-4 py-12">
@@ -41,7 +65,7 @@ export default function ProductSingle() {
                 {/* Изображения товара слева */}
                 <div className="mb-6 lg:mb-0">
                     <div className="flex flex-wrap gap-4">
-                        {Array.isArray(product.image) && product.image.length > 0? (
+                        {Array.isArray(product.image) && product.image.length > 0 ? (
                             product.image.map((image, index) => (
                                 <img
                                     key={index}
@@ -54,8 +78,7 @@ export default function ProductSingle() {
                             <img
                                 src={product.image}
                                 alt={product.title}
-                                className="w-full max-h-96 object-contain rounded-lg "
-
+                                className="w-full max-h-96 object-contain rounded-lg"
                             />
                         )}
                     </div>
@@ -66,31 +89,45 @@ export default function ProductSingle() {
                     <h2 className="text-2xl font-semibold text-gray-800 mb-2">{product.title}</h2>
 
                     {/* Описание товара */}
-                    <div
-                        className="text-gray-700 mb-6"> {product.description}
-                    </div>
+                    <div className="text-gray-700 mb-6">{product.description}</div>
 
-                    <p className="text-2xl font-bold text-gray-900 mb-4">{product.price} $ </p>
+                    <p className="text-2xl font-bold text-gray-900 mb-4">{product.price} $</p>
 
                     <ProductRating rating={product.rating} count={product.count} />
 
-                    <div className='mb-3 mt-3 mr-3 '> Quantity  </div>
+                    <div className="mb-3 mt-3 mr-3"> Quantity </div>
 
                     <div className="flex flex-wrap gap-4 pr-1 border-2 border-gray-200 max-w-50 px-6 py-3 mb-3">
-
                         <button
-                            onClick={() => dispatch(addToCart(product))} className='hover:cursor-pointer hover:scale-150 '> + </button>
+                            onClick={handleIncreaseQuantity}
+                            className="hover:cursor-pointer hover:scale-150"
+                        >
+                            {" "}
+                            +{" "}
+                        </button>
                         <p>{totalQuantity}</p>
 
                         <button
-                            onClick={() => dispatch(decreaseQuantity(product.id))} className='hover:cursor-pointer hover:scale-150'> - </button>
+                            onClick={handleDecreaseQuantity}
+                            className="hover:cursor-pointer hover:scale-150"
+                        >
+                            {" "}
+                            -{" "}
+                        </button>
+
                         <button
-                            onClick={() => dispatch(removeFromCart(product.id))} className='hover:cursor-pointer  hover:scale-150'> Delete </button>
+                            onClick={() => dispatch(removeFromCart(product.id))}
+                            className="hover:cursor-pointer hover:scale-150"
+                        >
+                            {" "}
+                            Delete{" "}
+                        </button>
                     </div>
 
                     <button
                         onClick={handleAddToCart}
-                        className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition hover:cursor-pointer">
+                        className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition hover:cursor-pointer"
+                    >
                         Добавить в корзину
                     </button>
                 </div>

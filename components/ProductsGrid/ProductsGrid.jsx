@@ -1,4 +1,4 @@
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProducts } from '../../src/store/productSlice/productSlice.js';
@@ -10,11 +10,13 @@ import {addToCart} from "../../src/store/cart/cartSlice.js";
 export default function ProductsGrid() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { id } = useParams();
     const { products, status, error, filteredCategory } = useSelector((state) => state.products);
+    const product = products.find(product => product.id === Number(id));
 
     const handleAddToCart = () => {
-        dispatch(addToCart(products));
-        navigate("/cart");
+        const productWithQuantity = {...product, quantity: 1};
+        dispatch(addToCart(productWithQuantity));
     }
 
 
