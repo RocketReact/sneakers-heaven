@@ -6,13 +6,16 @@ import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 import { addToCart, decreaseQuantity, removeFromCart } from "../../src/store/cart/cartSlice.js";
 import noImage from "../../src/img/no-image.jpg";
 
+
 export default function ProductSingle() {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const cartItems = useSelector((state) => state.cart.cartItems); // Получаем cartItems из Redux
     const { products, status } = useSelector((state) => state.products);
+    const cartItems = useSelector((state) => state.cart.cartItems);
     const product = products.find((product) => product.id === Number(id));
-    const productInCart = products.find((item) => item.id === product?.id);
+    const productInCart = Array.isArray(cartItems) && product
+        ? cartItems.find((item) => item.id === product.id)
+        : undefined;
     const productQuantity = productInCart? productInCart.quantity : 0;
 
 
@@ -47,6 +50,7 @@ export default function ProductSingle() {
             dispatch(removeFromCart(product.id));
         }
     }
+
 
     return (
         <div className="container mx-auto px-4 py-12">
@@ -94,6 +98,7 @@ export default function ProductSingle() {
                             className="hover:cursor-pointer hover:scale-150"
                         > +
                         </button>
+
                         <p>{productQuantity}</p>
 
                         <button

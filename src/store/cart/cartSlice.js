@@ -11,6 +11,7 @@ const localCartFromStorage = () => {
 };
 
 
+
 const cartMiddleware = (store) => (next) => (action) => {
     const result = next(action);
     const state = store.getState().cart;
@@ -29,11 +30,15 @@ const cartMiddleware = (store) => (next) => (action) => {
 }
 
 const updateCartTotals = (state) => {
+
     state.totalQuantity = state.cartItems.reduce (
-        (sum, item) => sum + item.quantity, 0);
+        (sum, item) => sum + item.quantity || 0, 0);
     state.totalPrice = state.cartItems.reduce ((sum, item) =>
-        sum + item.price *item.quantity, 0);
+        sum + item.price * item.quantity || 0, 0);
+
+
 }
+
 
 const cartSlice = createSlice({
 
@@ -72,10 +77,12 @@ const cartSlice = createSlice({
             }
         },
         removeFromCart: (state, action) => {
+
             const id = action.payload;
-            state.cartItems.filter((product) =>
+            state.cartItems = state.cartItems.filter((product) =>
                 product.id !== id);
             updateCartTotals(state)
+
         },
 
         clearCart: (state) => {
