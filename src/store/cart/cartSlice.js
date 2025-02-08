@@ -46,6 +46,7 @@ const cartSlice = createSlice({
     initialState: localCartFromStorage(),
     reducers: {
         addToCart: (state, action) => {
+
             const item = action.payload;
             const existingCartItem = state.cartItems.find
             (product => product.id === item.id);
@@ -66,7 +67,7 @@ const cartSlice = createSlice({
                 product.id === id);
 
             if (item) {
-                if (item.quantity > 1) {
+                if (item.quantity >= 1) {
                     item.quantity -= 1;
 
                 } else {
@@ -87,6 +88,8 @@ const cartSlice = createSlice({
 
         clearCart: (state) => {
             state.cartItems = [];
+            state.totalQuantity = 0;
+            state.totalPrice = 0;
             updateCartTotals(state)
         },
     },

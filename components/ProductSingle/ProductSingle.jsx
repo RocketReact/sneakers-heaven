@@ -1,63 +1,82 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../../src/store/productSlice/productSlice.js";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
-import { addToCart, decreaseQuantity, removeFromCart } from "../../src/store/cart/cartSlice.js";
+import { addToCart, decreaseQuantity, removeFromCart, clearCart } from "../../src/store/cart/cartSlice.js";
 import noImage from "../../src/img/no-image.jpg";
-
 
 export default function ProductSingle() {
     const { id } = useParams();
+    const location = useLocation(); // Получаем текущий маршрут
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { products, status } = useSelector((state) => state.products);
     const cartItems = useSelector((state) => state.cart.cartItems);
+
     const product = products.find((product) => product.id === Number(id));
-    const productInCart = Array.isArray(cartItems) && product
-        ? cartItems.find((item) => item.id === product.id)
-        : undefined;
-    const productQuantity = productInCart? productInCart.quantity : 0;
+    const productInCart = cartItems.find((item) => item.id === product?.id);
+    const productQuantity = productInCart ? productInCart.quantity : 1;
 
-
+    // Загружаем товары, если их ещё нет
     useEffect(() => {
         if (status === "idle" && products.length === 0) {
             dispatch(fetchProducts());
         }
     }, [status, products.length, dispatch]);
 
+    // Добавляем товар в корзину только при первом заходе, если его там нет
+    useEffect(() => {
+        if (product && !productInCart) {
+            dispatch(addToCart({ ...product, quantity: 1 })); // Добавляем только если товара ещё нет в корзине
+        }
+    }, [dispatch, product, productInCart]);
+
+    // Очищаем корзину при переходе на любую страницу, кроме текущей страницы продукта или корзины
+    useEffect(() => {
+        if (location.pathname !== `/product/${id}` && location.pathname !== "/cart") {
+            dispatch(clearCart()); // Очищаем корзину только если мы уходим с текущей страницы продукта
+        }
+    }, [location.pathname, id, dispatch]);
+
+    // Функции управления количеством товара
+    const handleIncreaseQuantity = () => {
+        if (product) {
+            dispatch(addToCart({ ...product, quantity: productQuantity + 1 }));
+        }
+    };
+
+    const handleDecreaseQuantity = () => {
+        if (productInCart && productInCart.quantity > 1) {
+            dispatch(decreaseQuantity(product.id));
+        }
+    };
+
+    const handleRemoveFromCart = () => {
+        if (productInCart) {
+            dispatch(removeFromCart(product.id));
+        }
+    };
+
+    // Обновляем кнопку "Купить", чтобы товар добавлялся в корзину перед переходом на страницу корзины
+    const handleRedirect = () => {
+        if (!productInCart) {
+            dispatch(addToCart({ ...product, quantity: 1 })); // Добавляем товар в корзину
+        }
+        navigate("/cart"); // Перенаправляем на страницу корзины
+    };
+
     if (status === "loading") {
         return <h2 className="text-center text-xl">Loading...</h2>;
     }
-
 
     if (!product) {
         return <h2 className="text-center text-xl">Товар не найден</h2>;
     }
 
-    const handleAddToCart = () =>
-        dispatch(addToCart(product));
-
-    const handleIncreaseQuantity = () =>
-        dispatch(addToCart(product))
-
-    const handleDecreaseQuantity = () => {
-        if (productInCart && productInCart.quantity > 1) {
-            dispatch(decreaseQuantity (product.id))
-        }
-    };
-    const handleRemoveFromCart = () => {
-        if (productInCart) {
-            dispatch(removeFromCart(product.id));
-        }
-    }
-
-
     return (
         <div className="container mx-auto px-4 py-12">
-            <div className="
-            lg:grid lg:grid-cols-2 lg:gap-12
-            bg-white p-6 rounded-lg shadow-lg">
-
+            <div className="lg:grid lg:grid-cols-2 lg:gap-12 bg-white p-6 rounded-lg shadow-lg">
                 <div className="mb-6 lg:mb-0">
                     <div className="flex flex-wrap gap-4">
                         {Array.isArray(product.image) && product.image.length ? (
@@ -81,12 +100,16 @@ export default function ProductSingle() {
 
                 {/* Контент товара справа */}
                 <div>
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-2">{product.title ||"No title"}</h2>
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                        {product.title || "No title"}
+                    </h2>
 
                     {/* Описание товара */}
                     <div className="text-gray-700 mb-6">{product.description || "No descriptions"}</div>
 
-                    <p className="text-2xl font-bold text-gray-900 mb-4">{product.price?.toFixed(2)} $ </p>
+                    <p className="text-2xl font-bold text-gray-900 mb-4">
+                        {product.price?.toFixed(2)} $
+                    </p>
 
                     <ProductRating rating={product.rating} count={product.count} />
 
@@ -96,7 +119,8 @@ export default function ProductSingle() {
                         <button
                             onClick={handleIncreaseQuantity}
                             className="hover:cursor-pointer hover:scale-150"
-                        > +
+                        >
+                            +
                         </button>
 
                         <p>{productQuantity}</p>
@@ -104,7 +128,7 @@ export default function ProductSingle() {
                         <button
                             onClick={handleDecreaseQuantity}
                             className="hover:cursor-pointer hover:scale-150"
-                            disabled={!productInCart || productQuantity<=1}
+                            disabled={!productInCart || productQuantity <= 1}
                         >
                             -
                         </button>
@@ -119,10 +143,10 @@ export default function ProductSingle() {
                     </div>
 
                     <button
-                        onClick={handleAddToCart}
-                        className="px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition hover:cursor-pointer"
+                        onClick={handleRedirect}
+                        className="min-w-50 px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition hover:cursor-pointer"
                     >
-                        Добавить в корзину
+                        Купить
                     </button>
                 </div>
             </div>
