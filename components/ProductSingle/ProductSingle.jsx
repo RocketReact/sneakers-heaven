@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../../src/store/productSlice/productSlice.js";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
-import { addToCart, decreaseQuantity, removeFromCart, clearCart } from "../../src/store/cart/cartSlice.js";
+import { addToCart, decreaseQuantity, removeFromCart } from "../../src/store/cart/cartSlice.js";
 import noImage from "../../src/img/no-image.jpg";
 
 export default function ProductSingle() {
     const { id } = useParams();
-    const location = useLocation(); // Получаем текущий маршрут
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { products, status } = useSelector((state) => state.products);
@@ -18,50 +17,36 @@ export default function ProductSingle() {
     const productInCart = cartItems.find((item) => item.id === product?.id);
     const productQuantity = productInCart ? productInCart.quantity : 1;
 
-    // Загружаем товары, если их ещё нет
+    // Загружаем список продуктов
     useEffect(() => {
         if (status === "idle" && products.length === 0) {
             dispatch(fetchProducts());
         }
     }, [status, products.length, dispatch]);
 
-    // Добавляем товар в корзину только при первом заходе, если его там нет
-    useEffect(() => {
-        if (product && !productInCart) {
-            dispatch(addToCart({ ...product, quantity: 1 })); // Добавляем только если товара ещё нет в корзине
-        }
-    }, [dispatch, product, productInCart]);
-
-    // Очищаем корзину при переходе на любую страницу, кроме текущей страницы продукта или корзины
-    useEffect(() => {
-        if (location.pathname !== `/product/${id}` && location.pathname !== "/cart") {
-            dispatch(clearCart()); // Очищаем корзину только если мы уходим с текущей страницы продукта
-        }
-    }, [location.pathname, id, dispatch]);
-
-    // Функции управления количеством товара
+    // Функции для изменений количества товара в корзине
     const handleIncreaseQuantity = () => {
         if (product) {
-            dispatch(addToCart({ ...product, quantity: productQuantity + 1 }));
+            dispatch(addToCart({ ...product, quantity: 1 })); // Увеличиваем количество товара
         }
     };
 
     const handleDecreaseQuantity = () => {
-        if (productInCart && productInCart.quantity > 1) {
+        if (product && productInCart && productQuantity > 1) {
             dispatch(decreaseQuantity(product.id));
         }
     };
 
     const handleRemoveFromCart = () => {
-        if (productInCart) {
+        if (product && productInCart) {
             dispatch(removeFromCart(product.id));
         }
     };
 
-    // Обновляем кнопку "Купить", чтобы товар добавлялся в корзину перед переходом на страницу корзины
+    // Логика обработки кнопки "Купить"
     const handleRedirect = () => {
         if (!productInCart) {
-            dispatch(addToCart({ ...product, quantity: 1 })); // Добавляем товар в корзину
+            dispatch(addToCart({ ...product, quantity: 1 })); // Добавляем товар в корзину, если его там ещё нет
         }
         navigate("/cart"); // Перенаправляем на страницу корзины
     };
@@ -98,7 +83,7 @@ export default function ProductSingle() {
                     </div>
                 </div>
 
-                {/* Контент товара справа */}
+                {/* Контент товара */}
                 <div>
                     <h2 className="text-2xl font-semibold text-gray-800 mb-2">
                         {product.title || "No title"}
