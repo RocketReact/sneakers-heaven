@@ -3,11 +3,13 @@ import { addToCart, removeFromCart, decreaseQuantity, clearCart } from "../../sr
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import generateProductURL from "../../src/generateProductURL/generateProductURL.js";
+import noImage from "../../src/img/no-image.jpg";
+
+
 
 function Cart () {
     const dispatch = useDispatch();
     const {cartItems, totalQuantity, totalPrice } = useSelector((state) => state.cart);
-
 
 
     if (!cartItems.length) {
@@ -23,7 +25,7 @@ function Cart () {
                 {cartItems.map(product => (
                     <li key={product.id} className='cartItem mb-10'>
 
-                        <img src={product.image} alt={product.title} width="50"/>
+                        <img src={product.image || noImage} alt={product.title || "Product image"} width="50"/>
                         <Link to={generateProductURL(product)} className='hover:underline'> <h4 > {product.title} </h4> </Link>
                         <p className='text-2xl mb-2 mt-2'>  {product.price} $</p>
                         <p >Quantity: {product.quantity}</p>

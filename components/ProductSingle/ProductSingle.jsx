@@ -4,13 +4,17 @@ import { useEffect } from "react";
 import { fetchProducts } from "../../src/store/productSlice/productSlice.js";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 import { addToCart, decreaseQuantity, removeFromCart } from "../../src/store/cart/cartSlice.js";
+import noImage from "../../src/img/no-image.jpg";
 
 export default function ProductSingle() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.cartItems); // Получаем cartItems из Redux
-
     const { products, status } = useSelector((state) => state.products);
+    const product = products.find((product) => product.id === Number(id));
+    const productInCart = products.find((item) => item.id === product?.id);
+    const productQuantity = productInCart? productInCart.quantity : 0;
+
 
     useEffect(() => {
         if (status === "idle" && products.length === 0) {
@@ -22,62 +26,49 @@ export default function ProductSingle() {
         return <h2 className="text-center text-xl">Loading...</h2>;
     }
 
-    const product = products.find((product) => product.id === Number(id));
 
     if (!product) {
         return <h2 className="text-center text-xl">Товар не найден</h2>;
     }
 
-    // Функция для добавления товара в корзину
-    const handleAddToCart = () => {
-        const existingProduct = cartItems.find((item) => item.id === product.id);
+    const handleAddToCart = () =>
+        dispatch(addToCart(product));
 
-        if (existingProduct) {
-            // Если товар уже есть в корзине, увеличиваем количество
-            dispatch(addToCart({ ...existingProduct, quantity: existingProduct.quantity + 1 }));
-        } else {
-            // Если товара нет в корзине, добавляем новый товар с quantity: 1
-            dispatch(addToCart({ ...product, quantity: 1 }));
-        }
-    };
+    const handleIncreaseQuantity = () =>
+        dispatch(addToCart(product))
 
-    // Функция для увеличения количества товара в корзине
-    const handleIncreaseQuantity = () => {
-        const existingProduct = cartItems.find((item) => item.id === product.id);
-        if (existingProduct) {
-            dispatch(addToCart({ ...existingProduct, quantity: existingProduct.quantity + 1 }));
-        }
-    };
-
-    // Функция для уменьшения количества товара в корзине
     const handleDecreaseQuantity = () => {
-        const existingProduct = cartItems.find((item) => item.id === product.id);
-        if (existingProduct) {
-            dispatch(decreaseQuantity({ ...existingProduct, quantity: existingProduct.quantity - 1 }));
+        if (productInCart && productInCart.quantity > 1) {
+            dispatch(decreaseQuantity (product.id))
         }
     };
-
-    const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0); // Вычисляем общее количество товаров в корзине
+    const handleRemoveFromCart = () => {
+        if (productInCart) {
+            dispatch(removeFromCart(product.id));
+        }
+    }
 
     return (
         <div className="container mx-auto px-4 py-12">
-            <div className="lg:grid lg:grid-cols-2 lg:gap-12 bg-white p-6 rounded-lg shadow-lg">
-                {/* Изображения товара слева */}
+            <div className="
+            lg:grid lg:grid-cols-2 lg:gap-12
+            bg-white p-6 rounded-lg shadow-lg">
+
                 <div className="mb-6 lg:mb-0">
                     <div className="flex flex-wrap gap-4">
-                        {Array.isArray(product.image) && product.image.length > 0 ? (
+                        {Array.isArray(product.image) && product.image.length ? (
                             product.image.map((image, index) => (
                                 <img
                                     key={index}
                                     src={image}
-                                    alt={product.title}
+                                    alt={product.title || "Product image"}
                                     className="w-full h-auto rounded-lg object-cover"
                                 />
                             ))
                         ) : (
                             <img
-                                src={product.image}
-                                alt={product.title}
+                                src={product.image || noImage}
+                                alt={product.title || "Product image"}
                                 className="w-full max-h-96 object-contain rounded-lg"
                             />
                         )}
@@ -86,12 +77,12 @@ export default function ProductSingle() {
 
                 {/* Контент товара справа */}
                 <div>
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-2">{product.title}</h2>
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-2">{product.title ||"No title"}</h2>
 
                     {/* Описание товара */}
-                    <div className="text-gray-700 mb-6">{product.description}</div>
+                    <div className="text-gray-700 mb-6">{product.description || "No descriptions"}</div>
 
-                    <p className="text-2xl font-bold text-gray-900 mb-4">{product.price} $</p>
+                    <p className="text-2xl font-bold text-gray-900 mb-4">{product.price?.toFixed(2)} $ </p>
 
                     <ProductRating rating={product.rating} count={product.count} />
 
@@ -101,26 +92,24 @@ export default function ProductSingle() {
                         <button
                             onClick={handleIncreaseQuantity}
                             className="hover:cursor-pointer hover:scale-150"
-                        >
-                            {" "}
-                            +{" "}
+                        > +
                         </button>
-                        <p>{totalQuantity}</p>
+                        <p>{productQuantity}</p>
 
                         <button
                             onClick={handleDecreaseQuantity}
                             className="hover:cursor-pointer hover:scale-150"
+                            disabled={!productInCart || productQuantity<=1}
                         >
-                            {" "}
-                            -{" "}
+                            -
                         </button>
 
                         <button
-                            onClick={() => dispatch(removeFromCart(product.id))}
+                            onClick={handleRemoveFromCart}
                             className="hover:cursor-pointer hover:scale-150"
+                            disabled={!productInCart}
                         >
-                            {" "}
-                            Delete{" "}
+                            Delete
                         </button>
                     </div>
 
