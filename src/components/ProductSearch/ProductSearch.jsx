@@ -9,7 +9,7 @@ export default function ProductSearch({closeSearch}) {
     const dispatch = useDispatch();
     const {searchingItems, searchQuery, status} =
         useSelector ((state) => state.filter);
-
+console.log(searchQuery);
 
 useEffect(() => {
     if (status === "idle") {
@@ -20,7 +20,6 @@ useEffect(() => {
 const handleSearch = (e) => {
     dispatch(setSearchQuery(e.target.value));
 }
-
 
 
 return (
@@ -37,6 +36,7 @@ return (
         ) : (
             <div>
                 {searchingItems.length > 0 ? (
+
                     searchingItems.map((product) => (
                         <div key={product.id} className="border-b-blue-600 pt-1 pb-1">
 
@@ -44,10 +44,15 @@ return (
                                    onClick={closeSearch}>
                                  <h3
                                      className='hover:cursor-pointer,
-                                     hover:underline'>{product.title}
-                                 </h3> </Link>
-                            <p>{product.price} $ </p>
-                        ></div>
+                                     hover:underline p-2 hover:bg-emerald-300 rounded-md'>{product.title}
+                                     <p>{product.price} $ </p>
+                                 </h3>
+                             </Link>
+
+
+
+                          <hr className='text-gray-200'/>
+                        </div>
                     ))
                 ): (
                     <p> No results </p>

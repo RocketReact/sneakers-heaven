@@ -9,7 +9,7 @@ export const fetchProductsSearch = createAsyncThunk (
 )
 
 const searchSlice = createSlice ({
-    name: "filter",
+    name: "search",
     initialState: {
         items: [],
         searchingItems: [],
@@ -33,7 +33,7 @@ const searchSlice = createSlice ({
             .addCase(fetchProductsSearch.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.items = action.payload;
-                state.searchingItems = action.payload;
+                state.searchingItems = [];
             })
             .addCase(fetchProductsSearch.rejected, (state, action) => {
                 state.status = "failed";
