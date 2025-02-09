@@ -49,8 +49,6 @@ return (
                                  </h3>
                              </Link>
 
-
-
                           <hr className='text-gray-200'/>
                         </div>
                     ))
