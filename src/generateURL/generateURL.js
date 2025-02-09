@@ -1,5 +1,5 @@
 
-export  default function generateProductURL(product) {
+export  default function generateProductLink(product) {
     if (!product || !product.title) return `/product/${product.id}`;
 
     const words = product.title
@@ -9,4 +9,6 @@ export  default function generateProductURL(product) {
         .toLowerCase()
     return `/product/${product.id}/${words}`;
 }
+
+
 

@@ -5,12 +5,14 @@ import Home from "./components/Pages/Home/Home.jsx";
 import About from "./components/Pages/About/About.jsx";
 import Contact from "./components/Pages/Contact/Contact.jsx";
 import Men from "./components/Pages/Men/Men.jsx";
+import Women from "./components/Pages/Women/Women.jsx";
 import Jewelery from "./components/Pages/Jewelery/Jewelery.jsx";
+import Electronics from "./components/Pages/Electronics/Electronics.jsx";
 import ProductsGrid from "./components/ProductsGrid/ProductsGrid.jsx";
 import CartPage from "./components/Cart/CartPage.jsx";
 import NotFoundPage from "./components/NotFound/NotFoundPage.jsx";
 import Account from "./components/Account/Account.jsx";
-
+import ProductSearch from "./components/ProductSearch/ProductSearch.jsx";
 function App() {
 
   return (
@@ -22,12 +24,16 @@ function App() {
                <Route path="/about" element={<About />} />
                <Route path="/contact" element={<Contact />} />
                <Route path="/men" element={<Men/>} />
-               <Route path="/jewelery" element={<Jewelery />} />
+               <Route path="/women" element={<Women/>} />
+               <Route path='/jewelery' element={<Jewelery />} />
+               <Route path="/electronics" element={<Electronics/>} />
                <Route path="/shop-all" element={<ProductsGrid/>} />
                <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
+               <Route path="/products/ProductsSearch" element={<ProductSearch/>} />
                <Route path="/account" element={<Account/>} />
                <Route path="/cart" element={<CartPage/>} />
                <Route path="*" element={<NotFoundPage />} />
+
 
            </Routes>
        </Router>

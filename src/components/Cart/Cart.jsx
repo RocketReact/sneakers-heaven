@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { addToCart, removeFromCart, decreaseQuantity, clearCart } from "../../store/cart/cartSlice.js";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import generateProductURL from "../../generateProductURL/generateProductURL.js";
+import generateProductLink from "../../generateURL/generateURL.js";
 import noImage from "../../img/no-image.jpg";
 
 
@@ -26,7 +26,7 @@ function Cart () {
                     <li key={product.id} className='cartItem mb-10'>
 
                         <img src={product.image || noImage} alt={product.title || "Product image"} width="50"/>
-                        <Link to={generateProductURL(product)} className='hover:underline'> <h4 > {product.title} </h4> </Link>
+                        <Link to={generateProductLink(product)} className='hover:underline'> <h4 > {product.title} </h4> </Link>
                         <p className='text-2xl mb-2 mt-2'>  {product.price} $</p>
                         <p >Quantity: {product.quantity}</p>
 

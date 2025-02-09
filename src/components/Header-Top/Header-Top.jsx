@@ -5,10 +5,16 @@ import { FaShoppingCart } from "react-icons/fa";
 import { RiAccountCircleFill } from "react-icons/ri";
 import logo from "../../img/logo.png"
 import burger from "../../img/burger.svg"
+import ProductSearch from "../ProductSearch/ProductSearch.jsx";
 
 
 const HeaderTop = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+    const toggleSearch = () => {
+        setIsSearchOpen(!isSearchOpen);
+    }
 
     // Функция для переключения меню
     const toggleMenu = () => {
@@ -30,13 +36,27 @@ const HeaderTop = () => {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About</Link></li>
                     <li><Link to="/contact">Contact</Link></li>
-                    <li><Link to="/man">Man</Link></li>
-                    <li><Link to="/woman">Woman</Link></li>
+                    <li><Link to="/men">Man</Link></li>
+                    <li><Link to="/women">Woman</Link></li>
                     <li><Link to="/shop-all">Shop All</Link></li>
                 </ul>
 
                 <div className="flex items-center space-x-8 relative">
-                    <FiSearch className="text-gray-600" fontSize={32} alt="Search" />
+
+                    <button onClick ={toggleSearch} className='ml-auto'>
+                        <FiSearch className="text-gray-600 hover:cursor-pointer"
+                                  fontSize={32} alt="Search" /> </button>
+
+                    {isSearchOpen && (
+                        <div className="absolute top-12 right-2
+                        bg-white shadow-lg p-2 rounded-md z-50
+                        max-h-120 w-96 overflow-y-auto
+">
+                            <ProductSearch closeSearch={() =>
+                                setIsSearchOpen(false)} />
+                            </div>
+                    )}
+
                     <Link to='/account'> <RiAccountCircleFill size='30' alt='Account' /> </Link>
                     <Link to='/cart'> <FaShoppingCart  size="30" alt="Cart"/>  </Link>
 

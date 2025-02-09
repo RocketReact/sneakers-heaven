@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProducts } from '../../store/productSlice/productSlice.js';
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
-import generateProductURL from "../../generateProductURL/generateProductURL.js";
+import generateProductLink from "../../generateURL/generateURL.js";
 import ProductFilter from "../ProductFilter/ProductFilter.jsx";
 import {addToCart} from "../../store/cart/cartSlice.js";
 
@@ -45,7 +45,7 @@ export default function ProductsGrid() {
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
                     {filteredProducts.map((product) => (
                         <div key={product.id} className="group">
-                            <Link to={generateProductURL(product)} className="block">
+                            <Link to={generateProductLink(product)} className="block">
                                 <img
                                     alt={product.title || 'No image available'}
                                     src={Array.isArray(product.image) ? product.image[0] : product.image|| require('../images/no-image.png')}
