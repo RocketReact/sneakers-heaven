@@ -1,9 +1,9 @@
 import {useDispatch, useSelector} from "react-redux";
-import { addToCart, removeFromCart, decreaseQuantity, clearCart } from "../../src/store/cart/cartSlice.js";
+import { addToCart, removeFromCart, decreaseQuantity, clearCart } from "../../store/cart/cartSlice.js";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import generateProductURL from "../../src/generateProductURL/generateProductURL.js";
-import noImage from "../../src/img/no-image.jpg";
+import generateProductURL from "../../generateProductURL/generateProductURL.js";
+import noImage from "../../img/no-image.jpg";
 
 
 

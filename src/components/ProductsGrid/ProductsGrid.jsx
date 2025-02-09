@@ -1,11 +1,11 @@
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchProducts } from '../../src/store/productSlice/productSlice.js';
+import { fetchProducts } from '../../store/productSlice/productSlice.js';
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
-import generateProductURL from "../../src/generateProductURL/generateProductURL.js";
+import generateProductURL from "../../generateProductURL/generateProductURL.js";
 import ProductFilter from "../ProductFilter/ProductFilter.jsx";
-import {addToCart} from "../../src/store/cart/cartSlice.js";
+import {addToCart} from "../../store/cart/cartSlice.js";
 
 export default function ProductsGrid() {
     const dispatch = useDispatch();

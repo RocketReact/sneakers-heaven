@@ -1,10 +1,10 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchProducts } from "../../src/store/productSlice/productSlice.js";
+import { fetchProducts } from "../../store/productSlice/productSlice.js";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
-import { addToCart, decreaseQuantity, removeFromCart } from "../../src/store/cart/cartSlice.js";
-import noImage from "../../src/img/no-image.jpg";
+import { addToCart, decreaseQuantity, removeFromCart } from "../../store/cart/cartSlice.js";
+import noImage from "../../img/no-image.jpg";
 
 export default function ProductSingle() {
     const { id } = useParams();

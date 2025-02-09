@@ -1,14 +1,15 @@
-import HeaderTop from "../components/Header-Top/Header-Top.jsx";
+import HeaderTop from "./components/Header-Top/Header-Top.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ProductSingle from "../components/ProductSingle/ProductSingle.jsx";
-import Home from "../components/Pages/Home/Home.jsx";
-import About from "../components/Pages/About/About.jsx";
-import Contact from "../components/Pages/Contact/Contact.jsx";
-import Men from "../components/Pages/Men/Men.jsx";
-import Jewelery from "../components/Pages/Jewelery/Jewelery.jsx";
-import ProductsGrid from "../components/ProductsGrid/ProductsGrid.jsx";
-import CartPage from "../components/Cart/CartPage.jsx";
-import NotFoundPage from "../components/NotFound/NotFoundPage.jsx";
+import ProductSingle from "./components/ProductSingle/ProductSingle.jsx";
+import Home from "./components/Pages/Home/Home.jsx";
+import About from "./components/Pages/About/About.jsx";
+import Contact from "./components/Pages/Contact/Contact.jsx";
+import Men from "./components/Pages/Men/Men.jsx";
+import Jewelery from "./components/Pages/Jewelery/Jewelery.jsx";
+import ProductsGrid from "./components/ProductsGrid/ProductsGrid.jsx";
+import CartPage from "./components/Cart/CartPage.jsx";
+import NotFoundPage from "./components/NotFound/NotFoundPage.jsx";
+import Account from "./components/Account/Account.jsx";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
                <Route path="/jewelery" element={<Jewelery />} />
                <Route path="/shop-all" element={<ProductsGrid/>} />
                <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
+               <Route path="/account" element={<Account/>} />
                <Route path="/cart" element={<CartPage/>} />
                <Route path="*" element={<NotFoundPage />} />
 

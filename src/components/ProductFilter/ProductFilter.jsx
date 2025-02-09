@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {setCategoryFilter} from "../../src/store/productSlice/productSlice.js";
+import {setCategoryFilter} from "../../store/productSlice/productSlice.js";
 
 export default function ProductFilter  ({categories}) {
     const dispatch = useDispatch();
@@ -22,6 +22,7 @@ export default function ProductFilter  ({categories}) {
                 {categories.map(category => (
                     <option key={category} value={category}> {category}</option>
                 ))}
+
 
             </select>
 

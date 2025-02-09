@@ -1,6 +1,11 @@
 import { FiSearch } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { FaShoppingCart } from "react-icons/fa";
+import { RiAccountCircleFill } from "react-icons/ri";
+import logo from "../../img/logo.png"
+import burger from "../../img/burger.svg"
+
 
 const HeaderTop = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,7 +21,7 @@ const HeaderTop = () => {
                 {/* Логотип */}
                 <div>
                     <Link to="/">
-                        <img className="logo" width="40" src="../../src/img/logo.png" alt="logo" />
+                        <img className="logo" width="40" src={logo} alt="logo" />
                     </Link>
                 </div>
 
@@ -32,8 +37,8 @@ const HeaderTop = () => {
 
                 <div className="flex items-center space-x-8 relative">
                     <FiSearch className="text-gray-600" fontSize={32} alt="Search" />
-                    <img className="w-6 h-6" src="../../src/img/account.png" alt="account" />
-                    <Link to='/cart'> <img className="w-6 h-6" src="../../src/img/cart.png" alt="cart" />  </Link>
+                    <Link to='/account'> <RiAccountCircleFill size='30' alt='Account' /> </Link>
+                    <Link to='/cart'> <FaShoppingCart  size="30" alt="Cart"/>  </Link>
 
                     {/* Иконка гамбургера для мобильных устройств */}
                     <button
@@ -45,7 +50,7 @@ const HeaderTop = () => {
                                 &times;
                             </span>
                         ) : (
-                            <img className="w-9 h-9" src="../../src/img/burger.svg" alt="burger" />
+                            <img className="w-9 h-9" src={burger} alt="burger" />
                         )}
                     </button>
                 </div>
