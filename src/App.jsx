@@ -24,9 +24,9 @@ function App() {
                <Route path="/about" element={<About />} />
                <Route path="/contact" element={<Contact />} />
                <Route path="/men" element={<Men/>} />
-               <Route path="/women" element={<Women/>} />
-               <Route path='/jewelery' element={<Jewelery />} />
-               <Route path="/electronics" element={<Electronics/>} />
+               <Route path="/products/:id" element={<Women/>} />
+               <Route path='/products/:id' element={<Jewelery />} />
+               <Route path="/products/:id" element={<Electronics/>} />
                <Route path="/shop-all" element={<ProductsGrid/>} />
                <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
                <Route path="/products/ProductsSearch" element={<ProductSearch/>} />

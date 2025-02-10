@@ -1,9 +1,22 @@
+import TemplateProductCategory from "../../TemplateProductCategory/TemplateProductCategory.jsx";
+import { useParams } from "react-router-dom";
+
 const Jewelery = () => {
+    const { id } = useParams();
+
     return (
+
         <div>
-<h1> Good </h1>
+
+
+
+            <TemplateProductCategory/>
+
         </div>
+
+
     );
 };
+
 
 export default Jewelery;

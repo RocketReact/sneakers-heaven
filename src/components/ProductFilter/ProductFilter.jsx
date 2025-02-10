@@ -3,7 +3,7 @@ import {setCategoryFilter} from "../../store/productSlice/productSlice.js";
 
 export default function ProductFilter  ({categories}) {
     const dispatch = useDispatch();
-    const selectedCategory = useSelector ((state) => state.products.filteredCategory)
+        const selectedCategory = useSelector ((state) => state.products.filteredCategory)
 
     const handleFilterChangeCategory = (e) => {
         dispatch(setCategoryFilter(e.target.value));

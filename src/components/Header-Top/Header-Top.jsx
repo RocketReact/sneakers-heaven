@@ -7,6 +7,7 @@ import logo from "../../img/logo.png"
 import burger from "../../img/burger.svg"
 import ProductSearch from "../ProductSearch/ProductSearch.jsx";
 import {useDispatch, useSelector} from "react-redux";
+import Jewelery from "../Pages/Jewelery/Jewelery.jsx";
 
 
 const HeaderTop = () => {
@@ -38,8 +39,10 @@ const HeaderTop = () => {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About</Link></li>
                     <li><Link to="/contact">Contact</Link></li>
-                    <li><Link to="/men">Man</Link></li>
-                    <li><Link to="/women">Woman</Link></li>
+                    <li><Link to="/products/men">Men</Link></li>
+                    <li><Link to="/products/women">Women</Link></li>
+                    <li><Link to="/products/electronics">Electronics</Link></li>
+                    <li><Link to="/products/jewelery">Jewelery</Link></li>
                     <li><Link to="/shop-all">Shop All</Link></li>
                 </ul>
 

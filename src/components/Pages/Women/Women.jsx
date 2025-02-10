@@ -1,10 +1,16 @@
-const Women = () => {
-    return (
-        <div>
+        import { useParams } from "react-router-dom";
+        import TemplateProductCategory from "../../TemplateProductCategory/TemplateProductCategory.jsx";
 
+        const Women = () => {
+            const { id } = useParams();
 
-        </div>
-    );
-};
+            return (
+                <div>
 
-export default Women;
+                    <TemplateProductCategory/>
+
+                </div>
+            );
+        };
+
+        export default Women;
