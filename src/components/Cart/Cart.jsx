@@ -22,29 +22,18 @@ function Cart () {
             <hr className="mt-4 mb-6 border-t-2 border-gray-300 "/>
 
             <ul>
-                {cartItems.map(product => (
-                    <li key={product.id} className='cartItem mb-10'>
-
-                        <img src={product.image || noImage} alt={product.title || "Product image"} width="50"/>
-                        <Link to={generateProductLink(product)} className='hover:underline'> <h4 > {product.title} </h4> </Link>
-                        <p className='text-2xl mb-2 mt-2'>  {product.price} $</p>
-                        <p >Quantity: {product.quantity}</p>
-
-                        <div className='flex space-x-4 border-1 max-w-30
-                                        mb-3 p-2
-                                        hover *:cursor-pointer
-                                        rounded-md justify-center'>
-                            <button className='hover:scale-150'
-                                    onClick={() => dispatch(addToCart(product))}> +
-                            </button>
-
-                            <button className='hover:scale-180'
-                                    onClick={() => dispatch(decreaseQuantity(product.id))}> -
-                            </button>
-
-                            <button
-                                className='hover:scale-110 '
-                                onClick={() => dispatch(removeFromCart(product.id))}> Delete </button>
+                {cartItems.map((product, index) => (
+                    <li key={`${product.id}-${index}`} className="cartItem mb-10">
+                        <img src={product.image || noImage} alt={product.title || "Product image"} width="50" />
+                        <Link to={generateProductLink(product)} className="hover:underline">
+                            <h4>{product.title}</h4>
+                        </Link>
+                        <p className="text-2xl mb-2 mt-2">{product.price} $</p>
+                        <p>Quantity: {product.quantity}</p>
+                        <div>
+                            <button onClick={() => dispatch(addToCart(product))}>+</button>
+                            <button onClick={() => dispatch(decreaseQuantity(product.id))}>-</button>
+                            <button onClick={() => dispatch(removeFromCart(product.id))}>Delete</button>
                         </div>
                     </li>
                 ))}

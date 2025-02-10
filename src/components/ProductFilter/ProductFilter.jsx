@@ -14,7 +14,7 @@ export default function ProductFilter  ({categories}) {
             <label className='block text-sm font-medium
             text-gray-700'> Filter by Category</label>
             <select
-                value={selectedCategory}
+                value={selectedCategory || ''}
                 onChange={handleFilterChangeCategory}
                 className='mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm'>
 

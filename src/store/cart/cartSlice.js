@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
+
 
 const localCartFromStorage = () => {
     try {
@@ -53,6 +55,7 @@ const cartSlice = createSlice({
     name: "cart",
     initialState: localCartFromStorage(),
     reducers: {
+
         addToCart: (state, action) => {
             const item = action.payload;
             const existingCartItem = state.cartItems.find(
@@ -66,8 +69,12 @@ const cartSlice = createSlice({
                         : product
                 );
             } else {
-                state.cartItems = [...state.cartItems, { ...item, quantity: 1 }];
+                // Генерируем уникальный ID, если он отсутствует
+                const newItem = { ...item, id: item.id || uuidv4(), quantity: 1 };
+                state.cartItems.push(newItem);
             }
+
+            console.log("Updated cart items:", state.cartItems);
 
             updateCartTotals(state);
         },

@@ -1,4 +1,4 @@
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProducts } from '../../store/productSlice/productSlice.js';
@@ -7,19 +7,23 @@ import generateProductLink from "../../generateURL/generateURL.js";
 import ProductFilter from "../ProductFilter/ProductFilter.jsx";
 import {addToCart} from "../../store/cart/cartSlice.js";
 
+
+
 export default function ProductsGrid() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { id } = useParams();
+
     const { products, status, error, filteredCategory } = useSelector((state) => state.products);
-    const product = products.find(product => product.id === Number(id));
+    const product = products.find(product => String (product.id) === String(id))
 
-    const handleAddToCart = () => {
-        const productWithQuantity = {...product, quantity: 1};
+    const handleAddToCart = (product) => {
+        const productWithQuantity = {
+            ...product,
+            quantity: 1,
+            id: product.id, // Сохраняем существующий id или создаем новый
+        };
         dispatch(addToCart(productWithQuantity));
-    }
-
-
+    };
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchProducts());
@@ -35,6 +39,9 @@ export default function ProductsGrid() {
     const filteredProducts = filteredCategory
         ? products.filter((product) => product.category === filteredCategory)
         : products;
+
+
+
     return (
         <div className="bg-white">
             <div className="m-0 gap-x-0.5 px-4 py-5 sm:px-6 sm:py-10 lg:px-8">
@@ -58,7 +65,8 @@ export default function ProductsGrid() {
 
 
                                 <button
-                                    onClick={handleAddToCart}
+                                    onClick={() => handleAddToCart (product)}
+
                                     className="
                                         inline-block cursor-pointer px-6 py-3 text-lg font-medium text-red-500
                                         border border-blue-600 rounded hover:bg-blue-600 hover:text-white
