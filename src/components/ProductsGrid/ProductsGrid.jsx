@@ -74,8 +74,6 @@ export default function ProductsGrid() {
                                 >
                                     Add to cart
                                 </button>
-
-
                         </div>
                     ))}
                 </div>
