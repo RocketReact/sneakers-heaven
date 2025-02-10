@@ -8,7 +8,7 @@ import Men from "./components/Pages/Men/Men.jsx";
 import Women from "./components/Pages/Women/Women.jsx";
 import Jewelery from "./components/Pages/Jewelery/Jewelery.jsx";
 import Electronics from "./components/Pages/Electronics/Electronics.jsx";
-import ProductsGrid from "./components/ProductsGrid/ProductsGrid.jsx";
+import AllProducts from "./components/AllProducts/AllProducts.jsx";
 import CartPage from "./components/Cart/CartPage.jsx";
 import NotFoundPage from "./components/NotFound/NotFoundPage.jsx";
 import Account from "./components/Account/Account.jsx";
@@ -23,11 +23,11 @@ function App() {
                <Route path="/" element={<Home />} />
                <Route path="/about" element={<About />} />
                <Route path="/contact" element={<Contact />} />
-               <Route path="/men" element={<Men/>} />
+               <Route path="/products/:id" element={<Men/>} />
                <Route path="/products/:id" element={<Women/>} />
                <Route path='/products/:id' element={<Jewelery />} />
                <Route path="/products/:id" element={<Electronics/>} />
-               <Route path="/shop-all" element={<ProductsGrid/>} />
+               {/*<Route path="/shop-all" element={<AllProducts/>} />*/}
                <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
                <Route path="/products/ProductsSearch" element={<ProductSearch/>} />
                <Route path="/account" element={<Account/>} />

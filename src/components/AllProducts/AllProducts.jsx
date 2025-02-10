@@ -1,16 +1,13 @@
-import {useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import ProductFilter from "../ProductFilter/ProductFilter.jsx";
-import TemplateProductCategory from "../TemplateProductCategory/TemplateProductCategory.jsx";
+import TemplateProductCategory from "../TemplateCategory/TemplateCategory.jsx";
 import {useEffect} from "react";
 import {fetchProducts} from "../../store/productSlice/productSlice.js";
 
 
 export default function ProductsGrid() {
     const dispatch = useDispatch();
-    const { id } = useParams();
     const { products, status, error, filteredCategory } = useSelector((state) => state.products);
-    const product = products.find(product => String (product.id) === String(id))
 
     useEffect(() => {
         if (status === 'idle') {
@@ -21,6 +18,7 @@ export default function ProductsGrid() {
     if (status === 'loading') return <p>Loading...</p>;
     if (status === 'failed') return <p>Failed: {error}</p>;
     if (status === 'succeeded' && products.length === 0) return <p>No products found.</p>;
+
     const categories = [...new Set(products.map((product) => product.category))];
 
     const filteredProducts = filteredCategory
@@ -33,7 +31,7 @@ export default function ProductsGrid() {
                 <h2 className="sr-only">Products</h2>
 
                 <ProductFilter categories={categories}/>
-                    {filteredProducts.map((product) => (
+                    {filteredProducts?.map((product) => (
                         <TemplateProductCategory/>
                     ))}
             </div>

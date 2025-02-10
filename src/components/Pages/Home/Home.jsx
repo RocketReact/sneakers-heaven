@@ -1,11 +1,11 @@
 import Banner from "../../Banner/Banner.jsx";
-import ProductsGrid from "../../ProductsGrid/ProductsGrid.jsx";
+import AllProducts from "../../AllProducts/AllProducts.jsx";
 
 const Home = () => {
     return (
         <div>
             <Banner />
-            <ProductsGrid/>
+            <AllProducts/>
 
         </div>
     );

@@ -1,5 +1,5 @@
         import { useParams } from "react-router-dom";
-        import TemplateProductCategory from "../../TemplateProductCategory/TemplateProductCategory.jsx";
+        import TemplateProductCategory from "../../TemplateCategory/TemplateCategory.jsx";
 
         const Women = () => {
             const { id } = useParams();

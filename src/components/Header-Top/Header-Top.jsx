@@ -7,7 +7,6 @@ import logo from "../../img/logo.png"
 import burger from "../../img/burger.svg"
 import ProductSearch from "../ProductSearch/ProductSearch.jsx";
 import {useDispatch, useSelector} from "react-redux";
-import Jewelery from "../Pages/Jewelery/Jewelery.jsx";
 
 
 const HeaderTop = () => {
