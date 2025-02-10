@@ -1,11 +1,11 @@
 import {useDispatch, useSelector} from 'react-redux';
 import ProductFilter from "../ProductFilter/ProductFilter.jsx";
-import TemplateProductCategory from "../TemplateCategory/TemplateCategory.jsx";
+import TemplateCategory from "../TemplateCategory/TemplateCategory.jsx";
 import {useEffect} from "react";
 import {fetchProducts} from "../../store/productSlice/productSlice.js";
 
 
-export default function ProductsGrid() {
+export default function AllProducts() {
     const dispatch = useDispatch();
     const { products, status, error, filteredCategory } = useSelector((state) => state.products);
 
@@ -32,7 +32,7 @@ export default function ProductsGrid() {
 
                 <ProductFilter categories={categories}/>
                     {filteredProducts?.map((product) => (
-                        <TemplateProductCategory/>
+                        <TemplateCategory/>
                     ))}
             </div>
         </div>

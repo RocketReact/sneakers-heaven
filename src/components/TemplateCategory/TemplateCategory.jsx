@@ -8,7 +8,7 @@ import noImage from "../../img/no-image.jpg"; // Импорт изображен
 import {fetchProducts} from "../../store/productSlice/productSlice.js";
 
 
-export default function TemplateProductCategory() {
+export default function TemplateCategory() {
     const { id } = useParams();
 
     const dispatch = useDispatch();
