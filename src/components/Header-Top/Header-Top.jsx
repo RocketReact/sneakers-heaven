@@ -6,11 +6,13 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import logo from "../../img/logo.png"
 import burger from "../../img/burger.svg"
 import ProductSearch from "../ProductSearch/ProductSearch.jsx";
+import {useDispatch, useSelector} from "react-redux";
 
 
 const HeaderTop = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
     const toggleSearch = () => {
         setIsSearchOpen(!isSearchOpen);
@@ -58,7 +60,24 @@ const HeaderTop = () => {
                     )}
 
                     <Link to='/account'> <RiAccountCircleFill size='30' alt='Account' /> </Link>
-                    <Link to='/cart'> <FaShoppingCart  size="30" alt="Cart"/>  </Link>
+
+
+                    <Link to='/cart'>
+                        <FaShoppingCart  className='relative' size="30" alt="Cart"/>
+                        {totalQuantity > 0 && (
+                            <span className='
+                            absolute -top-1 right-4
+                            bg-red-500 text-white
+                            rounded-full pt-1 pb-1 pr-2 pl-2
+                            text-xs font-bold
+                            '>
+                                {totalQuantity}
+
+                            </span>
+
+                        ) }
+
+                    </Link>
 
                     {/* Иконка гамбургера для мобильных устройств */}
                     <button
