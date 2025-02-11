@@ -27,7 +27,7 @@ function App() {
                <Route path="/products/:id" element={<Women/>} />
                <Route path='/products/:id' element={<Jewelery />} />
                <Route path="/products/:id" element={<Electronics/>} />
-               {/*<Route path="/shop-all" element={<AllProducts/>} />*/}
+               <Route path="/shop-all" element={<AllProducts/>} />
                <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
                <Route path="/products/ProductsSearch" element={<ProductSearch/>} />
                <Route path="/account" element={<Account/>} />
