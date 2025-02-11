@@ -10,7 +10,6 @@ import {fetchProducts} from "../../store/productSlice/productSlice.js";
 
 export default function TemplateCategory() {
     const { id } = useParams();
-
     const dispatch = useDispatch();
     const { products, status } = useSelector((state) => state.products);
 
@@ -22,6 +21,7 @@ export default function TemplateCategory() {
 
     const productByCategory = products.filter((product) => String(product.category) === String(id));
     console.log(productByCategory);
+
     const handleAddToCart = (product) => {
         if (!product) return;
 
@@ -35,7 +35,7 @@ export default function TemplateCategory() {
     };
 
     return (
-       <div><h1 className="text-3xl font-bold text-center my-6"> {id.toUpperCase()}</h1>
+       <div><h1 className="text-3xl font-bold text-center my-6"> {id}</h1>
 
         <div className="grid grid-cols-1 gap-6
         sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 m-20 ">

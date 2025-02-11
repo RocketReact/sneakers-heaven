@@ -11,12 +11,12 @@ export default function ProductFilter  ({categories}) {
 
     return (
         <div className='mb-4'>
-            <label className='block text-sm font-medium
+            <label className='block text-xl font-medium
             text-gray-700'> Filter by Category</label>
             <select
                 value={selectedCategory || ''}
                 onChange={handleFilterChangeCategory}
-                className='mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm'>
+                className='mt-1 block w-full  p-2 border border-gray-300 rounded-md shadow-sm'>
 
                 <option value=''> All Category </option>
                 {categories.map(category => (
