@@ -38,8 +38,8 @@ const HeaderTop = () => {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About</Link></li>
                     <li><Link to="/contact">Contact</Link></li>
-                    <li><Link to="/products/men">Men</Link></li>
-                    <li><Link to="/products/women">Women</Link></li>
+                    <li><Link to="/products/men's clothing">Men</Link></li>
+                    <li><Link to="/products/women's clothing">Women</Link></li>
                     <li><Link to="/products/electronics">Electronics</Link></li>
                     <li><Link to="/products/jewelery">Jewelery</Link></li>
                     <li><Link to="/shop-all">Shop All</Link></li>
