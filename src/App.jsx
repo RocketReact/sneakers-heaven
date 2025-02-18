@@ -13,6 +13,7 @@ import CartPage from "./components/Cart/CartPage.jsx";
 import NotFoundPage from "./components/NotFound/NotFoundPage.jsx";
 import Account from "./components/Account/Account.jsx";
 import ProductSearch from "./components/ProductSearch/ProductSearch.jsx";
+import Checkout from "./components/Checkout.jsx";
 function App() {
 
   return (
@@ -32,6 +33,7 @@ function App() {
                <Route path="/products/ProductsSearch" element={<ProductSearch/>} />
                <Route path="/account" element={<Account/>} />
                <Route path="/cart" element={<CartPage/>} />
+               <Route path="/checkout" element={<Checkout/>} />
                <Route path="*" element={<NotFoundPage />} />
 
 
