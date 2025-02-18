@@ -10,3 +10,21 @@
 
 }
 
+.btn {
+  @apply w-7 h-7
+}
+
+.btn:hover {
+  @apply scale-120 transition-transform duration-300 cursor-pointer bg-emerald-300 rounded-full
+}
+.btn:active {
+  @apply scale-100;
+}
+
+.btnDelete {
+  @apply p-1.5
+}
+
+.btnDelete:hover {
+  @apply scale-110 transition-transform duration-300 cursor-pointer bg-emerald-300 rounded
+}
