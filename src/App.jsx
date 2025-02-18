@@ -13,7 +13,7 @@ import CartPage from "./components/Cart/CartPage.jsx";
 import NotFoundPage from "./components/NotFound/NotFoundPage.jsx";
 import Account from "./components/Account/Account.jsx";
 import ProductSearch from "./components/ProductSearch/ProductSearch.jsx";
-import Checkout from "./components/Checkout.jsx";
+import Checkout from "./components/Checkout/Checkout.jsx";
 function App() {
 
   return (
