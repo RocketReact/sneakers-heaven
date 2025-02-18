@@ -5,9 +5,13 @@ import '../../index.css';
 import { FormProvider, useForm } from "react-hook-form";
 import TextInputHtml from "../TextInput/TextInputHtml.jsx";
 import TextInput from "../TextInput/TextInput.jsx";
+import {useSelector} from "react-redux";
+import Cart from "../Cart/Cart.jsx";
+import CheckoutCart from "./CheckoutCart.jsx";
 
 const Checkout = () => {
     const [activeButton, setActiveButton] = useState('ship');
+    const {cartItems, totalQuantity, totalPrice } = useSelector((state) => state.cart);
     const methods = useForm({
         defaultValues: {
             email: "",
@@ -116,6 +120,7 @@ const Checkout = () => {
                     {/* Модуль "In your bag" */}
                     <div className="flex-1 p-4">
                         <h2>In your bag</h2>
+                        <CheckoutCart/>
                     </div>
                 </div>
             </div>

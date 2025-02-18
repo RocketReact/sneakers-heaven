@@ -3,7 +3,6 @@ import TextInput from "./TextInput.jsx";
 
 export default function TextInputHtml () {
     return (
-
             <div>
         {/* Поле E-mail */}
     <TextInput
