@@ -7,7 +7,7 @@ import TextInputHtml from "../TextInput/TextInputHtml.jsx";
 import TextInput from "../TextInput/TextInput.jsx";
 
 const Checkout = () => {
-    const [activeButton, setActiveButton] = useState(null);
+    const [activeButton, setActiveButton] = useState('ship');
     const methods = useForm({
         defaultValues: {
             email: "",
@@ -44,9 +44,10 @@ const Checkout = () => {
                 <h1 className="text-2xl mt-3">Checkout</h1>
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 m-20 text-2xl">
                     <div className="flex-2 p-4">
-                        <div className="flex flex-col">
+                        <div className="flex flex-col relative h-[400px]
+">
                             <h2>Delivery Options</h2>
-                            <div className="flex flex-row space-x-3">
+                              <div className="flex flex-row space-x-3 ">
 
 
                                 <button
@@ -71,24 +72,13 @@ const Checkout = () => {
                                     <MdLocationOn size="25" /> Pick UP
                                 </button>
                             </div>
+
                             {activeButton === "ship" &&
-                                <div>
+
                                 <TextInputHtml/>
-                            {/* Кнопка Submit */}
-                                <div className="mt-6 ">
-                                <button
-                                type="submit"
-                                onClick={handleSubmit(onSubmit, onError)} // Связываем handleSubmit с функциями
-                            className="
-                                    w-full bg-blue-500 text-white py-3 px-4 rounded-lg
-                                    hover:bg-blue-600 transition-all hover:cursor-pointer
-                                "
-                        >
-                            Submit Order
-                        </button>
-                    </div>
-                                </div>
+
                             }
+
                             {activeButton === "pickup"
 
                                 &&
@@ -106,6 +96,19 @@ const Checkout = () => {
                                 </div>
                                 </div>
                             }
+                            {/* Кнопка Submit */}
+                            <div className="mt-6 ">
+                                <button
+                                    type="submit"
+                                    onClick={handleSubmit(onSubmit, onError)} // Связываем handleSubmit с функциями
+                                    className="
+                                    w-full bg-blue-500 text-white py-3 px-4 rounded-lg
+                                    hover:bg-blue-600 transition-all hover:cursor-pointer
+                                "
+                                >
+                                    Submit Order
+                                </button>
+                            </div>
                       </div>
 
 

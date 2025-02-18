@@ -5,7 +5,6 @@ export default function TextInputHtml () {
     return (
 
             <div>
-                <div>
         {/* Поле E-mail */}
     <TextInput
         id="email"
@@ -19,7 +18,7 @@ export default function TextInputHtml () {
             },
         }}
     />
-</div>
+
 
     {/* Имена пользователя */}
     <div className="flex-col">
