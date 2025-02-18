@@ -1,4 +1,4 @@
-import "./Banner.css"
+import "./Banner.css";
 import {useState} from "react";
 
 const Banner = () => {
@@ -7,7 +7,6 @@ const Banner = () => {
     const isAddPlus = () => {
         setAddPlus(!addPlus)
     }
-
     return (
             <div className="banner-container">
 
