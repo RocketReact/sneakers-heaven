@@ -4,6 +4,7 @@ import { MdLocationOn } from "react-icons/md";
 import '../../index.css';
 import { FormProvider, useForm } from "react-hook-form";
 import TextInputHtml from "../TextInput/TextInputHtml.jsx";
+import TextInput from "../TextInput/TextInput.jsx";
 
 const Checkout = () => {
     const [activeButton, setActiveButton] = useState(null);
@@ -45,9 +46,9 @@ const Checkout = () => {
                     <div className="flex-2 p-4">
                         <div className="flex flex-col">
                             <h2>Delivery Options</h2>
-
-
                             <div className="flex flex-row space-x-3">
+
+
                                 <button
                                     type="button"
                                     onClick={() => handleClick("ship")}
@@ -70,23 +71,42 @@ const Checkout = () => {
                                     <MdLocationOn size="25" /> Pick UP
                                 </button>
                             </div>
-
-                            <TextInputHtml/>
-
+                            {activeButton === "ship" &&
+                                <div>
+                                <TextInputHtml/>
                             {/* Кнопка Submit */}
-                           <div className="mt-6 ">
-                            <button
+                                <div className="mt-6 ">
+                                <button
                                 type="submit"
                                 onClick={handleSubmit(onSubmit, onError)} // Связываем handleSubmit с функциями
-                                className="
+                            className="
                                     w-full bg-blue-500 text-white py-3 px-4 rounded-lg
                                     hover:bg-blue-600 transition-all hover:cursor-pointer
                                 "
-                            >
-                                Submit Order
-                            </button>
-                          </div>
+                        >
+                            Submit Order
+                        </button>
                     </div>
+                                </div>
+                            }
+                            {activeButton === "pickup"
+
+                                &&
+                                <div>
+                                <h4 className='font-light text-xl mt-3'>Select a store location</h4>
+                                <div className="w-full">
+                                    <TextInput
+                                        id="storeLocation"
+                                        name="storeLocation"
+                                        label="Store Location*"
+                                        rules={{
+                                            required: "Enter your store location",
+                                        }}
+                                    />
+                                </div>
+                                </div>
+                            }
+                      </div>
 
 
                   </div>

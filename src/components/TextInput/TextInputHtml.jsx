@@ -4,8 +4,8 @@ import TextInput from "./TextInput.jsx";
 export default function TextInputHtml () {
     return (
 
-        <div>
             <div>
+                <div>
         {/* Поле E-mail */}
     <TextInput
         id="email"
@@ -102,7 +102,8 @@ export default function TextInputHtml () {
             </div>
         </div>
     </div>
-</div>
+
+        </div>
     )
 };
 
