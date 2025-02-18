@@ -28,3 +28,9 @@
 .btnDelete:hover {
   @apply scale-110 transition-transform duration-300 cursor-pointer bg-emerald-300 rounded
 }
+
+.btnDelivery {
+  @apply flex justify-center text-xl
+  font-light w-full rounded-md
+  mt-3 pt-3 pb-3 gap-3 hover:cursor-pointer
+}
