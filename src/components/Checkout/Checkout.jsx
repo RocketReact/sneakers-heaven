@@ -6,12 +6,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import TextInputHtml from "../TextInput/TextInputHtml.jsx";
 import TextInput from "../TextInput/TextInput.jsx";
 import {useSelector} from "react-redux";
-import Cart from "../Cart/Cart.jsx";
 import CheckoutCart from "./CheckoutCart.jsx";
 
 const Checkout = () => {
     const [activeButton, setActiveButton] = useState('ship');
-    const {cartItems, totalQuantity, totalPrice } = useSelector((state) => state.cart);
     const methods = useForm({
         defaultValues: {
             email: "",
@@ -80,11 +78,8 @@ const Checkout = () => {
                             {activeButton === "ship" &&
 
                                 <TextInputHtml/>
-
                             }
-
                             {activeButton === "pickup"
-
                                 &&
                                 <div>
                                 <h4 className='font-light text-xl mt-3'>Select a store location</h4>
@@ -106,16 +101,15 @@ const Checkout = () => {
                                     type="submit"
                                     onClick={handleSubmit(onSubmit, onError)} // Связываем handleSubmit с функциями
                                     className="
-                                    w-full bg-blue-500 text-white py-3 px-4 rounded-lg
-                                    hover:bg-blue-600 transition-all hover:cursor-pointer
+                                    w-50 bg-black text-white py-3 px-2 rounded-full
+                                    hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
+                                    text-xl mb-3
                                 "
                                 >
-                                    Submit Order
+                                    Continue to Payment
                                 </button>
                             </div>
                       </div>
-
-
                   </div>
                     {/* Модуль "In your bag" */}
                     <div className="flex-1 p-4">

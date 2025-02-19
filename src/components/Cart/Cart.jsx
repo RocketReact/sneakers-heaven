@@ -89,8 +89,8 @@ function Cart () {
                    onClick={() => navigate('/checkout')}
                    className='
                p-3 bg-black text-white
-               rounded-xl font-extralight text-xl mt-3
-               hover:cursor-pointer active:scale-90 duration-150'> Checkout </button>
+               rounded-full font-extralight text-xl mt-3
+               hover:cursor-pointer hover:bg-gray-400 active:scale-90 duration-150'> Checkout </button>
                 </div>
             </div>
 
