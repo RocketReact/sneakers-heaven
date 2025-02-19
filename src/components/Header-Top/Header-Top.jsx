@@ -61,7 +61,7 @@ const HeaderTop = () => {
                             </div>
                     )}
 
-                    <Link to='/account'> <RiAccountCircleFill size='30' alt='Account' /> </Link>
+                    <Link to='/login'> <RiAccountCircleFill size='30' alt='Login' /> </Link>
 
 
                     <Link to='/cart'>

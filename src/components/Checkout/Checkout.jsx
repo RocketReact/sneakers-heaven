@@ -6,6 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import TextInputHtml from "../TextInput/TextInputHtml.jsx";
 import TextInput from "../TextInput/TextInput.jsx";
 import CheckoutCart from "./CheckoutCart.jsx";
+import { addUserData } from "../../data/userRegisterData.js"; // Импортируем функцию добавления пользователя
 
 const Checkout = () => {
     const [activeButton, setActiveButton] = useState('ship');
@@ -26,17 +27,13 @@ const Checkout = () => {
     const handleClick = (buttonType) => {
         setActiveButton(activeButton === buttonType ? null : buttonType);
     };
-
-    // Функция для обработки отправки данных
     const onSubmit = (data) => {
-        console.log("Form Data:", data); // В консоль выводим данные формы
-        alert("Checkout Successful!"); // Информируем пользователя
-        // Здесь можно добавить код для отправки данных на сервер
+        console.log("Form Data:", data);
+        addUserData(data);
     };
 
-    // Функция для обработки ошибок, если они есть
     const onError = (errors) => {
-        console.log("Form Errors:", errors); // Лог ошибок
+        console.log("Form Errors:", errors);
     };
 
     return (
