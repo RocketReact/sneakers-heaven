@@ -5,7 +5,6 @@ import '../../index.css';
 import { FormProvider, useForm } from "react-hook-form";
 import TextInputHtml from "../TextInput/TextInputHtml.jsx";
 import TextInput from "../TextInput/TextInput.jsx";
-import {useSelector} from "react-redux";
 import CheckoutCart from "./CheckoutCart.jsx";
 
 const Checkout = () => {
