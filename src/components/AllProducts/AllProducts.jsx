@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import ProductFilter from "../ProductFilter/ProductFilter.jsx";
 import {useEffect} from "react";
 import {fetchProducts} from "../../store/productSlice/productSlice.js";
-import {Link} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
 import noImage from "../../img/no-image.jpg";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
@@ -10,8 +10,12 @@ import {addToCart} from "../../store/cart/cartSlice.js";
 
 
 export default function AllProducts() {
+    const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {products, status, error, filteredCategory} = useSelector((state) => state.products);
+    const cartItems = useSelector((state) => state.cart.cartItems);
+
 
     useEffect(() => {
         if (status === 'idle') {
@@ -29,16 +33,14 @@ export default function AllProducts() {
         ? products.filter((product) => product.category === filteredCategory)
         : products;
 
-    const handleAddToCart = (product) => {
-        if (!product) return;
 
-        const productWithQuantity = {
-            ...product,
-            quantity: 1,
-            id: product.id,
-        };
+    const handleRedirect = (product) => {
+        const productInCart = cartItems.find((item) => item.id === product.id);
+        !productInCart?
+            dispatch(addToCart({ ...product, quantity: 1 }))
+            :dispatch(addToCart ({...productInCart, quantity: productInCart.quantity + 1 }));
 
-        dispatch(addToCart(productWithQuantity));
+        navigate("/cart"); // Перенаправляем на страницу корзины
     };
     return (
         <div className="text-1xl text-center mr-20 ml-20 my-6">
@@ -61,7 +63,7 @@ export default function AllProducts() {
                             <p className="mt-1 text-lg font-medium text-gray-900">{product.price} $</p>
                         </Link>
                         <button
-                            onClick={() => handleAddToCart(product)}
+                            onClick={() => handleRedirect (product)}
                             className="inline-block cursor-pointer px-6 py-3 text-lg font-medium text-red-500
                                        border border-blue-600 rounded hover:bg-blue-600 hover:text-white
                                        focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"

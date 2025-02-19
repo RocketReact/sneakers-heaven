@@ -11,7 +11,7 @@ import Electronics from "./components/Pages/Electronics/Electronics.jsx";
 import AllProducts from "./components/AllProducts/AllProducts.jsx";
 import CartPage from "./components/Cart/CartPage.jsx";
 import NotFoundPage from "./components/NotFound/NotFoundPage.jsx";
-import Account from "./components/Account/Account.jsx";
+import Login from "./components/Login/Login.jsx";
 import ProductSearch from "./components/ProductSearch/ProductSearch.jsx";
 import Checkout from "./components/Checkout/Checkout.jsx";
 function App() {
@@ -31,7 +31,7 @@ function App() {
                <Route path="/shop-all" element={<AllProducts/>} />
                <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
                <Route path="/products/ProductsSearch" element={<ProductSearch/>} />
-               <Route path="/account" element={<Account/>} />
+               <Route path="/login" element={<Login/>} />
                <Route path="/cart" element={<CartPage/>} />
                <Route path="/checkout" element={<Checkout/>} />
                <Route path="*" element={<NotFoundPage />} />

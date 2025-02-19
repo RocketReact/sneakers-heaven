@@ -1,4 +1,4 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../../store/productSlice/productSlice.js";
@@ -45,9 +45,9 @@ export default function ProductSingle() {
 
     // Логика обработки кнопки "Купить"
     const handleRedirect = () => {
-        if (!productInCart) {
-            dispatch(addToCart({ ...product, quantity: 1 })); // Добавляем товар в корзину, если его там ещё нет
-        }
+        !productInCart?
+            dispatch(addToCart({ ...product, quantity: 1 }))
+            :dispatch(addToCart ({...productInCart, quantity: productInCart.quantity + 1 }));
         navigate("/cart"); // Перенаправляем на страницу корзины
     };
 
