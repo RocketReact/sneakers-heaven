@@ -1,5 +1,19 @@
 import TextInput from "./TextInput.jsx";
 
+export function Email () {
+    return <TextInput
+        id="email"
+        name="email"
+        label="Email*"
+        rules={{
+            required: "Email is required",
+            pattern: {
+                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                message: "Invalid email address",
+            },
+        }}
+    />
+}
 
 export default function TextInputHtml () {
     return (
