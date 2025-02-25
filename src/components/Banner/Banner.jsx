@@ -1,16 +1,8 @@
 import "./Banner.css";
-import {useState} from "react";
 
 const Banner = () => {
-    const [addPlus, setAddPlus] = useState(true)
-
-    const isAddPlus = () => {
-        setAddPlus(!addPlus)
-    }
     return (
             <div className="banner-container">
-
-                <button onClick={isAddPlus} className="plus"> + </button>
 
                 <div className="banner-content">
                     <h2> Buy the best running sneakers </h2>

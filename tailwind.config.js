@@ -6,11 +6,12 @@ module.exports = {
     theme: {
         extend: {
             fontSize: {
-                '4.5xl': '2.75rem' // Исправлено
+                '4.5xl': '2.75rem',
             },
         },
     },
     plugins: [
         require('tailwind-children') // Подключение tailwind-children
     ],
+
 };

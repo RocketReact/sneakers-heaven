@@ -14,7 +14,6 @@ import NotFoundPage from "./components/NotFound/NotFoundPage.jsx";
 import Login from "./components/Login/Login.jsx";
 import ProductSearch from "./components/ProductSearch/ProductSearch.jsx";
 import Checkout from "./components/Checkout/Checkout.jsx";
-import RegisterForm from "./components/RegisterForm/RegisterForm.jsx";
 function App() {
 
   return (
@@ -32,7 +31,6 @@ function App() {
                <Route path="/shop-all" element={<AllProducts/>} />
                <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
                <Route path="/products/ProductsSearch" element={<ProductSearch/>} />
-               <Route path='/register' element={<RegisterForm />} />
                <Route path="/login" element={<Login/>} />
                <Route path="/cart" element={<CartPage/>} />
                <Route path="/checkout" element={<Checkout/>} />
