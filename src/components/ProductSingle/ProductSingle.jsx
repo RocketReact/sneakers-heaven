@@ -15,7 +15,7 @@ export default function ProductSingle() {
 
     const product = products.find((product) => product.id === Number(id));
     const productInCart = cartItems.find((item) => item.id === product?.id);
-    const productQuantity = productInCart ? productInCart.quantity : 1;
+    const productQuantity = productInCart ? productInCart.quantity : 0;
 
     // Загружаем список продуктов
     useEffect(() => {
@@ -45,9 +45,6 @@ export default function ProductSingle() {
 
     // Логика обработки кнопки "Купить"
     const handleRedirect = () => {
-        !productInCart?
-            dispatch(addToCart({ ...product, quantity: 1 }))
-            :dispatch(addToCart ({...productInCart, quantity: productInCart.quantity + 1 }));
         navigate("/cart"); // Перенаправляем на страницу корзины
     };
 
@@ -108,7 +105,7 @@ export default function ProductSingle() {
                             +
                         </button>
 
-                        <p>{productQuantity}</p>
+                        <p>{productQuantity || 0}</p>
 
                         <button
                             onClick={handleDecreaseQuantity}
