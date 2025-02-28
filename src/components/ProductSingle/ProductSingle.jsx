@@ -97,7 +97,9 @@ export default function ProductSingle() {
 
                     <div className="mb-3 mt-3 mr-3"> Quantity </div>
 
-                    <div className="flex flex-wrap gap-4 pr-1 border-2 border-gray-200 max-w-50 px-6 py-3 mb-3">
+                    <div className="
+                    flex flex-wrap gap-4 pr-1 border-2
+                    border-gray-200 max-w-50 px-6 py-3 mb-3 rounded-lg">
                         <button
                             onClick={handleIncreaseQuantity}
                             className="hover:cursor-pointer hover:scale-150"
@@ -126,7 +128,10 @@ export default function ProductSingle() {
 
                     <button
                         onClick={handleRedirect}
-                        className="min-w-50 px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition hover:cursor-pointer"
+                        className="min-w-50 px-6 py-3 text-white
+                        bg-blue-600 rounded-lg hover:bg-blue-700
+                        transition hover:cursor-pointer hover:scale-105
+                        duration-200 active:scale-95"
                     >
                         Купить
                     </button>
