@@ -15,7 +15,8 @@ export default function ContactForm() {
 
     const onSubmit = (data) => {
         console.log('Отправленные данные:', data);
-        setMessage('');
+        setMessage('')
+
     };
 
     return (

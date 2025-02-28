@@ -1,63 +1,75 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {fetchProductsSearch, setSearchQuery} from "../../store/searchSlice/searchSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
+import { fetchProductsSearch, setSearchQuery } from "../../store/searchSlice/searchSlice.js";
 import generateProductLink from "../../generateURL/generateURL.js";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-
-export default function ProductSearch({closeSearch}) {
+export default function ProductSearch({ closeSearch }) {
     const dispatch = useDispatch();
-    const {searchingItems, searchQuery, status} =
-        useSelector ((state) => state.filter);
-console.log(searchQuery);
+    const { searchingItems, searchQuery, status } = useSelector((state) => state.filter);
 
-useEffect(() => {
-    if (status === "idle") {
-        dispatch(fetchProductsSearch());
-    }
-}, [dispatch, status]);
+    // Реф для отслеживания области компонента поиска
+    const searchContainer = useRef(null);
 
-const handleSearch = (e) => {
-    dispatch(setSearchQuery(e.target.value));
-}
+    useEffect(() => {
+        if (status === "idle") {
+            dispatch(fetchProductsSearch());
+        }
+    }, [dispatch, status]);
 
+    const handleSearch = (e) => {
+        dispatch(setSearchQuery(e.target.value));
+    };
 
-return (
-    <div>
-        <input type="text"
-               placeholder="Search..."
-               value={searchQuery}
-               onChange={handleSearch}
-               className='p-1 mb-1 mt-2 border-e-emerald-300 rounded-md min-w-full'
-        />
+    // Добавляем обработчик клика вне компонента
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // Проверяем, кликает ли пользователь вне контейнера
+            if (searchContainer.current && !searchContainer.current.contains(event.target)) {
+                closeSearch(); // Закрываем поиск
+            }
+        };
 
+        // Навешиваем обработчик на событие `mousedown` (или можно `click`)
+        document.addEventListener("mousedown", handleClickOutside);
 
-        {status === "loading"? (
-            <p> Loading...</p>
-        ) : (
-            <div>
-                {searchingItems.length > 0 ? (
+        // Удаляем обработчик при размонтировании компонента
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [closeSearch]);
 
-                    searchingItems.map((product) => (
-                        <div key={product.id} className="border-b-blue-600 pt-1 pb-1">
+    return (
+        <div ref={searchContainer}>
+            <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearch}
+                className="p-1 mb-1 mt-2 border-e-emerald-300 rounded-md min-w-full"
+            />
 
-                             <Link to={generateProductLink (product)}
-                                   onClick={closeSearch}>
-                                 <h3
-                                     className='hover:cursor-pointer,
-                                     hover:underline p-2 hover:bg-emerald-300 rounded-md'>{product.title}
-                                     <p>{product.price} $ </p>
-                                 </h3>
-                             </Link>
-
-                          <hr className='text-gray-200'/>
-                        </div>
-                    ))
-                ): (
-                    <p> No results </p>
-                )}
-            </div>
-        )}
-    </div>
-)
+            {status === "loading" ? (
+                <p>Loading...</p>
+            ) : (
+                <div>
+                    {searchingItems.length > 0 ? (
+                        searchingItems.map((product) => (
+                            <div key={product.id} className="border-b-blue-600 pt-1 pb-1">
+                                <Link to={generateProductLink(product)} onClick={closeSearch}>
+                                    <h3 className="hover:cursor-pointer hover:underline p-2 hover:bg-emerald-300 rounded-md">
+                                        {product.title}
+                                        <p>{product.price} $</p>
+                                    </h3>
+                                </Link>
+                                <hr className="text-gray-200" />
+                            </div>
+                        ))
+                    ) : (
+                        <p>No results</p>
+                    )}
+                </div>
+            )}
+        </div>
+    );
 }
