@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProductSingle from "./components/ProductSingle/ProductSingle.jsx";
 import Home from "./components/Pages/Home/Home.jsx";
 import About from "./components/Pages/About/About.jsx";
-import Contact from "./components/Pages/Contact/Contact.jsx";
+import ContactForm from "./components/Pages/ContactUs/ContactForm.jsx";
 import Men from "./components/Pages/Men/Men.jsx";
 import Women from "./components/Pages/Women/Women.jsx";
 import Jewelery from "./components/Pages/Jewelery/Jewelery.jsx";
@@ -23,7 +23,7 @@ function App() {
            <Routes>
                <Route path="/" element={<Home />} />
                <Route path="/about" element={<About />} />
-               <Route path="/contact" element={<Contact />} />
+               <Route path="/contact" element={<ContactForm/>} />
                <Route path="/products/:id" element={<Men/>} />
                <Route path="/products/:id" element={<Women/>} />
                <Route path='/products/:id' element={<Jewelery />} />

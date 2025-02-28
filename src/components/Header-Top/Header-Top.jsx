@@ -6,7 +6,7 @@ import { RiAccountCircleFill } from "react-icons/ri";
 import logo from "../../img/logo.png"
 import burger from "../../img/burger.svg"
 import ProductSearch from "../ProductSearch/ProductSearch.jsx";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 
 const HeaderTop = () => {
@@ -37,7 +37,7 @@ const HeaderTop = () => {
                 <ul className="hidden md:flex space-x-8">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About</Link></li>
-                    <li><Link to="/contact">Contact</Link></li>
+                    <li><Link to="/contact">ContactUs</Link></li>
                     <li><Link to="/products/men's clothing">Men</Link></li>
                     <li><Link to="/products/women's clothing">Women</Link></li>
                     <li><Link to="/products/electronics">Electronics</Link></li>
@@ -103,7 +103,7 @@ const HeaderTop = () => {
                     <ul className="space-y-4 text-black text-lg mt-8">
                         <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
                         <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
-                        <li><Link to="/contact" onClick={toggleMenu}>Contact</Link></li>
+                        <li><Link to="/contact" onClick={toggleMenu}>ContactUs</Link></li>
                         <li><Link to="/man" onClick={toggleMenu}>Man</Link></li>
                         <li><Link to="/woman" onClick={toggleMenu}>Woman</Link></li>
                         <li><Link to="/shop-all" onClick={toggleMenu}>Shop All</Link></li>

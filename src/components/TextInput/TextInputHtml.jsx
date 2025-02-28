@@ -15,6 +15,34 @@ export function Email () {
     />
 }
 
+export function Name () {
+    return <div className="flex-col">
+        <div className="flex flex-row space-x-3">
+            <div className="w-full">
+                <TextInput
+                    id="firstName"
+                    name="firstName"
+                    label="First Name*"
+                    rules={{
+                        required: "First name is required",
+                    }}
+                />
+            </div>
+            <div className="w-full">
+                <TextInput
+                    id="lastName"
+                    name="lastName"
+                    label="Last Name*"
+                    rules={{
+                        required: "Last name is required",
+                    }}
+                />
+            </div>
+        </div>
+    </div>
+}
+
+
 export default function TextInputHtml () {
     return (
             <div>
