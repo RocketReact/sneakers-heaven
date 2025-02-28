@@ -45,7 +45,7 @@ export function Name () {
 
 export default function TextInputHtml () {
     return (
-            <div>
+            <div >
         {/* Поле E-mail */}
     <TextInput
         id="email"
@@ -125,7 +125,7 @@ export default function TextInputHtml () {
 
     {/* Номер телефона */}
     <div className="flex-col">
-        <div className="flex flex-row space-x-3">
+        <div className="flex flex-row space-x-3 ">
             <div className="w-full">
                 <TextInput
                     id="phoneNumber"

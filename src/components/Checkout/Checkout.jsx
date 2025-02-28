@@ -42,7 +42,7 @@ const Checkout = () => {
                 <h1 className="text-2xl mt-3">Checkout</h1>
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 m-20 text-2xl">
                     <div className="flex-2 p-4">
-                        <div className="flex flex-col relative h-[400px]
+                        <div className="flex flex-col relative
 ">
                             <h2>Delivery Options</h2>
                               <div className="flex flex-row space-x-3 ">
@@ -95,7 +95,7 @@ const Checkout = () => {
                       </div>
                   </div>
                     {/* Модуль "In your bag" */}
-                    <div className="flex-1 p-4 md:mt-10">
+                    <div className="flex-1 p-4 md:mt-60 sm:mt-60 lg:mt-0 xl:mt-0">
                         <h2>In your bag</h2>
                         <CheckoutCart/>
                         {/* Кнопка Submit */}
