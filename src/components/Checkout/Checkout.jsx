@@ -91,28 +91,32 @@ const Checkout = () => {
                                 </div>
                                 </div>
                             }
-                            {/* Кнопка Submit */}
-                            <div className="mt-6 ">
-                                <button
-                                    type="submit"
-                                    onClick={handleSubmit(onSubmit, onError)} // Связываем handleSubmit с функциями
-                                    className="
+
+                      </div>
+                  </div>
+                    {/* Модуль "In your bag" */}
+                    <div className="flex-1 p-4 md:mt-10">
+                        <h2>In your bag</h2>
+                        <CheckoutCart/>
+                        {/* Кнопка Submit */}
+                        <div className="mt-6 ">
+                            <button
+                                type="submit"
+                                onClick={handleSubmit(onSubmit, onError)} // Связываем handleSubmit с функциями
+                                className="
                                     w-50 bg-black text-white py-3 px-2 rounded-full
                                     hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
                                     text-xl mb-3
                                 "
-                                >
-                                    Continue to Payment
-                                </button>
-                            </div>
-                      </div>
-                  </div>
-                    {/* Модуль "In your bag" */}
-                    <div className="flex-1 p-4">
-                        <h2>In your bag</h2>
-                        <CheckoutCart/>
+                            >
+                                Continue to Payment
+                            </button>
+                        </div>
                     </div>
+
                 </div>
+
+
             </div>
         </FormProvider>
     );

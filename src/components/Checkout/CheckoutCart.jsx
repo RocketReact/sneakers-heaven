@@ -17,7 +17,7 @@ export default function CheckoutCart () {
 
     return (
 
-        <div className="min-h-screen">
+        <div>
             <hr className="mt-10 mb-6 border-t-2 border-gray-300" />
 
             <ul>
