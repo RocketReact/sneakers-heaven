@@ -21,7 +21,7 @@ export default function ContactForm() {
     return (
         <FormProvider {...methods}>
             <form
-                className="mt-10 flex flex-col max-w-xl justify-self-center items-center max-h-screen"
+                className="max-h-screen mt-10 flex flex-col max-w-xl justify-self-center items-center"
                 onSubmit={methods.handleSubmit(onSubmit)}
             >
                 <h1 className="text-2xl font-extralight">Please Contact Us:</h1>
