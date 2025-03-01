@@ -1,9 +1,8 @@
 import { FormProvider, useForm } from "react-hook-form";
 import {Email} from '../TextInput/TextInputHtml.jsx'
 import {addUserData} from "../../data/userRegisterData.js";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import { ToastContainer } from "react-toastify";
+import {notifySuccess, notifyError} from "../Notification/Notification.jsx";
 
 
 export default function Login () {
@@ -11,26 +10,7 @@ export default function Login () {
     const { handleSubmit, reset } = methods;
     const storedData = JSON.parse(localStorage.getItem("userRegisterData")) || [];
 
-    const notifySuccess = () => {
-        toast.success('🎉 Your email was successfully registered!Check your mailbox to complete registration.', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-        })
-    };
-    const notifyError = () => {
-        toast.error('Email address already exists! Choose another email!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-        })
-    };
+
 
     const onSubmit = (data) => {
         const newUser = {

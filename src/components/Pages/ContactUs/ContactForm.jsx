@@ -1,9 +1,7 @@
 import { Email, Name } from '../../TextInput/TextInputHtml.jsx';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
-import { useState } from 'react';
 
 export default function ContactForm() {
-    const [message, setMessage] = useState('');
     const methods = useForm({
         defaultValues: {
             email: '',
@@ -12,10 +10,11 @@ export default function ContactForm() {
             message: '',
         },
     });
+    const { handleSubmit, control, reset } = methods;
 
     const onSubmit = (data) => {
         console.log('Отправленные данные:', data);
-        setMessage('')
+        reset();
 
     };
 
@@ -23,7 +22,7 @@ export default function ContactForm() {
         <FormProvider {...methods}>
             <form
                 className="max-h-screen mt-10 flex flex-col max-w-xl justify-self-center items-center"
-                onSubmit={methods.handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit)}
             >
                 <h1 className="text-2xl font-extralight">Please Contact Us:</h1>
                 <div className="w-full">
@@ -33,8 +32,8 @@ export default function ContactForm() {
                 <div className="mt-5 w-100">
                     <Controller
                         name="message"
-                        control={methods.control}
-                        rules={{ required: 'Message is required' }}
+                        control={control}
+                        rules={{ required: 'Message is required'} }
                         render={({ field, fieldState }) => (
                             <>
                                 <textarea
@@ -45,7 +44,7 @@ export default function ContactForm() {
                                 />
                                 {fieldState?.error && (
                                     <p className="text-red-500 text-sm ">
-                                        {fieldState?.error.message}
+                                        {fieldState.error.message}
                                     </p>
                                 )}
                             </>
