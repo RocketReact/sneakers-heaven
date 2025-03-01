@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import {Email} from '../TextInput/TextInputHtml.jsx'
+import {Email, Password} from '../TextInput/TextInputHtml.jsx'
 import {addUserData} from "../../data/userRegisterData.js";
 import { ToastContainer } from "react-toastify";
 import {notifySuccess, notifyError} from "../Notification/Notification.jsx";
@@ -13,7 +13,8 @@ export default function Login () {
     const onSubmit = (data) => {
         const newUser = {
             id: Date.now(),
-            email: data.email
+            email: data.email,
+            password: data.password
         };
 
         if (storedData.some(user => user.email === newUser.email)) {
@@ -37,8 +38,9 @@ export default function Login () {
 
             <form onSubmit={handleSubmit(onSubmit, onError)}
                   className='w-100 justify-self-center mt-20'>
-                <h1 className='text-2xl'>Enter your email to join us or sign in.</h1>
+                <h1 className='text-2xl'>Enter your email and password to join us or sign in.</h1>
                 <Email/>
+                <Password/>
                 <div className='justify-self-end mt-10'>
                 <button
                     type={'submit'}
