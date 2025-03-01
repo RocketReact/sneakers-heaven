@@ -14,12 +14,14 @@ import NotFoundPage from "./components/NotFound/NotFoundPage.jsx";
 import Login from "./components/Login/Login.jsx";
 import ProductSearch from "./components/ProductSearch/ProductSearch.jsx";
 import Checkout from "./components/Checkout/Checkout.jsx";
+import Payment from "./components/Payment/Payment.jsx";
+import {CustomerDataProvider} from "./components/Checkout/CustomerDataContext.jsx";
 function App() {
 
   return (
        <Router>
              <HeaderTop/>
-
+           <CustomerDataProvider>
            <Routes>
                <Route path="/" element={<Home />} />
                <Route path="/about" element={<About />} />
@@ -34,10 +36,10 @@ function App() {
                <Route path="/login" element={<Login/>} />
                <Route path="/cart" element={<CartPage/>} />
                <Route path="/checkout" element={<Checkout/>} />
+               <Route path="/payment" element={<Payment/>} />
                <Route path="*" element={<NotFoundPage />} />
-
-
            </Routes>
+           </CustomerDataProvider>
        </Router>
 
   )

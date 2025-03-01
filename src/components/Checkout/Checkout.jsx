@@ -6,13 +6,14 @@ import { FormProvider, useForm } from "react-hook-form";
 import TextInputHtml from "../TextInput/TextInputHtml.jsx";
 import TextInput from "../TextInput/TextInput.jsx";
 import CheckoutCart from "./CheckoutCart.jsx";
-import { addUserData } from "../../data/userRegisterData.js"; // Импортируем функцию добавления пользователя
+import { addUserData } from "../../data/userRegisterData.js";
+import { useNavigate } from "react-router-dom";
+import { useCustomerData } from "./CustomerDataContext.jsx";
 
-
-
-export default function Checkout  ()  {
+export default function Checkout() {
+    const { setCustomerData } = useCustomerData();
+    const navigate = useNavigate();
     const [activeButton, setActiveButton] = useState('ship');
-    const [customerData, setCustomerData] = useState([]); // Состояние для хранения данных покупателя
     const methods = useForm({
         defaultValues: {
             email: "",
@@ -25,107 +26,97 @@ export default function Checkout  ()  {
         },
     });
 
-    const { handleSubmit } = methods; // Деконструкция handleSubmit для использования
+    const { handleSubmit, formState: { errors } } = methods;
 
     const handleClick = (buttonType) => {
         setActiveButton(activeButton === buttonType ? null : buttonType);
     };
+
     const onSubmit = (data) => {
         console.log("Form Data:", data);
         setCustomerData(data);
         addUserData(data);
+        navigate('/payment'); // Редирект после успешной отправки формы
     };
 
-
     const onError = (errors) => {
-        console.log("Form Errors:", errors);
+        console.log("Form Errors:", errors); // Логирование ошибок
     };
 
     return (
         <FormProvider {...methods}>
             <div className="text-center min-h-[1000px]">
                 <h1 className="text-2xl mt-3">Checkout</h1>
-                <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 m-20 text-2xl">
-                    <div className="flex-2 p-4">
-                        <div className="flex flex-col relative
-">
-                            <h2>Delivery Options</h2>
-                              <div className="flex flex-row space-x-3 ">
+                <form onSubmit={handleSubmit(onSubmit, onError)}>
+                    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 m-20 text-2xl">
+                        <div className="flex-2 p-4">
+                            <div className="flex flex-col relative">
+                                <h2>Delivery Options</h2>
+                                <div className="flex flex-row space-x-3 ">
 
+                                    <button
+                                        type="button"
+                                        onClick={() => handleClick("ship")}
+                                        className={`
+                                            btnDelivery
+                                            ${activeButton === "ship" ? "border-black border-2" : "border-gray-300 border-1"}
+                                        `}
+                                    >
+                                        <FaShippingFast size="25" /> Ship
+                                    </button>
 
+                                    <button
+                                        type="button"
+                                        onClick={() => handleClick("pickup")}
+                                        className={`
+                                            btnDelivery
+                                            ${activeButton === "pickup" ? "border-black border-2" : "border-gray-300 border-1"}
+                                        `}
+                                    >
+                                        <MdLocationOn size="25" /> Pick UP
+                                    </button>
+                                </div>
+
+                                {activeButton === "ship" && <TextInputHtml />}
+                                {activeButton === "pickup" && (
+                                    <div>
+                                        <h4 className="font-light text-xl mt-3">Select a store location</h4>
+                                        <div className="w-full">
+                                            <TextInput
+                                                id="storeLocation"
+                                                name="storeLocation"
+                                                label="Store Location*"
+                                                rules={{
+                                                    required: "Enter your store location",
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Модуль "In your bag" */}
+                        <div className="flex-1 p-4 md:mt-60 sm:mt-60 lg:mt-0 xl:mt-0">
+                            <h2>In your bag</h2>
+                            <CheckoutCart />
+                            {/* Кнопка Submit */}
+                            <div className="mt-6">
                                 <button
-                                    type="button"
-                                    onClick={() => handleClick("ship")}
-                                    className={`
-                                        btnDelivery
-                                        ${activeButton === "ship" ? "border-black border-2" : "border-gray-300 border-1"} 
-                                    `}
-                                 >
-                                    <FaShippingFast size="25" /> Ship
-                                </button>
-
-                                <button
-                                    type="button"
-                                    onClick={() => handleClick("pickup")}
-                                    className={`
-                                        btnDelivery
-                                        ${activeButton === "pickup" ? "border-black border-2" : "border-gray-300 border-1"} 
-                                    `}
-                                 >
-                                    <MdLocationOn size="25" /> Pick UP
+                                    type="submit"
+                                    className="
+                                        w-50 bg-black text-white py-3 px-2 rounded-full
+                                        hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
+                                        text-xl mb-3
+                                    "
+                                >
+                                    Continue to Payment
                                 </button>
                             </div>
-
-                            {activeButton === "ship" &&
-
-                                <TextInputHtml/>
-                            }
-                            {activeButton === "pickup"
-                                &&
-                                <div>
-                                <h4 className='font-light text-xl mt-3'>Select a store location</h4>
-                                <div className="w-full">
-                                    <TextInput
-                                        id="storeLocation"
-                                        name="storeLocation"
-                                        label="Store Location*"
-                                        rules={{
-                                            required: "Enter your store location",
-                                        }}
-                                    />
-                                </div>
-                                </div>
-                            }
-
-                      </div>
-                  </div>
-                    {/* Модуль "In your bag" */}
-                    <div className="flex-1 p-4 md:mt-60 sm:mt-60 lg:mt-0 xl:mt-0">
-                        <h2>In your bag</h2>
-                        <CheckoutCart/>
-                        {/* Кнопка Submit */}
-                        <div className="mt-6 ">
-                            <button
-                                type="submit"
-                                onClick={handleSubmit(onSubmit, onError)} // Связываем handleSubmit с функциями
-                                className="
-                                    w-50 bg-black text-white py-3 px-2 rounded-full
-                                    hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
-                                    text-xl mb-3
-                                "
-                            >
-                                Continue to Payment
-                            </button>
                         </div>
                     </div>
-
-                </div>
-
-
+                </form>
             </div>
         </FormProvider>
     );
-};
-export const getCustomerData = () => {
-    return customerData;
 };
