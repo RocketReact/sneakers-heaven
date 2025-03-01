@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaShippingFast } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import '../../index.css';
@@ -8,10 +8,9 @@ import TextInput from "../TextInput/TextInput.jsx";
 import CheckoutCart from "./CheckoutCart.jsx";
 import { addUserData } from "../../data/userRegisterData.js";
 import { useNavigate } from "react-router-dom";
-import { useCustomerData } from "./CustomerDataContext.jsx";
 
 export default function Checkout() {
-    const { setCustomerData } = useCustomerData();
+    const [customerData, setCustomerData ] = useState(null)
     const navigate = useNavigate();
     const [activeButton, setActiveButton] = useState('ship');
     const methods = useForm({
@@ -27,6 +26,16 @@ export default function Checkout() {
     });
 
     const { handleSubmit, formState: { errors } } = methods;
+
+    useEffect(() => {
+        const storeData = localStorage.getItem("userRegisterData");
+   if (storeData) {
+       setCustomerData(JSON.parse(storeData));
+   } else {
+       setCustomerData({});
+   }
+    }, []);
+
 
     const handleClick = (buttonType) => {
         setActiveButton(activeButton === buttonType ? null : buttonType);
