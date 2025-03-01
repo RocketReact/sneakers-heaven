@@ -1,6 +1,6 @@
 import { Email, Name } from '../../TextInput/TextInputHtml.jsx';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
-import {notifySuccess, notifyError} from "../../Notification/Notification.jsx";
+import {notifySuccess} from "../../Notification/Notification.jsx";
 import {ToastContainer} from "react-toastify";
 
 
