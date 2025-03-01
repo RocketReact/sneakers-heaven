@@ -8,8 +8,11 @@ import TextInput from "../TextInput/TextInput.jsx";
 import CheckoutCart from "./CheckoutCart.jsx";
 import { addUserData } from "../../data/userRegisterData.js"; // Импортируем функцию добавления пользователя
 
-const Checkout = () => {
+
+
+export default function Checkout  ()  {
     const [activeButton, setActiveButton] = useState('ship');
+    const [customerData, setCustomerData] = useState([]); // Состояние для хранения данных покупателя
     const methods = useForm({
         defaultValues: {
             email: "",
@@ -29,8 +32,10 @@ const Checkout = () => {
     };
     const onSubmit = (data) => {
         console.log("Form Data:", data);
+        setCustomerData(data);
         addUserData(data);
     };
+
 
     const onError = (errors) => {
         console.log("Form Errors:", errors);
@@ -38,7 +43,7 @@ const Checkout = () => {
 
     return (
         <FormProvider {...methods}>
-            <div className="text-center">
+            <div className="text-center min-h-[1000px]">
                 <h1 className="text-2xl mt-3">Checkout</h1>
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 m-20 text-2xl">
                     <div className="flex-2 p-4">
@@ -121,5 +126,6 @@ const Checkout = () => {
         </FormProvider>
     );
 };
-
-export default Checkout;
+export const getCustomerData = () => {
+    return customerData;
+};
