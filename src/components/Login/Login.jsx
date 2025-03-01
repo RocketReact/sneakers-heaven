@@ -10,8 +10,6 @@ export default function Login () {
     const { handleSubmit, reset } = methods;
     const storedData = JSON.parse(localStorage.getItem("userRegisterData")) || [];
 
-
-
     const onSubmit = (data) => {
         const newUser = {
             id: Date.now(),

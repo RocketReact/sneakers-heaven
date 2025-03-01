@@ -1,5 +1,9 @@
 import { Email, Name } from '../../TextInput/TextInputHtml.jsx';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
+import {notifySuccess, notifyError} from "../../Notification/Notification.jsx";
+import {ToastContainer} from "react-toastify";
+
+
 
 export default function ContactForm() {
     const methods = useForm({
@@ -10,11 +14,19 @@ export default function ContactForm() {
             message: '',
         },
     });
-    const { handleSubmit, control, reset } = methods;
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors }
+    } = methods;
 
     const onSubmit = (data) => {
         console.log('Отправленные данные:', data);
-        reset();
+        reset()
+        notifySuccess ('' +
+            'We received your message, ' +
+            'we respond asap!:)')
 
     };
 
@@ -33,7 +45,12 @@ export default function ContactForm() {
                     <Controller
                         name="message"
                         control={control}
-                        rules={{ required: 'Message is required'} }
+                        rules={{
+                            required: 'Message is required',
+                            minLength: {
+                               value:50,
+                                message: 'Message must be at least 50 characters long'
+                        } }}
                         render={({ field, fieldState }) => (
                             <>
                                 <textarea
@@ -58,6 +75,7 @@ export default function ContactForm() {
                 >
                     Submit
                 </button>
+                <ToastContainer/>
             </form>
         </FormProvider>
     );
