@@ -19,7 +19,6 @@ import {useState} from "react";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    console.log(isAuthenticated);
   return (
        <Router>
              <HeaderTop/>

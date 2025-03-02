@@ -104,8 +104,8 @@ const HeaderTop = () => {
                         <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
                         <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
                         <li><Link to="/contact" onClick={toggleMenu}>ContactUs</Link></li>
-                        <li><Link to="/man" onClick={toggleMenu}>Man</Link></li>
-                        <li><Link to="/woman" onClick={toggleMenu}>Woman</Link></li>
+                        <li><Link to="/products/men's%20clothing" onClick={toggleMenu}>Man</Link></li>
+                        <li><Link to="/products/women's%20clothing" onClick={toggleMenu}>Woman</Link></li>
                         <li><Link to="/shop-all" onClick={toggleMenu}>Shop All</Link></li>
                     </ul>
                 </div>
