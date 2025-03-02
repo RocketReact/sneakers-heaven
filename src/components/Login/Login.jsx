@@ -7,26 +7,55 @@ import {notifySuccess, notifyError} from "../Notification/Notification.jsx";
 
 export default function Login () {
     const methods = useForm()
-    const { handleSubmit, reset } = methods;
+    const {handleSubmit, reset} = methods;
     const storedData = JSON.parse(localStorage.getItem("userRegisterData")) || [];
 
     const onSubmit = (data) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(data.email)) {
+            return notifyError('Invalid email format!');
+        }
+
+
         const newUser = {
             id: Date.now(),
             email: data.email,
             password: data.password
         };
+        const findUser = (storedData.find(user =>
+            user.email === newUser.email))
 
-        if (storedData.some(user => user.email === newUser.email)) {
-            notifyError();
-        } else {
+
+        if (findUser) {
+
+            if (findUser.password ===newUser.password
+             ) {
+                notifySuccess ('You successfully logged!')
+                reset()
+            } else {
+                notifyError('THIS EMAIL ADDRESS ALREADY EXISTS!')
+                }
+           } else {
+
             addUserData(newUser);
-            localStorage.setItem("userRegisterData", JSON.stringify([...storedData, newUser]));
-            reset()
-            notifySuccess()
+
+            try {
+                localStorage.setItem("userRegisterData", JSON.stringify([...storedData, newUser]));
+                reset()
+                notifySuccess('🎉 Your email was successfully ' +
+                    'registered!Check your mailbox to complete registration.')
+            } catch (error) {
+                console.error('Error saving user data.', error);
+            notifyError(
+                'Failed to save user data. ' +
+                'Please try again.');
+            }
+
 
         }
-    };
+    }
+
 
     const onError = (errors) => {
         console.log("Form Errors:", errors);

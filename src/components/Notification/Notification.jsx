@@ -12,7 +12,10 @@ export const notifySuccess = (content = '🎉 Your email was successfully regist
         draggable: true,
     })
 };
-export const notifyError = (content='Email address already exists! Choose another email!') => {
+export const notifyError = (content='' +
+'THIS EMAIL ADDRESS ALREADY EXISTS!' +
+' ' +
+'CHOOSE ANOTHER EMAIL!') => {
     toast.error( content, {
         position: "top-right",
         autoClose: 5000,

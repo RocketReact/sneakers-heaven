@@ -1,5 +1,4 @@
 let userRegisterData = [];
-
 // Получение данных из localStorage при инициализации
 const storedData = localStorage.getItem("userRegisterData");
 if (storedData) {
@@ -11,6 +10,7 @@ const addUserData = (newData) => {
     userRegisterData.push(newData);
     localStorage.setItem("userRegisterData", JSON.stringify(userRegisterData)); // Обновляем данные в localStorage
 };
+console.log(userRegisterData)
 
 // Функция для получения всех данных пользователей
 const getUserRegisterData = () => {
