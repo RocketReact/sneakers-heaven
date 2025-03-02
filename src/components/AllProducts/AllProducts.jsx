@@ -1,57 +1,75 @@
-import {useDispatch, useSelector} from 'react-redux';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ProductFilter from "../ProductFilter/ProductFilter.jsx";
-import {useEffect} from "react";
-import {fetchProducts} from "../../store/productSlice/productSlice.js";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import { fetchProducts } from "../../store/productSlice/productSlice.js";
+import { Link, useNavigate } from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
 import noImage from "../../img/no-image.jpg";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
-import {addToCart} from "../../store/cart/cartSlice.js";
-
+import { addToCart } from "../../store/cart/cartSlice.js";
 
 export default function AllProducts() {
-    const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {products, status, error, filteredCategory} = useSelector((state) => state.products);
+    const { products, status, error, filteredCategory } = useSelector((state) => state.products);
     const cartItems = useSelector((state) => state.cart.cartItems);
 
+    // Состояние для управления номером текущей страницы
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Количество товаров на одной странице
+    const itemsPerPage = 10;
 
     useEffect(() => {
-        if (status === 'idle') {
+        if (status === "idle") {
             dispatch(fetchProducts());
         }
     }, [status, dispatch]);
 
-    if (status === 'loading') return <p>Loading...</p>;
-    if (status === 'failed') return <p>Failed: {error}</p>;
-    if (status === 'succeeded' && products.length === 0) return <p>No products found.</p>;
+    if (status === "loading") return <p>Loading...</p>;
+    if (status === "failed") return <p>Failed: {error}</p>;
+    if (status === "succeeded" && products.length === 0) return <p>No products found.</p>;
 
+    // Фильтрация продуктов по категории
     const categories = [...new Set(products.map((product) => product.category))];
-
     const filteredProducts = filteredCategory
         ? products.filter((product) => product.category === filteredCategory)
         : products;
 
+    // Вычисляем общее количество страниц
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
+    // Вычисляем, какие товары показывать на текущей странице
+    const currentProducts = filteredProducts.slice(
+        (currentPage - 1) * itemsPerPage, // начальный индекс
+        currentPage * itemsPerPage        // конечный индекс
+    );
+
+    // Логика для обработки добавления товара в корзину
     const handleRedirect = (product) => {
         const productInCart = cartItems.find((item) => item.id === product.id);
-        !productInCart?
-            dispatch(addToCart({ ...product, quantity: 1 }))
-            :dispatch(addToCart ({...productInCart, quantity: productInCart.quantity + 1 }));
+        !productInCart
+            ? dispatch(addToCart({ ...product, quantity: 1 }))
+            : dispatch(addToCart({ ...productInCart, quantity: productInCart.quantity + 1 }));
 
         navigate("/cart"); // Перенаправляем на страницу корзины
     };
+
+    // Функция для переключения страниц
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber); // Устанавливаем текущую страницу
+    };
+
     return (
         <div className="text-1xl text-center mr-20 ml-20 my-6">
-            <ProductFilter categories={categories}/>
+            {/* Панель фильтров */}
+            <ProductFilter categories={categories} />
 
-            <div className="grid grid-cols-1 gap-6
-        sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 m-20 ">
+            {/* Сетка товаров */}
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 m-20">
                 <h2 className="sr-only">Products</h2>
-                {filteredProducts?.map((product) => (
+                {currentProducts.map((product) => (
                     <div key={product.id} className="group">
-
                         <Link to={generateProductLink(product)} className="block">
                             <img
                                 alt={product.title || "No image available"}
@@ -63,17 +81,48 @@ export default function AllProducts() {
                             <p className="mt-1 text-lg font-medium text-gray-900">{product.price} $</p>
                         </Link>
                         <button
-                            onClick={() => handleRedirect (product)}
+                            onClick={() => handleRedirect(product)}
                             className="inline-block cursor-pointer px-6 py-3 text-lg font-medium text-red-500
                                        border border-blue-600 rounded hover:bg-blue-600 hover:text-white
                                        focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
                         >
                             Add to cart
                         </button>
-
                     </div>
                 ))}
             </div>
+
+            {/* Постраничная навигация */}
+            <div className="pagination-controls flex justify-center items-center space-x-2 mt-8 ">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="hover:cursor-pointer px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    Previous
+                </button>
+                {/* Отображение номеров страниц */}
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={`hover:cursor-pointer px-3 py-1 rounded ${
+                            currentPage === index + 1
+                                ? "bg-blue-600 text-white"
+                                : "border bg-gray-100 text-gray-600"
+                        }`}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="hover:cursor-pointer px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    Next
+                </button>
+            </div>
         </div>
-    )
+    );
 }

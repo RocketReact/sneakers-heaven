@@ -15,6 +15,5 @@ const addUserData = (newData) => {
 const getUserRegisterData = () => {
     return userRegisterData;
 };
-console.log(userRegisterData);
 // Экспортируем функции
 export { addUserData, getUserRegisterData };
