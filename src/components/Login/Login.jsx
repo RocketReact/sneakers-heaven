@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import {notifySuccess, notifyError} from "../Notification/Notification.jsx";
 
 
-export default function Login () {
+export default function Login ({isAuthenticated, setIsAuthenticated}) {
     const methods = useForm()
     const {handleSubmit, reset} = methods;
     const storedData = JSON.parse(localStorage.getItem("userRegisterData")) || [];
@@ -16,7 +16,6 @@ export default function Login () {
         if (!emailRegex.test(data.email)) {
             return notifyError('Invalid email format!');
         }
-
 
         const newUser = {
             id: Date.now(),
@@ -32,6 +31,7 @@ export default function Login () {
             if (findUser.password ===newUser.password
              ) {
                 notifySuccess ('You successfully logged!')
+                setIsAuthenticated (true)
                 reset()
             } else {
                 notifyError('THIS EMAIL ADDRESS ALREADY EXISTS!')
@@ -60,6 +60,13 @@ export default function Login () {
     const onError = (errors) => {
         console.log("Form Errors:", errors);
     };
+    const handleLogout = () => {
+        setIsAuthenticated(false);
+        notifySuccess("You successfully logged out!");
+    };
+   const styleBtn = 'bg-black rounded-full p-3 pr-5 pl-5 ' +
+       'text-white font-extralight hover:bg-gray-400' +
+       'hover:cursor-pointer active:scale-90 duration-200'
 
     return (
 
@@ -71,13 +78,15 @@ export default function Login () {
                 <Email/>
                 <Password/>
                 <div className='justify-self-end mt-10'>
-                <button
+                    {(!isAuthenticated)? <button
                     type={'submit'}
-                    className='
-                bg-black rounded-full p-3 pr-5 pl-5
-                text-white font-extralight hover:bg-gray-400
-                hover:cursor-pointer active:scale-90 duration-200'
+                    className={styleBtn}
                 > Continue </button>
+                        : <button
+                            onClick={handleLogout}
+                            className= {styleBtn}
+                        > Log Out </button>
+                    }
                 </div>
                 <ToastContainer/>
             </form>

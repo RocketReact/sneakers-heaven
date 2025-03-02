@@ -15,8 +15,11 @@ import Login from "./components/Login/Login.jsx";
 import ProductSearch from "./components/ProductSearch/ProductSearch.jsx";
 import Checkout from "./components/Checkout/Checkout.jsx";
 import Payment from "./components/Payment/Payment.jsx";
-function App() {
+import {useState} from "react";
 
+function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    console.log(isAuthenticated);
   return (
        <Router>
              <HeaderTop/>
@@ -31,8 +34,10 @@ function App() {
                <Route path="/shop-all" element={<AllProducts/>} />
                <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
                <Route path="/products/ProductsSearch" element={<ProductSearch/>} />
-               <Route path="/login" element={<Login/>} />
-               <Route path="/cart" element={<CartPage/>} />
+               <Route path="/login" element={<Login
+                   isAuthenticated ={isAuthenticated} setIsAuthenticated ={setIsAuthenticated}/>} />
+
+               <Route path="/cart" element={<CartPage isAuthenticated={isAuthenticated}/>} />
                <Route path="/checkout" element={<Checkout/>} />
                <Route path="/payment" element={<Payment/>} />
                <Route path="*" element={<NotFoundPage />} />

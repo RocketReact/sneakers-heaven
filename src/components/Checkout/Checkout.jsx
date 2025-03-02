@@ -9,7 +9,8 @@ import CheckoutCart from "./CheckoutCart.jsx";
 import { addUserData } from "../../data/userRegisterData.js";
 import { useNavigate } from "react-router-dom";
 
-export default function Checkout() {
+
+export default function Checkout({isAuthenticated}) {
     const [customerData, setCustomerData ] = useState(null)
     const navigate = useNavigate();
     const [activeButton, setActiveButton] = useState('ship');
