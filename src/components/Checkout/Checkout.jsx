@@ -24,10 +24,10 @@ export default function Checkout({isAuthenticated}) {
             city: "",
             postalCode: "",
             phoneNumber: "",
-        },
+        }
     });
 
-    const { handleSubmit, formState: { errors } } = methods;
+    const { handleSubmit } = methods;
 
     useEffect(() => {
         const storeData = localStorage.getItem("userRegisterData");
@@ -50,16 +50,14 @@ export default function Checkout({isAuthenticated}) {
         navigate('/payment'); // Редирект после успешной отправки формы
     };
 
-    const onError = (errors) => {
-        console.log("Form Errors:", errors); // Логирование ошибок
-    };
+
 
 
     return (
         <FormProvider {...methods}>
             <div className="text-center min-h-[1000px]">
                 <h1 className="text-2xl mt-3">Checkout</h1>
-                <form onSubmit={handleSubmit(onSubmit, onError)}>
+                <form onSubmit={handleSubmit(onSubmit )}>
                     <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 m-20 text-2xl">
                         <div className="flex-2 p-4">
                             <div className="flex flex-col relative">
