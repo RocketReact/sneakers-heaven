@@ -3,6 +3,7 @@ import {Email, Password} from '../TextInput/TextInputHtml.jsx'
 import {addUserData} from "../../data/userRegisterData.js";
 import { ToastContainer } from "react-toastify";
 import {notifySuccess, notifyError} from "../Notification/Notification.jsx";
+import Button from "../Button/Button.jsx";
 
 
 export default function Login ({isAuthenticated, setIsAuthenticated}) {
@@ -60,13 +61,13 @@ export default function Login ({isAuthenticated, setIsAuthenticated}) {
     const onError = (errors) => {
         console.log("Form Errors:", errors);
     };
-    const handleLogout = () => {
+
+    const logOut = () => {
         setIsAuthenticated(false);
         notifySuccess("You successfully logged out!");
     };
-   const styleBtn = 'bg-black rounded-full p-3 pr-5 pl-5 ' +
-       'text-white font-extralight hover:bg-gray-400' +
-       'hover:cursor-pointer active:scale-90 duration-200'
+
+
 
     return (
 
@@ -77,17 +78,12 @@ export default function Login ({isAuthenticated, setIsAuthenticated}) {
                 <h1 className='text-2xl'>Enter your email and password to join us or sign in.</h1>
                 <Email/>
                 <Password/>
-                <div className='justify-self-end mt-10'>
-                    {(!isAuthenticated)? <button
-                    type={'submit'}
-                    className={styleBtn}
-                > Continue </button>
-                        : <button
-                            onClick={handleLogout}
-                            className= {styleBtn}
-                        > Log Out </button>
-                    }
-                </div>
+                <Button
+                    isAuthenticated={isAuthenticated}
+                    onLogOut={logOut}
+
+
+                />
                 <ToastContainer/>
             </form>
         </FormProvider>

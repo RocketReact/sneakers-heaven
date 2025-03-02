@@ -8,6 +8,8 @@ import TextInput from "../TextInput/TextInput.jsx";
 import CheckoutCart from "./CheckoutCart.jsx";
 import { addUserData } from "../../data/userRegisterData.js";
 import { useNavigate } from "react-router-dom";
+import Button from "../Button/Button.jsx";
+import {notifySuccess} from "../Notification/Notification.jsx";
 
 
 export default function Checkout({isAuthenticated}) {
@@ -52,6 +54,7 @@ export default function Checkout({isAuthenticated}) {
     const onError = (errors) => {
         console.log("Form Errors:", errors); // Логирование ошибок
     };
+
 
     return (
         <FormProvider {...methods}>
@@ -105,15 +108,12 @@ export default function Checkout({isAuthenticated}) {
                                 )}
 
                             </div>
-                            <button
-                                onClick={() => navigate("/login")}
-                                className='mt-3 p-2 pr-5 pl-5 bg-black text-white
-                                justify-content-center font-extralight text-sm rounded-full
-                                text-center hover:cursor-pointer hover:scale-105 active:scale-95
-                                duration-200'
-                            >
-                                Login
-                            </button>
+                            <Button
+                                onClick={ () => navigate("/login")}
+                                isAuthenticated={isAuthenticated}
+                                loginText="Login"
+                            />
+
                         </div>
 
                         {/* Модуль "In your bag" */}
