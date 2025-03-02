@@ -102,7 +102,17 @@ export default function Checkout() {
                                         </div>
                                     </div>
                                 )}
+
                             </div>
+                            <button
+                                onClick={() => navigate("/login")}
+                                className='mt-3 p-2 pr-5 pl-5 bg-black text-white
+                                justify-content-center font-extralight text-sm rounded-full
+                                text-center hover:cursor-pointer hover:scale-105 active:scale-95
+                                duration-200'
+                            >
+                                Login
+                            </button>
                         </div>
 
                         {/* Модуль "In your bag" */}
