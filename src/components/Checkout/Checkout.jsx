@@ -9,7 +9,6 @@ import CheckoutCart from "./CheckoutCart.jsx";
 import { addUserData } from "../../data/userRegisterData.js";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button.jsx";
-import {notifySuccess} from "../Notification/Notification.jsx";
 
 
 export default function Checkout({isAuthenticated}) {
