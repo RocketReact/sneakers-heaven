@@ -23,7 +23,7 @@ function Cart () {
         <div className="cart mb-10 ml-20 mr-20 min-h-screen">
             <Helmet>
                 <title> Cart</title>
-                <meta name'robots' content='noindex, nofollow' />
+                <meta name='robots' content='noindex, nofollow' />
             </Helmet>
             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
 
@@ -83,6 +83,15 @@ function Cart () {
                             </li>
                         ))}
                     </ul>
+                    <div>
+                        {/* Кнопка Очистить корзину */}
+                        <button
+                            className="flex mt-5 p-2 border rounded-md hover:cursor-pointer hover:bg-red-400 hover:text-white w-30"
+                            onClick={() => dispatch(clearCart())}
+                        >
+                            Clear Cart <FaTrash size={15} className="ml-2 mt-1" />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Блок Summary */}
@@ -99,13 +108,7 @@ function Cart () {
                 </div>
             </div>
 
-            {/* Кнопка Очистить корзину */}
-            <button
-                className="flex mt-5 p-2 border rounded-md hover:cursor-pointer hover:bg-red-400 hover:text-white w-30"
-                onClick={() => dispatch(clearCart())}
-            >
-                Clear Cart <FaTrash size={15} className="ml-2 mt-1" />
-            </button>
+
 
             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
         </div>
