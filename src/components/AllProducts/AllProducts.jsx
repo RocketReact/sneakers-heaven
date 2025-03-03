@@ -97,7 +97,7 @@ export default function AllProducts() {
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="hover:cursor-pointer px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="hover:cursor-pointer hover:scale-104 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Previous
                 </button>
@@ -106,7 +106,7 @@ export default function AllProducts() {
                     <button
                         key={index}
                         onClick={() => handlePageChange(index + 1)}
-                        className={`hover:cursor-pointer px-3 py-1 rounded ${
+                        className={`hover:cursor-pointer hover:scale-104 px-3 py-1 rounded ${
                             currentPage === index + 1
                                 ? "bg-blue-600 text-white"
                                 : "border bg-gray-100 text-gray-600"
@@ -118,7 +118,7 @@ export default function AllProducts() {
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className="hover:cursor-pointer px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="hover:cursor-pointer hover:scale-104 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Next
                 </button>
