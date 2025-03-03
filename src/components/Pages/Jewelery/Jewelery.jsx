@@ -8,8 +8,6 @@ const Jewelery = () => {
 
         <div>
 
-
-
             <TemplateProductCategory/>
 
         </div>

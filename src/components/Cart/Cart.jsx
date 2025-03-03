@@ -4,6 +4,7 @@ import { FaTrash } from "react-icons/fa";
 import {Link, useNavigate} from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
 import noImage from "../../img/no-image.jpg";
+import {Helmet} from "react-helmet-async";
 
 
 
@@ -20,6 +21,10 @@ function Cart () {
     return (
 
         <div className="cart mb-10 ml-20 mr-20 min-h-screen">
+            <Helmet>
+                <title> Cart</title>
+                <meta name'robots' content='noindex, nofollow' />
+            </Helmet>
             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
 
             {/* Контейнер Flexbox для вывода колонок */}
