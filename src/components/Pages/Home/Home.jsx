@@ -24,14 +24,14 @@ const Home = () => {
 
             <Banner />
             <AllProducts/>
-            <section className="text-gray-800 mr-20 ml-20 mb-10">
-                <h1 className="text-center font-bold text-xl mb-5">
+            <section className=" text-gray-800 mr-40 ml-40 mb-10">
+                <h1 className="text-center font-bold text-2xl mb-5 mt-10">
                     Welcome to Sneaker Haven – Your Ultimate Online Sneaker Destination
                 </h1>
 
-                <h2 className='font-normal text-lg mb-4'>Our Brands </h2>
+                <h2 className='font-bold text-lg mb-4'>Our Brands </h2>
                 <p className="mb-4 font-light">
-                    Explore a massive collection of footwear from top brands like <strong>Nike</strong>,{' '}
+                    <span className='ml-2'>Explore</span> a massive collection of footwear from top brands like <strong>Nike</strong>,{' '}
                     <strong>Adidas</strong>, <strong>Puma</strong>, <strong>Reebok</strong>,{' '}
                     <strong>Converse</strong>, <strong>New Balance</strong>, and more. Whether you’re looking for
                     stylish casual sneakers, high-performance running shoes, basketball kicks, or exclusive
@@ -39,17 +39,17 @@ const Home = () => {
                     perfect blend of comfort, quality, and style to match your everyday needs and elevate your
                     sneaker game.
                 </p>
-                <h2 className='font-normal text-lg mb-4'> Uniq sneakers for you</h2>
+                <h2 className='font-bold text-lg mb-4'> Uniq sneakers for you</h2>
                 <p className="mb-4 font-light">
-                    Our catalog covers everything from classic designs to cutting-edge trends, ensuring you stay
+                    <span className='ml-2'>Our</span> catalog covers everything from classic designs to cutting-edge trends, ensuring you stay
                     ahead in streetwear fashion. Enjoy <strong>exclusive deals</strong>, discounted prices, and
                     seasonal sales on some of the most iconic sneaker collections. Looking for something unique?
                     Check out our selection of trendy collaborations and sneakers that turn heads!
                 </p>
-                <h2 className='font-normal text-lg mb-4'> Sneakers for all</h2>
+                <h2 className='font-bold text-lg mb-4'> Sneakers for all</h2>
 
                 <p className="mb-4 font-light">
-                    We offer a wide range of sizes for <strong>men</strong>, <strong>women</strong>, and{' '}
+                    <span className='ml-2'>We</span> offer a wide range of sizes for <strong>men</strong>, <strong>women</strong>, and{' '}
                     <strong>kids</strong>, so the whole family can step out in style. Our detailed size guides and
                     customer reviews ensure you pick the perfect fit every time. Plus, our fast shipping and
                     hassle-free returns make your shopping experience easy and enjoyable. No matter what your sneaker
@@ -57,9 +57,9 @@ const Home = () => {
                     <strong>sports-specific performance shoes</strong>—we’ve got it. Don’t miss out on our
                     hand-picked recommendations, bestsellers, and new arrivals launched every week!
                 </p>
-                <h2 className='font-normal text-lg mb-4'> We are working for you</h2>
+                <h2 className='font-bold text-lg mb-4'> We are working for you</h2>
                 <p className="mb-4 font-light">
-                    Sneaker Haven is more than just a store—it’s a <strong>community</strong>. Join our newsletter or
+                    <span className='ml-2'>Sneaker</span> Haven is more than just a store—it’s a <strong>community</strong>. Join our newsletter or
                     follow us on social media to stay updated with <strong>exclusive drops</strong>,{' '}
                     <strong>sneakerhead tips</strong>, and upcoming releases. Whether you need inspiration for your
                     next sneaker choice or you’re hunting for a collector’s grail, Sneaker Haven is the one-stop
