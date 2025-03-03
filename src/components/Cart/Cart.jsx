@@ -98,24 +98,20 @@ function Cart () {
     return (
 
         <div className="cart mb-10 ml-20 mr-20 min-h-screen ">
+
             <Helmet>
                 <title> Cart</title>
                 <meta name='robots' content='noindex, nofollow' />
             </Helmet>
+
+
             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
-
-
-
-            {/* Контейнер Flexbox для вывода колонок */}
             <div className="flex flex-col md:flex-row md:space-x-10 ">
 
                 <Bag/>
                 <Summary/>
 
             </div>
-
-
-
             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
         </div>
 
