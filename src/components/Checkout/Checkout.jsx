@@ -5,10 +5,10 @@ import '../../index.css';
 import { FormProvider, useForm } from "react-hook-form";
 import TextInputHtml from "../TextInput/TextInputHtml.jsx";
 import TextInput from "../TextInput/TextInput.jsx";
-import CheckoutCart from "./CheckoutCart.jsx";
 import { addUserData } from "../../data/userRegisterData.js";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button.jsx";
+import {Bag, Summary} from "../Cart/Cart.jsx";
 
 
 export default function Checkout({isAuthenticated}) {
@@ -116,7 +116,14 @@ export default function Checkout({isAuthenticated}) {
                         {/* Модуль "In your bag" */}
                         <div className="flex-1 p-4 md:mt-60 sm:mt-60 lg:mt-0 xl:mt-0">
                             <h2>In your bag</h2>
-                            <CheckoutCart />
+                            <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
+
+                               <Bag textBag='hidden' textTitle='text-lg' textPrice='text-lg' textBtn=''/>
+
+                            <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
+
+                              <Summary textSize='text-lg'/>
+
                             {/* Кнопка Submit */}
                             <div className="mt-6">
                                 <button
