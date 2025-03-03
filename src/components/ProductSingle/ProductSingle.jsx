@@ -149,7 +149,7 @@ export default function ProductSingle() {
                         transition hover:cursor-pointer hover:scale-105
                         duration-200 active:scale-95"
                     >
-                        Купить
+                        Buy now
                     </button>
                 </div>
             </div>

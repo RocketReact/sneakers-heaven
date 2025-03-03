@@ -18,7 +18,7 @@ export default function AllProducts() {
     const [currentPage, setCurrentPage] = useState(1);
 
     // Количество товаров на одной странице
-    const itemsPerPage = 10;
+    const itemsPerPage = 12;
 
     useEffect(() => {
         if (status === "idle") {
@@ -82,7 +82,7 @@ export default function AllProducts() {
                         </Link>
                         <button
                             onClick={() => handleRedirect(product)}
-                            className="inline-block cursor-pointer px-6 py-3 text-lg font-medium text-red-500
+                            className="inline-block cursor-pointer px-4 py-2 mt-2 text-lg font-medium text-red-500
                                        border border-blue-600 rounded hover:bg-blue-600 hover:text-white
                                        focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
                         >
