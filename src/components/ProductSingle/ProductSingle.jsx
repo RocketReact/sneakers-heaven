@@ -5,6 +5,8 @@ import { fetchProducts } from "../../store/productSlice/productSlice.js";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 import { addToCart, decreaseQuantity, removeFromCart } from "../../store/cart/cartSlice.js";
 import noImage from "../../img/no-image.jpg";
+import {Helmet} from "react-helmet-async";
+import generateProductLink from "../../generateURL/generateURL.js";
 
 export default function ProductSingle() {
     const { id } = useParams();
@@ -53,11 +55,24 @@ export default function ProductSingle() {
     }
 
     if (!product) {
-        return <h2 className="text-center text-xl">Товар не найден</h2>;
+        return <h2 className="text-center text-xl">Product not found</h2>;
     }
 
     return (
         <div className="container mx-auto px-4 py-12">
+        <Helmet>
+            <title>{product ? product.title : "Product not found"}</title>
+            <meta name="description" content={product.description?.substring(0, 160) || "No description available."}/>            <meta property="og:title" content={product.title || "Product"} />
+            <meta property="og:description" content={product.description || "There is no description for this product."} />
+            <meta property="og:image" content={Array.isArray(product.image) ? product.image[0] : product.image || noImage} />
+            <meta property="og:image:alt" content={product.title} />
+            <meta property="og:url" content={generateProductLink (product)} />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={product.title || "Product"} />
+            <meta name="twitter:description" content={product.description || "There is no description for this product."} />
+            <meta name="twitter:image" content={Array.isArray(product.image) ? product.image[0] : product.image || noImage} />
+        </Helmet>
+
             <div className="lg:grid lg:grid-cols-2 lg:gap-12 bg-white p-6 rounded-lg shadow-lg">
                 <div className="mb-6 lg:mb-0">
                     <div className="flex flex-wrap gap-4">
@@ -79,6 +94,7 @@ export default function ProductSingle() {
                         )}
                     </div>
                 </div>
+
 
                 {/* Контент товара */}
                 <div>

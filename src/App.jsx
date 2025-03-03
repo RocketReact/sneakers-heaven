@@ -16,10 +16,12 @@ import ProductSearch from "./components/ProductSearch/ProductSearch.jsx";
 import Checkout from "./components/Checkout/Checkout.jsx";
 import Payment from "./components/Payment/Payment.jsx";
 import {useState} from "react";
+import {HelmetProvider} from "react-helmet-async";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
+      <HelmetProvider>
        <Router>
              <HeaderTop/>
            <Routes>
@@ -42,7 +44,7 @@ function App() {
                <Route path="*" element={<NotFoundPage />} />
            </Routes>
        </Router>
-
+      </HelmetProvider>
   )
 }
 
