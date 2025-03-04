@@ -59,7 +59,7 @@ export default function ProductSingle() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-12">
+        <div className="container  mx-auto px-4 py-12">
         <Helmet>
             <title>{product ? product.title : "Product not found"}</title>
             <meta name="description" content={product.description?.substring(0, 160) || "No description available."}/>            <meta property="og:title" content={product.title || "Product"} />
@@ -73,7 +73,7 @@ export default function ProductSingle() {
             <meta name="twitter:image" content={Array.isArray(product.image) ? product.image[0] : product.image || noImage} />
         </Helmet>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 lg:gap-12 bg-white p-6 rounded-lg shadow-lg">
+            <div className="gap-7 grid grid-cols-2 lg:grid-cols-3 lg:gap-12 bg-white p-6 rounded-lg shadow-lg">
                 <div className="mb-6 lg:mb-0">
                     <div className="flex flex-wrap gap-4">
                         {Array.isArray(product.image) && product.image.length ? (

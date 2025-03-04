@@ -13,13 +13,14 @@ export const Bag = ({textBag, textTitle, textPrice, textBtn}) => {
     if (!cartItems.length) {
         return <h2 className='text-center'>Cart is empty</h2>
     }
-    return <div className="flex-2 w-full md:w-2/3 mb-7 ">
+    return <div className="flex-2 w-full md:w-2/3 mb-7">
         <h1 className={`${textBag || 'text-base'} text-2xl mb-5`}>Bag</h1>
+
         <ul>
             {cartItems.map((product, index) => (
                 <li
                     key={`${product.id}-${index}`}
-                    className="cartItem mb-10 flex items-center space-x-4"
+                    className="cartItem mb-10 flex items-center space-x-4 "
                 >
                     {/* Фото */}
                     <img
@@ -29,7 +30,7 @@ export const Bag = ({textBag, textTitle, textPrice, textBtn}) => {
                         className="object-cover rounded-md"
                     />
                     {/* Информация о продукте */}
-                    <div className="flex flex-col">
+                    <div className="flex flex-col ">
                         {/* Название */}
                         <Link
                             to={generateProductLink(product)}
@@ -43,7 +44,7 @@ export const Bag = ({textBag, textTitle, textPrice, textBtn}) => {
                         {/* Количество */}
                         <p className={`${textPrice || 'text-base'} text-2xl mb-2 mt-2 text-start `}>Quantity: {product.quantity}</p>
                         {/* Кнопки управления */}
-                        <div className="space-x-2 text-start">
+                        <div className="space-x-2 text-start ">
                             <button
                                 className={`${textBtn || 'text-base'} text-md btn `}
                                 onClick={() => dispatch(addToCart(product))}
@@ -67,6 +68,7 @@ export const Bag = ({textBag, textTitle, textPrice, textBtn}) => {
                 </li>
             ))}
         </ul>
+
 
     </div>
 }
@@ -94,19 +96,21 @@ function Cart () {
 
 
             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
-            <div className="flex flex-col md:flex-row md:space-x-35 ">
+            <div className="flex flex-col md:flex-row md:space-x-35 justify-self-center">
 
 
-                <div className='mb-10'>
+                <div className='justify-items-center mb-7 '>
                     <Bag/>
 
                     <button
-                        className="flex mt-5 p-2 border rounded-md hover:cursor-pointer hover:bg-red-400 hover:text-white w-30"
+                        className=" justify-center flex mt-5 p-2 border rounded-md hover:cursor-pointer hover:bg-red-400 hover:text-white w-30 "
                         onClick={() => dispatch(clearCart())}
                     >
                         Clear Cart <FaTrash size={15} className="ml-2 mt-1" />
                     </button>
+
                 </div>
+
                 <div className="flex-1 text-2xl max-w-md">
                 <Summary/>
                 <button
