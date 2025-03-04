@@ -33,6 +33,8 @@ const HeaderTop = () => {
                     </Link>
                 </div>
 
+
+               <div className='md:hidden lg:flex'>
                 {/* Основное меню для больших экранов */}
                 <ul className="hidden md:flex space-x-8">
                     <li><Link to="/">Home</Link></li>
@@ -42,8 +44,9 @@ const HeaderTop = () => {
                     <li><Link to="/products/women's clothing">Women</Link></li>
                     <li><Link to="/products/electronics">Electronics</Link></li>
                     <li><Link to="/products/jewelery">Jewelery</Link></li>
-                    <li><Link to="/shop-all">Shop All</Link></li>
+                    <li ><Link to="/shop-all">Shop All</Link></li>
                 </ul>
+               </div>
 
                 <div className="flex items-center space-x-8 relative">
 
@@ -84,7 +87,7 @@ const HeaderTop = () => {
                     {/* Иконка гамбургера для мобильных устройств */}
                     <button
                         onClick={toggleMenu}
-                        className="md:hidden hover:cursor-pointer w-9 h-9 flex justify-center items-center"
+                        className=" lg:hidden hover:cursor-pointer w-9 h-9 flex justify-center items-center"
                     >
                         {isMenuOpen ? (
                             <span className="absolute -top-1 right-2 text-4xl text-black hover:text-gray-600 transition-transform transform hover:scale-110">
