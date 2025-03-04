@@ -73,7 +73,7 @@ export default function ProductSingle() {
             <meta name="twitter:image" content={Array.isArray(product.image) ? product.image[0] : product.image || noImage} />
         </Helmet>
 
-            <div className="lg:grid lg:grid-cols-2 lg:gap-12 bg-white p-6 rounded-lg shadow-lg">
+            <div className="grid grid-cols-2 lg:grid-cols-3 lg:gap-12 bg-white p-6 rounded-lg shadow-lg">
                 <div className="mb-6 lg:mb-0">
                     <div className="flex flex-wrap gap-4">
                         {Array.isArray(product.image) && product.image.length ? (

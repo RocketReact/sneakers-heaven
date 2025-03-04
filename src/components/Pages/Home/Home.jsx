@@ -4,7 +4,7 @@ import {Helmet} from "react-helmet-async";
 
 const Home = () => {
     return (
-        <div>
+        <div >
             <Helmet>
                 <title>Nike Shop</title>
                 <meta
@@ -20,11 +20,11 @@ const Home = () => {
                 <meta property="og:url" content="https://example.com" />
                 <meta property="og:type" content="website" />
             </Helmet>
-
-
             <Banner />
+
+
             <AllProducts/>
-            <section className=" text-gray-800 mr-40 ml-40 mb-10">
+            <section className=" text-gray-800 m-10 lg:mr-40 lg:ml-40">
                 <h1 className="text-center font-bold text-2xl mb-5 mt-10">
                     Welcome to Sneaker Haven – Your Ultimate Online Sneaker Destination
                 </h1>
@@ -67,6 +67,7 @@ const Home = () => {
                     today—<strong>shop with us now!</strong>
                 </p>
             </section>
+
 
         </div>
     );

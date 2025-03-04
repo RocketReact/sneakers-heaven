@@ -61,12 +61,12 @@ export default function AllProducts() {
     };
 
     return (
-        <div className="text-1xl text-center mr-20 ml-20 my-6">
+        <div className="text-1xl text-center m-7 lg:mr-20 lg:ml-20 xl:mr-20 xl:ml-20 ">
             {/* Панель фильтров */}
             <ProductFilter categories={categories} />
 
             {/* Сетка товаров */}
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 m-20">
+            <div className="grid grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 lg:m-20 xl:m20">
                 <h2 className="sr-only">Products</h2>
                 {currentProducts.map((product) => (
                     <div key={product.id} className="group">

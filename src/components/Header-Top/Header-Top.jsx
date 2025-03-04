@@ -53,16 +53,17 @@ const HeaderTop = () => {
                     <button onClick ={toggleSearch} className='ml-auto'>
                         <FiSearch className="text-gray-600 hover:cursor-pointer"
                                   fontSize={32} alt="Search" /> </button>
-
+                    <div >
                     {isSearchOpen && (
-                        <div className="absolute top-12 right-2
+                        <div className=" absolute top-12 right-0.5
                         bg-white shadow-lg p-2 rounded-md z-50
-                        max-h-120 w-96 overflow-y-auto
+                        max-h-120 w-85 lg:w-96
 ">
                             <ProductSearch closeSearch={() =>
                                 setIsSearchOpen(false)} />
                             </div>
                     )}
+                    </div>
 
                     <Link to='/login'> <RiAccountCircleFill size='30' alt='Login' /> </Link>
 
