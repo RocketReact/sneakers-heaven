@@ -6,9 +6,9 @@ import imageDesigner from '../../../img/tom cruise.webp'
 
 export default function About() {
     return (
-        <div className="bg-gray-100 py-16 px-6 lg:px-8">
+        <div className="bg-gray-100 py-16 px-6 lg:px-8 font-extralight">
             <div className="max-w-7xl mx-auto text-center">
-                <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl">
+                <h1 className="text-4xl text-gray-900 sm:text-5xl font-extralight">
                     About Us
                 </h1>
                 <p className="mt-4 text-lg text-gray-600 sm:mt-6">
@@ -60,7 +60,7 @@ export default function About() {
             </div>
 
             <div className="mt-16 max-w-4xl mx-auto text-center">
-                <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className="text-2xl font-extralight text-gray-900 sm:text-3xl">
                     Meet Our Team
                 </h2>
                 <p className="mt-4 text-lg text-gray-600">
