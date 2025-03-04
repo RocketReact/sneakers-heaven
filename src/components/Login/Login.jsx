@@ -4,6 +4,7 @@ import {addUserData} from "../../data/userRegisterData.js";
 import { ToastContainer } from "react-toastify";
 import {notifySuccess, notifyError} from "../Notification/Notification.jsx";
 import Button from "../Button/Button.jsx";
+import {Helmet} from "react-helmet-async";
 
 
 export default function Login ({isAuthenticated, setIsAuthenticated}) {
@@ -72,6 +73,10 @@ export default function Login ({isAuthenticated, setIsAuthenticated}) {
     return (
 
         <FormProvider {...methods} >
+            <Helmet>
+                <title> Login </title>
+                <meta name='robots' content='noindex, nofollow' />
+            </Helmet>
 
             <form onSubmit={handleSubmit(onSubmit, onError)}
                   className='w-100 justify-self-center mt-20'>

@@ -9,6 +9,7 @@ import { addUserData } from "../../data/userRegisterData.js";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button.jsx";
 import {Bag, Summary} from "../Cart/Cart.jsx";
+import {Helmet} from "react-helmet-async";
 
 
 export default function Checkout({isAuthenticated}) {
@@ -55,6 +56,10 @@ export default function Checkout({isAuthenticated}) {
 
     return (
         <FormProvider {...methods}>
+            <Helmet>
+                <title> Checkout </title>
+                <meta name='robots' content='noindex, nofollow' />
+            </Helmet>
             <div className="text-center min-h-[1000px]">
                 <h1 className="text-2xl mt-3">Checkout</h1>
                 <form onSubmit={handleSubmit(onSubmit )}>
