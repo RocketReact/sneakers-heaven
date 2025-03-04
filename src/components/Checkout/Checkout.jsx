@@ -60,10 +60,11 @@ export default function Checkout({isAuthenticated}) {
                 <title> Checkout </title>
                 <meta name='robots' content='noindex, nofollow' />
             </Helmet>
-            <div className="text-center min-h-[1000px]">
+            <div className="text-center min-h-[1000px] w-full">
                 <h1 className="text-2xl mt-3">Checkout</h1>
                 <form onSubmit={handleSubmit(onSubmit )}>
-                    <div className="flex flex-col md:flex-col lg:flex-row space-y-4 md:space-y-0 md:space-x-4 m-20 text-2xl">
+                    <div className="flex flex-col md:flex-col lg:flex-row space-y-4
+                    md:space-y-0 md:space-x-4 m-2 md:m-15 lg:m-20 text-2xl">
                         <div className="flex-2 p-4">
                             <div className="flex flex-col relative">
                                 <h2>Delivery Options</h2>
