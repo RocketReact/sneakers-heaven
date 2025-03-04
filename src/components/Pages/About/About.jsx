@@ -3,10 +3,37 @@ import { GiOctogonalEye, GiMaterialsScience } from "react-icons/gi";
 import imageSEO from '../../../img/leodicaprio.webp'
 import imageCTO from '../../../img/johansson scarlett.webp'
 import imageDesigner from '../../../img/tom cruise.webp'
+import { Helmet } from "react-helmet-async";
+
 
 export default function About() {
     return (
         <div className="bg-gray-100 py-16 px-6 lg:px-8 font-extralight">
+
+            <Helmet>
+                <title>About Us | Sneaker Haven </title>
+                <meta name="description" content="
+                Learn more about Sneaker Haven,
+                our mission, values, and the team behind the brand." />
+
+                {/* Open Graph (Facebook, LinkedIn) */}
+                <meta property="og:title" content="About Us - Sneaker Haven" />
+                <meta property="og:description" content="Best Nike, Reebok, New Balance, Asics sneakers ." />
+                <meta property="og:image" content="https://example.com/about-us-image.jpg" />
+                <meta property="og:image:alt" content="Team photo of Sneaker Haven" />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://example.com/about-us" />
+
+                {/* Twitter/X */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="About Us - Sneaker Haven" />
+                <meta name="twitter:description" content="Meet the people and the story behind Sneaker Haven." />
+                <meta name="twitter:image" content="https://example.com/about-us-image.jpg" />
+
+                {/* Canonical URL */}
+                <link rel="canonical" href="http://localhost:3000/about-us"/>
+            </Helmet>
+
             <div className="max-w-7xl mx-auto text-center">
                 <h1 className="text-4xl text-gray-900 sm:text-5xl font-extralight">
                     About Us
