@@ -6,15 +6,11 @@ import generateProductLink from "../../generateURL/generateURL.js";
 import noImage from "../../img/no-image.jpg";
 import {Helmet} from "react-helmet-async";
 
-export const Bag = ({textBag, textTitle, textPrice, textBtn}) => {
+export const Bag = ({ textTitle, textPrice, textBtn}) => {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const dispatch = useDispatch();
 
-    if (!cartItems.length) {
-        return <h2 className='text-center'>Cart is empty</h2>
-    }
     return <div className="flex-2 w-full md:w-2/3 mb-7">
-        <h1 className={`${textBag || 'text-base'} text-2xl mb-5`}>Bag</h1>
 
         <ul>
             {cartItems.map((product, index) => (
@@ -89,32 +85,26 @@ export default function Cart () {
 
     return (
             <div className=" mb-10 ml-20 mr-20 min-h-screen font-extralight ">
-
-                    <Helmet>
+                <Helmet>
                         <title> Cart</title>
                         <meta name='robots' content='noindex, nofollow'/>
-                    </Helmet>
-
-
-                    <hr className="mt-4 mb-6 border-t-2 border-gray-300"/>
-                    <div className="flex flex-col md:flex-row md:space-x-35 justify-center items-center md:items-start">
-
-
-                        <div className='justify-items-center mb-7 '>
+                </Helmet>
+                <hr className="mt-4 mb-6 border-t-2 border-gray-300"/>
+                <div className="flex flex-col md:flex-row md:space-x-35 justify-center items-center md:items-start">
+                    <div className='justify-items-center mb-7 '>
                             <Bag/>
-
-                            <button
+                        <button
                                 className="flex justify-center mt-5 p-2 border
                         rounded-md hover:cursor-pointer hover:bg-red-400
                         hover:text-white w-30 "
                                 onClick={() => dispatch(clearCart())}
                             >
                                 Clear Cart <FaTrash size={15} className="ml-2 mt-1"/>
-                            </button>
+                        </button>
+                    </div>
 
-                        </div>
 
-                        <div className="flex-1 text-2xl max-w-md">
+                    <div className="flex-1 text-2xl max-w-md">
                             <Summary/>
                             <button
                                 onClick={() => navigate('/checkout')}

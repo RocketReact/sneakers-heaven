@@ -123,7 +123,7 @@ export default function Checkout({isAuthenticated}) {
                             <h2>In your bag</h2>
                             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
 
-                               <Bag textBag='hidden' textTitle='text-lg' textPrice='text-lg' textBtn=''/>
+                               <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
 
                             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
 
