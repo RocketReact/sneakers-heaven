@@ -94,10 +94,10 @@ function Cart () {
 
 
             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
-            <div className="flex flex-col md:space-x-35 ">
+            <div className="flex flex-col md:flex-row md:space-x-35 ">
 
 
-                <div className='mb-10 '>
+                <div className='mb-10'>
                     <Bag/>
 
                     <button
