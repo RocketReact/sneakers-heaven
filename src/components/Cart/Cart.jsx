@@ -7,7 +7,7 @@ import noImage from "../../img/no-image.jpg";
 import {Helmet} from "react-helmet-async";
 
 export const Bag = ({textBag, textTitle, textPrice, textBtn}) => {
-    const {cartItems} = useSelector((state) => state.cart);
+    const cartItems = useSelector((state) => state.cart.cartItems);
     const dispatch = useDispatch();
 
     if (!cartItems.length) {
@@ -83,53 +83,52 @@ export const Summary = ({textSize}) => {
     </div>
 }
 
-function Cart () {
+export default function Cart () {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
     return (
+            <div className=" mb-10 ml-20 mr-20 min-h-screen font-extralight ">
 
-        <div className="cart mb-10 ml-20 mr-20 min-h-screen font-extralight ">
-
-            <Helmet>
-                <title> Cart</title>
-                <meta name='robots' content='noindex, nofollow' />
-            </Helmet>
-
-
-            <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
-            <div className="flex flex-col md:flex-row md:space-x-35 justify-center items-center md:items-start">
+                    <Helmet>
+                        <title> Cart</title>
+                        <meta name='robots' content='noindex, nofollow'/>
+                    </Helmet>
 
 
-                <div className='justify-items-center mb-7 '>
-                    <Bag/>
+                    <hr className="mt-4 mb-6 border-t-2 border-gray-300"/>
+                    <div className="flex flex-col md:flex-row md:space-x-35 justify-center items-center md:items-start">
 
-                    <button
-                        className="flex justify-center mt-5 p-2 border
+
+                        <div className='justify-items-center mb-7 '>
+                            <Bag/>
+
+                            <button
+                                className="flex justify-center mt-5 p-2 border
                         rounded-md hover:cursor-pointer hover:bg-red-400
                         hover:text-white w-30 "
-                        onClick={() => dispatch(clearCart())}
-                    >
-                        Clear Cart <FaTrash size={15} className="ml-2 mt-1" />
-                    </button>
+                                onClick={() => dispatch(clearCart())}
+                            >
+                                Clear Cart <FaTrash size={15} className="ml-2 mt-1"/>
+                            </button>
 
-                </div>
+                        </div>
 
-                <div className="flex-1 text-2xl max-w-md">
-                <Summary/>
-                <button
-                    onClick={() => navigate('/checkout')}
-                    className='
+                        <div className="flex-1 text-2xl max-w-md">
+                            <Summary/>
+                            <button
+                                onClick={() => navigate('/checkout')}
+                                className='
                p-3 bg-black text-white
                rounded-full font-extralight text-xl mt-10
-               hover:cursor-pointer hover:bg-gray-400 active:scale-90 duration-150'> Checkout </button>
+               hover:cursor-pointer hover:bg-gray-400 active:scale-90 duration-150'> Checkout
+                            </button>
+                        </div>
+                    </div>
+                    <hr className="mt-4 mb-6 border-t-2 border-gray-300"/>
                 </div>
-            </div>
-            <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
-        </div>
 
 
+            )
+        };
 
-)
-
-}
-
-export default Cart

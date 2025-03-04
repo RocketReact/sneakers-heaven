@@ -72,10 +72,15 @@ const HeaderTop = () => {
                         <FaShoppingCart  className='relative' size="30" alt="Cart"/>
                         {totalQuantity > 0 && (
                             <span className='
-                            absolute -top-1 right-4
+                            absolute
+                            -top-0.5 right-15
+                            sm:top-0 sm:right-15
+                            md:-top-0.5 md:right-15
+                            lg:right-6 -lg:top-1
                             bg-red-500 text-white
                             rounded-full pt-1 pb-1 pr-2 pl-2
                             text-xs font-bold
+
                             '>
                                 {totalQuantity}
 
@@ -103,7 +108,7 @@ const HeaderTop = () => {
 
             {/* Мобильное меню с фиксированным положением */}
             {isMenuOpen && (
-                <div className="md:hidden fixed top-16 right-0 h-[calc(100%-4rem)] w-[50vw] bg-white z-50 p-4 shadow-lg">
+                <div className=" fixed top-16 right-0 h-[calc(100%-4rem)] w-[50vw] bg-white z-50 p-4 shadow-lg">
                     <ul className="space-y-4 text-black text-lg mt-8">
                         <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
                         <li><Link to="/about" onClick={toggleMenu}>About</Link></li>

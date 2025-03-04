@@ -59,7 +59,7 @@ export default function ProductSingle() {
     }
 
     return (
-        <div className="container  mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-12">
         <Helmet>
             <title>{product ? product.title : "Product not found"}</title>
             <meta name="description" content={product.description?.substring(0, 160) || "No description available."}/>            <meta property="og:title" content={product.title || "Product"} />
