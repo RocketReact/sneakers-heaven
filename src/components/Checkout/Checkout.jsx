@@ -58,7 +58,7 @@ export default function Checkout({isAuthenticated}) {
             <div className="text-center min-h-[1000px]">
                 <h1 className="text-2xl mt-3">Checkout</h1>
                 <form onSubmit={handleSubmit(onSubmit )}>
-                    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 m-20 text-2xl">
+                    <div className="flex flex-col md:flex-col lg:flex-row space-y-4 md:space-y-0 md:space-x-4 m-20 text-2xl">
                         <div className="flex-2 p-4">
                             <div className="flex flex-col relative">
                                 <h2>Delivery Options</h2>
@@ -114,7 +114,7 @@ export default function Checkout({isAuthenticated}) {
                         </div>
 
                         {/* Модуль "In your bag" */}
-                        <div className="flex-1 p-4 md:mt-60 sm:mt-60 lg:mt-0 xl:mt-0">
+                        <div className="flex-1 p-4 md:mt-10 sm:mt-10 lg:mt-0 xl:mt-0">
                             <h2>In your bag</h2>
                             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
 
