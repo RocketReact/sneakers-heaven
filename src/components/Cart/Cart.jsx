@@ -96,14 +96,16 @@ function Cart () {
 
 
             <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
-            <div className="flex flex-col md:flex-row md:space-x-35 justify-self-center">
+            <div className="flex flex-col md:flex-row md:space-x-35 justify-center items-center md:items-start">
 
 
                 <div className='justify-items-center mb-7 '>
                     <Bag/>
 
                     <button
-                        className=" justify-center flex mt-5 p-2 border rounded-md hover:cursor-pointer hover:bg-red-400 hover:text-white w-30 "
+                        className="flex justify-center mt-5 p-2 border
+                        rounded-md hover:cursor-pointer hover:bg-red-400
+                        hover:text-white w-30 "
                         onClick={() => dispatch(clearCart())}
                     >
                         Clear Cart <FaTrash size={15} className="ml-2 mt-1" />
