@@ -82,7 +82,7 @@ export default function AllProducts() {
                         </Link>
                         <button
                             onClick={() => handleRedirect(product)}
-                            className="inline-block cursor-pointer px-4 py-2 mt-2 text-lg font-medium text-red-500
+                            className="inline-block cursor-pointer mt-3 px-2 py-2 md:px-6 md:py-3 text-sm md:text-lg font-medium text-red-500
                                        border border-blue-600 rounded hover:bg-blue-600 hover:text-white
                                        focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
                         >

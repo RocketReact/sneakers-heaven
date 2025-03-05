@@ -53,7 +53,7 @@ export default function TemplateCategory() {
                                 src={Array.isArray(product.image) ? product.image[0] : product.image || noImage}
                                 className="w-full h-auto max-h-96 object-contain rounded-lg p-2"
                             />
-                            <h3 className="text-center mt-4 text-lg text-gray-700 hover:underline">{product.title}</h3>
+                            <h3 className="text-center mt-4 font-extralight text-lg text-gray hover:underline">{product.title}</h3>
                             <ProductRating rating={product.rating} />
                             <p className="text-center mt-1 text-lg font-medium text-gray-900">{product.price} $</p>
                         </Link>

@@ -132,7 +132,7 @@ export default function TextInputHtml () {
                     }}
                 />
             </div>
-            <div className="w-full">
+            <div className="w-full font-stretch-50%">
                 <TextInput
                     id="postalCode"
                     name="postalCode"

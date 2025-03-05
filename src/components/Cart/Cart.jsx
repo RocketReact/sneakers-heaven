@@ -71,7 +71,7 @@ export const Bag = ({ textTitle, textPrice, textBtn}) => {
 export const Summary = ({textSize}) => {
     const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
 
-    return <div className={`${textSize || 'text-base'} flex-1 text-2xl max-w-md`}>
+    return <div className={`${textSize || 'text-base'} flex-1 text-2xl max-w-md mt-5 ml:mt-0`}>
         <h2 className="mb-5 ">Summary</h2>
         <h3>Total Price: {totalPrice?.toFixed(2)} $</h3>
         <h4>Total Quantity: {totalQuantity}</h4>
@@ -90,8 +90,9 @@ export default function Cart () {
                         <meta name='robots' content='noindex, nofollow'/>
                 </Helmet>
                 <hr className="mt-4 mb-6 border-t-2 border-gray-300"/>
-                <div className="flex flex-col md:flex-row md:space-x-35 justify-center items-center md:items-start">
-                    <div className=' mb-7 '>
+                <div className="flex flex-col md:flex-row md:space-x-35 justify-center items-center">
+
+                    <div className='mb-7 justify-items-center'>
                             <Bag />
                         <button
                                 className="flex justify-center mt-5 p-2 border
