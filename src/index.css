@@ -1,6 +1,10 @@
 
 @import "tailwindcss";
 
+
+
+
+
 .container {
   display: flex;
   align-items: center;
@@ -24,6 +28,27 @@
 .btnDelete {
   @apply p-1.5
 }
+
+@keyframes tilt-shake {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0); /* Начальная и конечная позиция */
+  }
+  25% {
+    transform: rotate(5deg) translateY(-3px); /* Правая сторона поднимается */
+  }
+  50% {
+    transform: rotate(0deg) translateY(0); /* Возврат в центр */
+  }
+  75% {
+    transform: rotate(-5deg) translateY(-3px); /* Левая сторона поднимается */
+  }
+}
+
+.animate-shake {
+  animation: tilt-shake 0.1s ease-in infinite; /* Эффект длится 0.5 секунд и повторяется бесконечно */
+}
+
+
 
 .btnDelete:hover {
   @apply scale-110 transition-transform duration-300 cursor-pointer bg-emerald-300 rounded
