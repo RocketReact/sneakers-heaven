@@ -32,16 +32,20 @@ export default function ContactForm() {
 
     return (
         <FormProvider {...methods}>
-            <form
-                className="max-h-screen mt-10 flex flex-col max-w-xl justify-self-center items-center"
+            <div className='flex flex-col mr-10 ml-10 items-center justify-center'>
+
+                <form
+                className="max-h-screen mt-10 flex flex-col max-w-xl justify-self-center items-center "
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <h1 className="text-2xl font-extralight">Please Contact Us:</h1>
-                <div className="w-full">
+                <div >
                     <Email />
                     <Name />
                 </div>
-                <div className="mt-5 w-100">
+
+
+
                     <Controller
                         name="message"
                         control={control}
@@ -56,7 +60,7 @@ export default function ContactForm() {
                                 <textarea
                                     {...field}
                                     className= {`${fieldState?.error? 'border-red-500' : 'border-gray-300'} 
-                                    text-gray-600 border-2  w-full h-30 rounded-lg`}
+                                    text-gray-600 border-2 h-30 w-full rounded-lg mt-5`}
                                     placeholder="Your message"
                                 />
                                 {fieldState?.error && (
@@ -67,7 +71,6 @@ export default function ContactForm() {
                             </>
                         )}
                     />
-                </div>
 
                 <button
                     type="submit"
@@ -77,6 +80,7 @@ export default function ContactForm() {
                 </button>
                 <ToastContainer/>
             </form>
+            </div>
         </FormProvider>
     );
 }
