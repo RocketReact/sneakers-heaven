@@ -51,9 +51,6 @@ export default function Checkout({isAuthenticated}) {
         navigate('/payment'); // Редирект после успешной отправки формы
     };
 
-
-
-
     return (
         <FormProvider {...methods}>
             <Helmet>
@@ -63,7 +60,7 @@ export default function Checkout({isAuthenticated}) {
             <div className="text-center min-h-[1000px] w-full">
                 <h1 className="text-2xl mt-3">Checkout</h1>
                 <form onSubmit={handleSubmit(onSubmit )}>
-                    <div className="flex flex-col md:flex-col lg:flex-row space-y-4
+                    <div className="flex flex-col justify-center items-center md:flex-col lg:flex-row space-y-4
                     md:space-y-0 md:space-x-4 m-2 md:m-15 lg:m-20 text-2xl">
                         <div className="flex-2 p-4">
                             <div className="flex flex-col relative">
@@ -122,11 +119,12 @@ export default function Checkout({isAuthenticated}) {
                         {/* Модуль "In your bag" */}
                         <div className="flex-1 p-4 md:mt-10 sm:mt-10 lg:mt-0 xl:mt-0">
                             <h2>In your bag</h2>
-                            <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
+                            <hr className="mt-4 mb-2 border-t-2 border-gray-300" />
 
                                <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
 
-                            <hr className="mt-4 mb-6 border-t-2 border-gray-300" />
+                            <hr className="mt-4 border-t-2 border-gray-300" />
+
 
                               <Summary textSize='text-lg'/>
 

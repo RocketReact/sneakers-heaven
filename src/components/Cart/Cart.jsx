@@ -91,8 +91,8 @@ export default function Cart () {
                 </Helmet>
                 <hr className="mt-4 mb-6 border-t-2 border-gray-300"/>
                 <div className="flex flex-col md:flex-row md:space-x-35 justify-center items-center md:items-start">
-                    <div className='justify-items-center mb-7 '>
-                            <Bag/>
+                    <div className=' mb-7 '>
+                            <Bag />
                         <button
                                 className="flex justify-center mt-5 p-2 border
                         rounded-md hover:cursor-pointer hover:bg-red-400
