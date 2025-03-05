@@ -73,9 +73,11 @@ export default function ProductSingle() {
             <meta name="twitter:image" content={Array.isArray(product.image) ? product.image[0] : product.image || noImage} />
         </Helmet>
 
-            <div className="gap-7 grid grid-cols-2 lg:grid-cols-3 lg:gap-12 bg-white p-6 rounded-lg shadow-lg">
-                <div className="mb-6 lg:mb-0">
-                    <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-12
+            bg-white p-6 rounded-lg shadow-lg
+            ">
+                <div className=" mb-6 lg:mb-0 ">
+                    <div className="flex flex-wrap gap-4 ">
                         {Array.isArray(product.image) && product.image.length ? (
                             product.image.map((image, index) => (
                                 <img
@@ -97,7 +99,7 @@ export default function ProductSingle() {
 
 
                 {/* Контент товара */}
-                <div>
+                <div  className='ml-10 '>
                     <h2 className="text-2xl font-semibold text-gray-800 mb-2">
                         {product.title || "No title"}
                     </h2>
