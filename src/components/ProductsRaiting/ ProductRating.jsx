@@ -1,9 +1,10 @@
-export default function ProductRating ({rating, count}) {
+export default function ProductRating ({rating, count, mainRatingDiv}) {
     const maxStars = 5;
 
     return (
-        <div className="flex flex-col items-center gap-4">
-         <div className='flex flex-row mt-3'>
+        <div className={`${mainRatingDiv || 'items-center'} flex flex-col gap-4`}>
+
+            <div className='flex mt-3'>
             {[...Array(maxStars)].map((_, i) => (
                 <svg
                     key={i}
@@ -23,7 +24,7 @@ export default function ProductRating ({rating, count}) {
          </div>
 
 
-            <span className=' ml-2 text-grey-700 text-sm '>
+            <span className=' text-grey-700 text-sm '>
                 {rating.rate ? rating.rate.toFixed(1) : 'No Rating'}
                 <span className='text-grey-500'> ({rating.count || 0} Reviews)</span>
 

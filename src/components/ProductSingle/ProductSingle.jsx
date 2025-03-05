@@ -111,7 +111,7 @@ export default function ProductSingle() {
                         {product.price?.toFixed(2)} $
                     </p>
 
-                    <ProductRating rating={product.rating} count={product.count} />
+                    <ProductRating rating={product.rating} count={product.count} mainRatingDiv='items-left' />
 
                     <div className="mb-3 mt-3 mr-3"> Quantity </div>
 
@@ -146,7 +146,7 @@ export default function ProductSingle() {
 
                     <button
                         onClick={handleRedirect}
-                        className="min-w-50 px-6 py-3 text-white
+                        className="w-full px-6 py-3 text-white
                         bg-blue-600 rounded-lg hover:bg-blue-700
                         transition hover:cursor-pointer hover:scale-105
                         duration-200 active:scale-95"
