@@ -74,7 +74,7 @@ export default function ProductSingle() {
             bg-white p-6 rounded-lg shadow-lg
             ">
                 <div className=" mb-6 lg:mb-0 ">
-                    <div className="flex flex-wrap gap-4 ">
+                    <div className="flex gap-4 ">
                         {Array.isArray(product.image) && product.image.length ? (
                             product.image.map((image, index) => (
                                 <img
@@ -96,7 +96,7 @@ export default function ProductSingle() {
 
 
                 {/* Контент товара */}
-                <div  className='ml-10 '>
+                <div  className='m-7 text-left '>
                     <h2 className="text-2xl font-semibold text-gray-800 mb-2">
                         {product.title || "No title"}
                     </h2>
