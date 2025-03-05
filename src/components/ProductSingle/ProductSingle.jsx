@@ -25,12 +25,12 @@ export default function ProductSingle() {
         if (status === "idle" && products.length === 0) {
             dispatch(fetchProducts());
         }
-    }, [status, products.length, dispatch]);
+    }, [status,products.length, dispatch]);
 
     // Функции для изменений количества товара в корзине
     const handleIncreaseQuantity = () => {
         if (product) {
-            dispatch(addToCart({ ...product, quantity: 1 })); // Увеличиваем количество товара
+            dispatch(addToCart({...product, quantity: 1})); // Увеличиваем количество товара
         }
     };
 
