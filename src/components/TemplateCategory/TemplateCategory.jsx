@@ -20,7 +20,6 @@ export default function TemplateCategory() {
     }, [status, dispatch]);
 
     const productByCategory = products.filter((product) => String(product.category) === String(id));
-    console.log(productByCategory);
 
     const handleAddToCart = (product) => {
         if (!product) return;

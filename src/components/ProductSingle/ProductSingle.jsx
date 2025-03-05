@@ -7,6 +7,7 @@ import { addToCart, decreaseQuantity, removeFromCart } from "../../store/cart/ca
 import noImage from "../../img/no-image.jpg";
 import {Helmet} from "react-helmet-async";
 import generateProductLink from "../../generateURL/generateURL.js";
+import BuyNowShakingBtn from "./BuyNowShakingBtn";
 
 export default function ProductSingle() {
     const { id } = useParams();
@@ -45,10 +46,6 @@ export default function ProductSingle() {
         }
     };
 
-    // Логика обработки кнопки "Купить"
-    const handleRedirect = () => {
-        navigate("/cart"); // Перенаправляем на страницу корзины
-    };
 
     if (status === "loading") {
         return <h2 className="text-center text-xl">Loading...</h2>;
@@ -144,15 +141,7 @@ export default function ProductSingle() {
                         </button>
                     </div>
 
-                    <button
-                        onClick={handleRedirect}
-                        className="w-full px-6 py-3 text-white
-                        bg-blue-600 rounded-lg hover:bg-blue-700
-                        transition hover:cursor-pointer hover:scale-105
-                        duration-200 active:scale-95"
-                    >
-                        Buy now
-                    </button>
+                    <BuyNowShakingBtn/>
                 </div>
             </div>
         </div>

@@ -45,7 +45,6 @@ export default function Checkout({isAuthenticated}) {
     };
 
     const onSubmit = (data) => {
-        console.log("Form Data:", data);
         setCustomerData(data);
         addUserData(data);
         navigate('/payment'); // Редирект после успешной отправки формы
