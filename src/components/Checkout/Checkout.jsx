@@ -13,11 +13,13 @@ import {Helmet} from "react-helmet-async";
 
 
 export default function Checkout({isAuthenticated}) {
-    const [customerData, setCustomerData ] = useState(null)
+    const [customerData, setCustomerData ] = useState([])
+
     const navigate = useNavigate();
     const [activeButton, setActiveButton] = useState('ship');
     const methods = useForm({
         defaultValues: {
+            id: Date.now(),
             email: "",
             firstName: "",
             lastName: "",
@@ -30,25 +32,29 @@ export default function Checkout({isAuthenticated}) {
 
     const { handleSubmit } = methods;
 
-    useEffect(() => {
-        const storeData = localStorage.getItem("userRegisterData");
-   if (storeData) {
-       setCustomerData(JSON.parse(storeData));
-   } else {
-       setCustomerData({});
-   }
-    }, []);
 
 
     const handleClick = (buttonType) => {
         setActiveButton(activeButton === buttonType ? null : buttonType);
     };
 
+
     const onSubmit = (data) => {
-        setCustomerData(data);
-        addUserData(data);
-        navigate('/payment'); // Редирект после успешной отправки формы
+        const cleanedData = {
+            id: Date.now(),
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            country: data.country,
+            city: data.city,
+            postalCode: data.postalCode,
+            phoneNumber: data.phoneNumber,
+        };
+        setCustomerData([cleanedData])
+        addUserData(cleanedData);
     };
+
+
 
     return (
         <FormProvider {...methods}>
@@ -61,8 +67,9 @@ export default function Checkout({isAuthenticated}) {
                 <form onSubmit={handleSubmit(onSubmit )}>
                     <div className="flex flex-col justify-center items-center md:flex-col lg:flex-row space-y-4
                     md:space-y-0 md:space-x-4 md:m-15 lg:m-20 text-2xl">
-                        <div className="flex-2 p-4">
-                            <div className="flex flex-col relative">
+
+                         <div className="flex-2 p-4 w-full">
+                            <div className="flex flex-col relative ">
                                 <h2>Delivery Options</h2>
                                 <div className="flex flex-row space-x-3 ">
 
@@ -89,7 +96,53 @@ export default function Checkout({isAuthenticated}) {
                                     </button>
                                 </div>
 
-                                {activeButton === "ship" && <TextInputHtml />}
+                                <Button
+                                    onClick={ () => navigate("/login")}
+                                    isAuthenticated={isAuthenticated}
+                                    loginText="Login"
+                                />
+
+                                {(activeButton === "ship"
+                                    && (customerData.length === 0
+
+                                    ))? <TextInputHtml />
+
+                                    : <div className='flex flex-col
+                                    p-5 mt-3 border border-gray-400 rounded-md items-start justify-start
+                                    '>
+                                        {customerData && customerData.length>0 && (
+                                        <ul className='flex flex-col font-extralight text-sm md:text-lg text-left'>
+                                            { customerData.map((item) => (
+                                                <li key={item.id}>
+                                                    <div>{item.email}</div>
+                                                    <div>{item.firstName}</div>
+                                                    <div>{item.lastName}</div>
+                                                    <div>{item.country}</div>
+                                                    <div>{item.city}</div>
+                                                    <div>{item.postalCode}</div>
+                                                    <div>{item.phoneNumber}</div>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                            )
+                                        }
+                                    </div>
+                                }
+
+                                <div className="mt-6">
+                                    <button
+                                        type="submit"
+                                        className="
+                                        w-50 bg-black text-white py-3 px-2 rounded-full
+                                        hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
+                                        text-xl mb-3
+                                    "
+                                    >
+                                        Save & Continue
+                                    </button>
+                                </div>
+
+
                                 {activeButton === "pickup" && (
                                     <div>
                                         <h4 className="font-light text-xl mt-3">Select a store location</h4>
@@ -107,13 +160,11 @@ export default function Checkout({isAuthenticated}) {
                                 )}
 
                             </div>
-                            <Button
-                                onClick={ () => navigate("/login")}
-                                isAuthenticated={isAuthenticated}
-                                loginText="Login"
-                            />
+
 
                         </div>
+
+
 
                         {/* Модуль "In your bag" */}
                         <div className="flex-1 p-4 mt-0 sm:mt-3">
@@ -127,19 +178,8 @@ export default function Checkout({isAuthenticated}) {
 
                               <Summary textSize='text-lg'/>
 
-                            {/* Кнопка Submit */}
-                            <div className="mt-6">
-                                <button
-                                    type="submit"
-                                    className="
-                                        w-50 bg-black text-white py-3 px-2 rounded-full
-                                        hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
-                                        text-xl mb-3
-                                    "
-                                >
-                                    Continue to Payment
-                                </button>
-                            </div>
+
+
                         </div>
                     </div>
                 </form>
