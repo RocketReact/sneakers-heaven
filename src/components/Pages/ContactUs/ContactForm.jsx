@@ -2,6 +2,7 @@ import { Email, Name } from '../../TextInput/TextInputHtml.jsx';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import {notifySuccess} from "../../Notification/Notification.jsx";
 import {ToastContainer} from "react-toastify";
+import {Helmet} from "react-helmet-async";
 
 
 
@@ -33,7 +34,10 @@ export default function ContactForm() {
     return (
         <FormProvider {...methods}>
             <div className='flex flex-col mr-10 ml-10 items-center justify-center'>
-
+                <Helmet>
+                    <title>Contact Us | Sneakers Heaven</title>
+                    <meta name="description" content="Contact us - we respond asap!" />
+                </Helmet>
                 <form
                 className="max-h-screen mt-10 flex flex-col max-w-xl justify-self-center items-center "
                 onSubmit={handleSubmit(onSubmit)}
