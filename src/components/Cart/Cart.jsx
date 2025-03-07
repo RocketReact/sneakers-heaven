@@ -10,8 +10,8 @@ export const Bag = ({ textTitle, textPrice, textBtn}) => {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const dispatch = useDispatch();
 
-    return <div className="flex-2 w-full md:w-2/3 mb-7">
-
+    return <div className="flex-2 w-full mb-7">
+        <hr className="mt-4 mb-2 border-t-2 border-gray-300 w-full"/>
         <ul>
             {cartItems.map((product, index) => (
                 <li
@@ -64,7 +64,7 @@ export const Bag = ({ textTitle, textPrice, textBtn}) => {
                 </li>
             ))}
         </ul>
-
+        <hr className="mt-4 border-t-2 border-gray-300" />
 
     </div>
 }

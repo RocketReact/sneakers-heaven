@@ -66,7 +66,7 @@ export default function Checkout({isAuthenticated}) {
                     <div className="flex flex-col justify-center items-center md:flex-col
                     lg:flex-row space-y-4 md:space-y-0 md:space-x-4 md:m-15 lg:m-20 text-2xl">
 
-                         <div className="flex-2 p-4 w-full">
+                         <div className="flex-2 order-2 lg:order-1 p-4 w-full">
                             <div className="flex flex-col relative ">
                                 <h2>Delivery Options</h2>
                                 <div className="flex flex-row space-x-3 ">
@@ -166,13 +166,9 @@ export default function Checkout({isAuthenticated}) {
                         </div>
 
 
-
-
-
-
-                        <div className="flex-1 p-4 mt-0 sm:mt-3 lg:self-start ">
+                        <div className="flex-1 order-1 lg:order-2 p-4 mt-0 sm:mt-3 lg:self-start w-full">
                            <div
-                               className='flex flex-row items-center justify-center
+                               className='flex flex-row items-center justify-between
                                gap-5
                                '>
                                <h2>In your bag</h2>
@@ -180,7 +176,7 @@ export default function Checkout({isAuthenticated}) {
                                    onClick={() => setIsOpen(!isOpen)}
                                    className={`${isOpen ? "rotate-180" : "rotate-0"} 
                                 text-gray-400 hover:text-gray-600 hover:cursor-pointer mt-1
-                                lg:hidden
+                                lg:hidden 
                                 `}
                                > ▼
 
@@ -188,13 +184,10 @@ export default function Checkout({isAuthenticated}) {
                            </div>
 
                             {!isOpen?
-                                <div>
-                                <hr className="mt-4 mb-2 border-t-2 border-gray-300"/>
+                                <div className='flex flex-col items-center'>
+
 
                                 <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
-
-                                <hr className="mt-4 border-t-2 border-gray-300" />
-
 
                                 <Summary textSize='text-lg'/>
                                 </div>
