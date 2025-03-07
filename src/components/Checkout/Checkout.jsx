@@ -213,7 +213,8 @@ export default function Checkout({isAuthenticated}) {
                             {!isOpen?
                                 <div className='flex flex-col items-center'>
                                     <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
-                                    <Summary textSize='text-lg'/>
+
+                                    <Summary textSize='text-lg hidden lg:block'/>
 
                                 </div>
                                 :<hr className="lg:hidden mb-10 border-t-2 border-gray-300 w-full"/>
