@@ -121,53 +121,35 @@ export default function Checkout({isAuthenticated}) {
                                     loginText="Login"
                                 />
 
-                                {((activeButton === "ship" && customerData.length === 0) || isActiveEdit)
-                                    ? <TextInputHtml />
+                                {activeButton === "ship" && (
 
-                                     : <div className='flex flex-col
-                                    p-5 mt-3 border-2 border-gray-500 hover:border-gray-700 rounded-md items-start justify-start
-                                    '>
-                                       <div className='self-end text-sm font-bold text-gray-400
-                                       hover:text-gray-500'>
-                                           <button
-                                               onClick={() => setIsActiveEdit(true)}
-                                               className='hover:cursor-pointer
-                                            underline underline-offset-3'> Edit </button> </div>
+                                    ((customerData.length === 0) || isActiveEdit)
+                                        ? <TextInputHtml />
+                                        : <div className='flex flex-col
+                                            p-5 mt-3 border-2 border-gray-500 hover:border-gray-700 rounded-md items-start justify-start'>
+                                            <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
+                                                <button
+                                                    onClick={() => setIsActiveEdit(true)}
+                                                    className='hover:cursor-pointer underline underline-offset-3'> Edit </button>
+                                            </div>
 
-                                        {customerData && customerData.length>0 && (
-                                        <ul className='flex flex-col font-extralight text-base text-left '>
-                                            { customerData.map((item) => (
-                                                <li
-
-                                                    key={item.id}>
-                                                    <div>{item.email}</div>
-                                                    <div>{item.firstName}</div>
-                                                    <div>{item.lastName}</div>
-                                                    <div>{item.country}</div>
-                                                    <div>{item.city}</div>
-                                                    <div>{item.postalCode}</div>
-                                                    <div>{item.phoneNumber}</div>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                            )
-                                        }
-                                    </div>
-                                }
-
-                                <div className="mt-6">
-                                    <button
-                                        type="submit"
-                                        className="
-                                        w-50 bg-black text-white py-3 px-2 rounded-full
-                                        hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
-                                        text-xl mb-3
-                                    "
-                                    >
-                                        Save & Continue
-                                    </button>
-                                </div>
-
+                                            {customerData && customerData.length > 0 && (
+                                                <ul className='flex flex-col font-extralight text-base text-left '>
+                                                    {customerData.map((item) => (
+                                                        <li key={item.id}>
+                                                            <div>{item.email}</div>
+                                                            <div>{item.firstName}</div>
+                                                            <div>{item.lastName}</div>
+                                                            <div>{item.country}</div>
+                                                            <div>{item.city}</div>
+                                                            <div>{item.postalCode}</div>
+                                                            <div>{item.phoneNumber}</div>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                )}
                                 {activeButton === "pickup" && (
                                     <div>
                                         <h4 className="font-light text-xl mt-3">Select a store location</h4>
@@ -183,6 +165,20 @@ export default function Checkout({isAuthenticated}) {
                                         </div>
                                     </div>
                                 )}
+
+                                <div className='mt-6'>
+                                        <button
+                                            type="submit"
+                                            className="
+                                        w-50 bg-black text-white py-3 px-2 rounded-full
+                                        hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
+                                        text-xl mb-3
+                                    "
+                                        >
+                                            Save & Continue
+                                        </button>
+                                    </div>
+
                             </div>
                         </div>
 
