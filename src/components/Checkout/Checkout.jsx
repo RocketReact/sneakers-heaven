@@ -14,9 +14,10 @@ import {Helmet} from "react-helmet-async";
 
 export default function Checkout({isAuthenticated}) {
     const [customerData, setCustomerData ] = useState([])
-
     const navigate = useNavigate();
     const [activeButton, setActiveButton] = useState('ship');
+    const [isActiveEdit, setIsActiveEdit] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const methods = useForm({
         defaultValues: {
             id: Date.now(),
@@ -32,12 +33,9 @@ export default function Checkout({isAuthenticated}) {
 
     const { handleSubmit } = methods;
 
-
-
     const handleClick = (buttonType) => {
         setActiveButton(activeButton === buttonType ? null : buttonType);
     };
-
 
     const onSubmit = (data) => {
         const cleanedData = {
@@ -52,9 +50,9 @@ export default function Checkout({isAuthenticated}) {
         };
         setCustomerData([cleanedData])
         addUserData(cleanedData);
+        setIsActiveEdit(false)
+
     };
-
-
 
     return (
         <FormProvider {...methods}>
@@ -65,8 +63,8 @@ export default function Checkout({isAuthenticated}) {
             <div className="text-center min-h-[1000px] w-full">
                 <h1 className="text-2xl mt-3">Checkout</h1>
                 <form onSubmit={handleSubmit(onSubmit )}>
-                    <div className="flex flex-col justify-center items-center md:flex-col lg:flex-row space-y-4
-                    md:space-y-0 md:space-x-4 md:m-15 lg:m-20 text-2xl">
+                    <div className="flex flex-col justify-center items-center md:flex-col
+                    lg:flex-row space-y-4 md:space-y-0 md:space-x-4 md:m-15 lg:m-20 text-2xl">
 
                          <div className="flex-2 p-4 w-full">
                             <div className="flex flex-col relative ">
@@ -102,18 +100,25 @@ export default function Checkout({isAuthenticated}) {
                                     loginText="Login"
                                 />
 
-                                {(activeButton === "ship"
-                                    && (customerData.length === 0
+                                {((activeButton === "ship" && customerData.length === 0) || isActiveEdit)
+                                    ? <TextInputHtml />
 
-                                    ))? <TextInputHtml />
-
-                                    : <div className='flex flex-col
-                                    p-5 mt-3 border border-gray-400 rounded-md items-start justify-start
+                                     : <div className='flex flex-col
+                                    p-5 mt-3 border-2 border-gray-500 hover:border-gray-700 rounded-md items-start justify-start
                                     '>
+                                       <div className='self-end text-sm font-bold text-gray-400
+                                       hover:text-gray-500'>
+                                           <button
+                                               onClick={() => setIsActiveEdit(true)}
+                                               className='hover:cursor-pointer
+                                            underline underline-offset-3'> Edit </button> </div>
+
                                         {customerData && customerData.length>0 && (
-                                        <ul className='flex flex-col font-extralight text-sm md:text-lg text-left'>
+                                        <ul className='flex flex-col font-extralight text-base text-left '>
                                             { customerData.map((item) => (
-                                                <li key={item.id}>
+                                                <li
+
+                                                    key={item.id}>
                                                     <div>{item.email}</div>
                                                     <div>{item.firstName}</div>
                                                     <div>{item.lastName}</div>
@@ -142,7 +147,6 @@ export default function Checkout({isAuthenticated}) {
                                     </button>
                                 </div>
 
-
                                 {activeButton === "pickup" && (
                                     <div>
                                         <h4 className="font-light text-xl mt-3">Select a store location</h4>
@@ -158,29 +162,48 @@ export default function Checkout({isAuthenticated}) {
                                         </div>
                                     </div>
                                 )}
-
                             </div>
-
-
                         </div>
 
 
 
-                        {/* Модуль "In your bag" */}
-                        <div className="flex-1 p-4 mt-0 sm:mt-3">
-                            <h2>In your bag</h2>
-                            <hr className="mt-4 mb-2 border-t-2 border-gray-300" />
-
-                               <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
-
-                            <hr className="mt-4 border-t-2 border-gray-300" />
 
 
-                              <Summary textSize='text-lg'/>
+
+                        <div className="flex-1 p-4 mt-0 sm:mt-3 lg:self-start ">
+                           <div
+                               className='flex flex-row items-center justify-center
+                               gap-5
+                               '>
+                               <h2>In your bag</h2>
+                               <button
+                                   onClick={() => setIsOpen(!isOpen)}
+                                   className={`${isOpen ? "rotate-180" : "rotate-0"} 
+                                text-gray-400 hover:text-gray-600 hover:cursor-pointer mt-1
+                                lg:hidden
+                                `}
+                               > ▼
+
+                               </button>
+                           </div>
+
+                            {!isOpen?
+                                <div>
+                                <hr className="mt-4 mb-2 border-t-2 border-gray-300"/>
+
+                                <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
+
+                                <hr className="mt-4 border-t-2 border-gray-300" />
 
 
+                                <Summary textSize='text-lg'/>
+                                </div>
+                                : ''
+
+                            }
 
                         </div>
+
                     </div>
                 </form>
             </div>
