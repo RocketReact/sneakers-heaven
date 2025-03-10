@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaShippingFast } from "react-icons/fa";
+import { FaShippingFast, FaApplePay} from "react-icons/fa";
 import { FcCheckmark } from "react-icons/fc";
 import { MdLocationOn } from "react-icons/md";
 import '../../index.css';
@@ -14,6 +14,7 @@ import {Helmet} from "react-helmet-async";
 import {useSelector} from "react-redux";
 import Checkbox from "./Checkbox.jsx";
 import payPal from '../../img/paypal_PNG1.png'
+import GPay from '../../img/google-pay.webp'
 
 const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
 const paidShipping = "$20.00 Shipping, Arrives by Wed, Jun 12"
@@ -58,6 +59,7 @@ export default function Checkout({isAuthenticated}) {
     const onSubmit = (data) => {
 
        if (!isSubmitted) {
+
         const cleanedData = {
             id: Date.now(),
             email: data.email,
@@ -71,8 +73,8 @@ export default function Checkout({isAuthenticated}) {
         };
         setCustomerData([cleanedData])
         addUserData(cleanedData);
+        (customerData.length>0 && setIsSubmitted(true))
 
-        setIsSubmitted(true)
        } else {
            const updatedData = {
                ...customerData[0], shippingMethod: activeBtnShippingMethod
@@ -254,7 +256,7 @@ export default function Checkout({isAuthenticated}) {
 
                                 {isContinueToPayment &&
                                     <div>
-                                        <hr className="  border-t-2 border-gray-300 mt-10 "/>
+                                        <hr className="  border-t-2 border-gray-300 mt-10"/>
                                         <div className=' flex flex-col max-w-60'>
                                             <div className='flex flex-col justify-start items-start gap-3'>
                                                 <h2 className='mt-8'>Payment</h2>
@@ -262,8 +264,8 @@ export default function Checkout({isAuthenticated}) {
                                             </div>
 
                                             <Checkbox
-                                                checked={selectedPaymentMethod === "card"}
-                                                onChange={() => handlePaymentMethodChange ("card")}
+                                                checked={selectedPaymentMethod === "Card"}
+                                                onChange={() => handlePaymentMethodChange ("Card")}
                                             />
 
 
@@ -271,15 +273,41 @@ export default function Checkout({isAuthenticated}) {
                                                 <Checkbox
                                                     iconCheckbox={null}
                                                     textLabel={null}
-                                                    checked={selectedPaymentMethod === "paypal"}
-                                                    onChange={() => handlePaymentMethodChange ("paypal")}
+                                                    checked={selectedPaymentMethod === "PayPal"}
+                                                    onChange={() => handlePaymentMethodChange ("PayPal")}
                                                 />
                                                 <img
-                                                    onClick={() => handlePaymentMethodChange("paypal")}
+                                                    onClick={() => handlePaymentMethodChange("PayPal")}
                                                     src={payPal}
                                                     className='w-20 h-14 -ml-1'
                                                     alt="PayPal"/>
                                             </div>
+
+
+                                            <Checkbox
+                                                textLabel={null}
+                                                iconSize={41}
+                                                iconCheckbox={FaApplePay}
+                                                checked={selectedPaymentMethod === "ApplePay"}
+                                                onChange={() => handlePaymentMethodChange ("ApplePay")}
+                                            />
+
+                                            <div className='flex flex-row hover:cursor-pointerg '>
+                                            <Checkbox
+                                                textLabel={null}
+
+                                                iconCheckbox={null}
+                                                checked={selectedPaymentMethod === "GooglePay"}
+                                                onChange={() => handlePaymentMethodChange ("GooglePay")}
+                                            />
+                                                <img
+
+                                                    onClick={() => handlePaymentMethodChange("GooglePay")}
+                                                    src={GPay}
+                                                    className='w-11 h-10.5 hover:cursor-pointer '
+                                                    alt="GooglePay"/>
+                                            </div>
+
                                         </div>
                                     </div>
                                 }

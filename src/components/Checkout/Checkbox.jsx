@@ -2,7 +2,8 @@ import { LuCreditCard } from "react-icons/lu";
 
 export default function Checkbox({ iconCheckbox: IconCheckBox,
                                      textLabel: NewText,
-                                     checked, onChange
+                                     checked, onChange,
+                                     iconSize= 25
                                  }) {
 
 
@@ -35,7 +36,7 @@ export default function Checkbox({ iconCheckbox: IconCheckBox,
           )}
         </span>
                 <span className="flex flex-row ml-2 text-gray-700 select-none font-normal text-base gap-2">
-          {IconToShow && <IconToShow size={25} className="font-extralight" />}
+          {IconToShow && <IconToShow size={iconSize} className="font-extralight" />}
                     {LabelText}
         </span>
             </label>
