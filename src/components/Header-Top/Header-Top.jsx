@@ -25,7 +25,7 @@ const HeaderTop = () => {
 
     return (
         <div className="bg-white shadow-md">
-            <nav className="container flex justify-between items-center py-4 px-6">
+            <nav className="container flex justify-between items-center sm:mx-15 ">
                 {/* Логотип */}
                 <div>
                     <Link to="/">

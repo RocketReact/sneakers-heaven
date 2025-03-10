@@ -153,7 +153,8 @@ export default function Checkout({isAuthenticated}) {
 
                                     ((customerData.length === 0) && !isContinueToPayment) || isActiveEdit
                                         ? <TextInputHtml />
-                                        :  <div className={`${isContinueToPayment? 'border-none' : 'flex flex-col p-5 mt-3 border-2 border-gray-500 hover:border-gray-700 rounded-md items-start justify-start'}`}
+                                        :  <div className={`${isContinueToPayment? 'border-none' : 'flex flex-col p-5 mt-3 ' +
+                                            'border-2 border-gray-500 hover:border-gray-700 rounded-md items-between justify-between'}`}
                                         >
                                         <div className="flex flex-row justify-between mb-3">
 
@@ -162,7 +163,7 @@ export default function Checkout({isAuthenticated}) {
                                             <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
                                                 <button
                                                     onClick={() => setIsActiveEdit(true)}
-                                                    className='hover:cursor-pointer underline underline-offset-3'> Edit </button>
+                                                    className=' hover:cursor-pointer underline underline-offset-3'> Edit </button>
                                             </div>
                                         </div>
 
