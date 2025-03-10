@@ -24,17 +24,21 @@ const HeaderTop = () => {
     };
 
     return (
-        <div className="bg-white shadow-md">
-            <nav className="container flex justify-between items-center sm:mx-15 ">
+        <div className="bg-white shadow-md justify-between items-center">
+            <nav className="flex justify-between items-center p-6 mx-3 md:mx-15">
                 {/* Логотип */}
-                <div>
+
+
+
+
+                <div className='shrink-0'>
                     <Link to="/">
                         <img className="logo" width="40" src={logo} alt="logo" />
                     </Link>
                 </div>
 
+                <div className=' md:hidden lg:flex'>
 
-               <div className='md:hidden lg:flex'>
                 {/* Основное меню для больших экранов */}
                 <ul className="hidden md:flex space-x-8">
                     <li><Link to="/">Home</Link></li>
