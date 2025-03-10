@@ -11,7 +11,7 @@ export default function Checkbox({ iconCheckbox: IconCheckBox,
 
     return (
         <>
-            <label className="inline-flex items-center cursor-pointer ml-4">
+            <label className="inline-flex items-center cursor-pointer ">
                 <input
                     type="checkbox"
                     checked={checked}
