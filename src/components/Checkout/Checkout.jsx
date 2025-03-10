@@ -18,7 +18,7 @@ const paidShipping = "$20.00 Shipping, Arrives by Wed, Jun 12"
 export default function Checkout({isAuthenticated}) {
     const [customerData, setCustomerData ] = useState([])
     const [activeBtnShipPickUp, setActiveBtnShipPickUp] = useState('ship');
-
+    const [isContinueToPayment, setIsContinueToPayment] = useState(false);
     const [activeBtnShippingMethod, setActiveBtnShippingMethod] = useState(freeShipping);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isActiveEdit, setIsActiveEdit] = useState(false);
@@ -73,8 +73,9 @@ export default function Checkout({isAuthenticated}) {
                ...customerData[0], shippingMethod: activeBtnShippingMethod
            }
            setCustomerData([updatedData])
+           setIsContinueToPayment (true)
        }
-        setIsActiveEdit(false)
+        setIsActiveEdit (false)
 
     };
     useEffect(() => {
@@ -91,6 +92,7 @@ export default function Checkout({isAuthenticated}) {
         return () => window.removeEventListener("resize", handleResize);
 
     }, [setIsOpen]);
+
 
 
     return (
@@ -145,9 +147,9 @@ export default function Checkout({isAuthenticated}) {
 
                                 {activeBtnShipPickUp === "ship" && (
 
-                                    ((customerData.length === 0) || isActiveEdit)
+                                    ((customerData.length === 0) && !isContinueToPayment) || isActiveEdit
                                         ? <TextInputHtml />
-                                        : <div className='flex flex-col
+                                        :  <div className='flex flex-col
                                             p-5 mt-3 border-2 border-gray-500 hover:border-gray-700 rounded-md items-start justify-start'>
                                             <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
                                                 <button
@@ -167,14 +169,18 @@ export default function Checkout({isAuthenticated}) {
                                                             <div>{item.city}</div>
                                                             <div>{item.postalCode}</div>
                                                             <div>{item.phoneNumber}</div>
-                                                            {customerData && customerData[0]
-                                                                && Object.keys(customerData[0]).length ===9
-                                                                && <p className='font-normal mt-2'>Shipping Speed</p>}
-                                                            <div>{item.shippingMethod}</div>
+                                                            {isContinueToPayment && (
+                                                                <>
+                                                                    <p className='font-normal mt-2'>Shipping Speed</p>
+                                                                    <div>{item.shippingMethod}</div>
+                                                                </>
+                                                            )}
+
                                                         </li>
                                                     ))}
                                                 </ul>
                                             )}
+
                                         </div>
                                 )}
                                 {activeBtnShipPickUp === "pickup" && (
@@ -193,7 +199,7 @@ export default function Checkout({isAuthenticated}) {
                                     </div>
                                 )}
 
-                              { isSubmitted  && (<div className='mt-3 flex flex-col justify-start items-start
+                              { isSubmitted  && !isContinueToPayment || isActiveEdit && (<div className='mt-3 flex flex-col justify-start items-start
                                 self-start text-base w-full'>
                                     <p className='font-normal mb-3'>Select your shipping speed</p>
 
@@ -224,18 +230,22 @@ export default function Checkout({isAuthenticated}) {
 
                                 }
 
-                                <div className='mt-6'>
-                                        <button
-                                            type="submit"
-                                            className="
+                                 <div className='mt-6'>
+                                    <button
+                                        type="submit"
+                                        className="
                                         w-50 bg-black text-white py-3 px-2 rounded-full
                                         hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
                                         text-xl mb-3
                                     "
-                                        >
-                                            Save & Continue
-                                        </button>
-                                    </div>
+                                    >
+                                        {!isSubmitted? 'Save & Continue' : 'Continue to Payment'}
+
+                                    </button>
+                                </div>
+
+
+
 
                             </div>
                         </div>
@@ -281,3 +291,4 @@ export default function Checkout({isAuthenticated}) {
         </FormProvider>
     );
 };
+
