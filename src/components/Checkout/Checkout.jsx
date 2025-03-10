@@ -12,6 +12,8 @@ import Button from "../Button/Button.jsx";
 import {Bag, Summary} from "../Cart/Cart.jsx";
 import {Helmet} from "react-helmet-async";
 import {useSelector} from "react-redux";
+import Checkbox from "./Checkbox.jsx";
+import payPal from '../../img/paypal_PNG1.png'
 
 const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
 const paidShipping = "$20.00 Shipping, Arrives by Wed, Jun 12"
@@ -39,6 +41,8 @@ export default function Checkout({isAuthenticated}) {
     });
     const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
     const { handleSubmit } = methods;
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+
     const navigate = useNavigate();
 
 
@@ -76,6 +80,7 @@ export default function Checkout({isAuthenticated}) {
            setCustomerData([updatedData])
            setIsContinueToPayment (true)
        }
+
         setIsActiveEdit (false)
 
     };
@@ -94,6 +99,9 @@ export default function Checkout({isAuthenticated}) {
 
     }, [setIsOpen]);
 
+    const handlePaymentMethodChange = (method) => {
+        setSelectedPaymentMethod(prevMethod => prevMethod === method ? null : method);
+    };
 
 
     return (
@@ -153,12 +161,13 @@ export default function Checkout({isAuthenticated}) {
 
                                     ((customerData.length === 0) && !isContinueToPayment) || isActiveEdit
                                         ? <TextInputHtml />
-                                        :  <div className={`${isContinueToPayment? 'border-none' : 'flex flex-col p-5 mt-3 ' +
+                                        :  <div className={`${isContinueToPayment? 'border-none' : 'flex flex-col p-5 ' +
                                             'border-2 border-gray-500 hover:border-gray-700 rounded-md items-between justify-between'}`}
                                         >
                                         <div className="flex flex-row justify-between mb-3">
 
-                                            <div className='flex flex-row gap-3 max-w-100'><h2>Delivery Options </h2> <FcCheckmark size={20}/></div>
+                                            <div className='flex flex-row gap-3 max-w-100'><h2>Delivery Options </h2> <FcCheckmark className='text-emerald-400' size={20} />
+                                            </div>
 
                                             <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
                                                 <button
@@ -194,6 +203,30 @@ export default function Checkout({isAuthenticated}) {
 
                                         </div>
                                 )}
+
+                                {isContinueToPayment &&
+                                    <>
+                                    <hr className="  border-t-2 border-gray-300 mt-10"/>
+                                    <div className='flex flex-col justify-start items-start gap-3'>
+                                    <h2 className='mt-8'>Payment</h2>
+                                    <p className='text-base mb-3'>Select payment method</p>
+                                    </div>
+                                        <Checkbox
+                                            checked={selectedPaymentMethod === "card"}
+                                            onChange={() => handlePaymentMethodChange ("card")}
+                                        />
+
+                                        <div className='flex flex-row'>
+                                        <Checkbox
+                                            iconCheckbox={null}
+                                            textLabel={null}
+                                            checked={selectedPaymentMethod === "paypal"}
+                                            onChange={() => handlePaymentMethodChange ("paypal")}
+                                        />
+                                            <img src={payPal} className='w-20 h-15' alt="PayPal"/>
+                                        </div>
+                                        </>
+                                    }
                                 {activeBtnShipPickUp === "pickup" && (
                                     <div>
                                         <h4 className="font-light text-xl mt-3">Select a store location</h4>
@@ -293,7 +326,7 @@ export default function Checkout({isAuthenticated}) {
                                 </div>
                         </div>
                             {!isOpen &&
-                                (<hr className="lg:hidden mb-10 border-t-2 border-gray-300 w-full"/>)}
+                                (<hr className="lg:hidden  border-t-2 border-gray-300 w-full"/>)}
                            </div>
                         </div>
                     </div>

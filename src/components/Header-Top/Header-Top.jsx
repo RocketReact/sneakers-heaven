@@ -29,8 +29,6 @@ const HeaderTop = () => {
                 {/* Логотип */}
 
 
-
-
                 <div className='shrink-0'>
                     <Link to="/">
                         <img className="logo" width="40" src={logo} alt="logo" />
