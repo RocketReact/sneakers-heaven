@@ -12,11 +12,15 @@ import {Bag, Summary} from "../Cart/Cart.jsx";
 import {Helmet} from "react-helmet-async";
 import {useSelector} from "react-redux";
 
+const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
+const paidShipping = "$20.00 Shipping, Arrives by Wed, Jun 12"
 
 export default function Checkout({isAuthenticated}) {
     const [customerData, setCustomerData ] = useState([])
-    const navigate = useNavigate();
-    const [activeButton, setActiveButton] = useState('ship');
+    const [activeBtnShipPickUp, setActiveBtnShipPickUp] = useState('ship');
+
+    const [activeBtnShippingMethod, setActiveBtnShippingMethod] = useState(freeShipping);
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const [isActiveEdit, setIsActiveEdit] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const methods = useForm({
@@ -29,17 +33,26 @@ export default function Checkout({isAuthenticated}) {
             city: "",
             postalCode: "",
             phoneNumber: "",
+            shippingMethod:''
         }
     });
     const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
-
     const { handleSubmit } = methods;
+    const navigate = useNavigate();
 
-    const handleClick = (buttonType) => {
-        setActiveButton(activeButton === buttonType ? null : buttonType);
+
+    const handleClickShipPickUp = (buttonType) => {
+        setActiveBtnShipPickUp(activeBtnShipPickUp === buttonType ? null : buttonType);
     };
 
+    const handleClickChooseShippingMethod = (buttonType) => {
+        setActiveBtnShippingMethod (activeBtnShippingMethod===buttonType ? null : buttonType);
+    }
+
+
     const onSubmit = (data) => {
+
+       if (!isSubmitted) {
         const cleanedData = {
             id: Date.now(),
             email: data.email,
@@ -48,10 +61,19 @@ export default function Checkout({isAuthenticated}) {
             country: data.country,
             city: data.city,
             postalCode: data.postalCode,
-            phoneNumber: data.phoneNumber,
+            phoneNumber: data.phoneNumber
+
         };
         setCustomerData([cleanedData])
         addUserData(cleanedData);
+
+        setIsSubmitted(true)
+       } else {
+           const updatedData = {
+               ...customerData[0], shippingMethod: activeBtnShippingMethod
+           }
+           setCustomerData([updatedData])
+       }
         setIsActiveEdit(false)
 
     };
@@ -94,10 +116,10 @@ export default function Checkout({isAuthenticated}) {
 
                                     <button
                                         type="button"
-                                        onClick={() => handleClick("ship")}
+                                        onClick={() => handleClickShipPickUp("ship")}
                                         className={`
                                             btnDelivery
-                                            ${activeButton === "ship" ? "border-black border-2" : "border-gray-300 border-1"}
+                                            ${activeBtnShipPickUp === "ship" ? "border-black border-2" : "border-gray-300 border-1"}
                                         `}
                                     >
                                         <FaShippingFast size="25" /> Ship
@@ -105,10 +127,10 @@ export default function Checkout({isAuthenticated}) {
 
                                     <button
                                         type="button"
-                                        onClick={() => handleClick("pickup")}
+                                        onClick={() => handleClickShipPickUp("pickup")}
                                         className={`
                                             btnDelivery
-                                            ${activeButton === "pickup" ? "border-black border-2" : "border-gray-300 border-1"}
+                                            ${activeBtnShipPickUp === "pickup" ? "border-black border-2" : "border-gray-300 border-1"}
                                         `}
                                     >
                                         <MdLocationOn size="25" /> Pick UP
@@ -121,7 +143,7 @@ export default function Checkout({isAuthenticated}) {
                                     loginText="Login"
                                 />
 
-                                {activeButton === "ship" && (
+                                {activeBtnShipPickUp === "ship" && (
 
                                     ((customerData.length === 0) || isActiveEdit)
                                         ? <TextInputHtml />
@@ -137,6 +159,7 @@ export default function Checkout({isAuthenticated}) {
                                                 <ul className='flex flex-col font-extralight text-base text-left '>
                                                     {customerData.map((item) => (
                                                         <li key={item.id}>
+                                                            <p className='font-normal'>Shipping Address</p>
                                                             <div>{item.email}</div>
                                                             <div>{item.firstName}</div>
                                                             <div>{item.lastName}</div>
@@ -144,13 +167,17 @@ export default function Checkout({isAuthenticated}) {
                                                             <div>{item.city}</div>
                                                             <div>{item.postalCode}</div>
                                                             <div>{item.phoneNumber}</div>
+                                                            {customerData && customerData[0]
+                                                                && Object.keys(customerData[0]).length ===9
+                                                                && <p className='font-normal mt-2'>Shipping Speed</p>}
+                                                            <div>{item.shippingMethod}</div>
                                                         </li>
                                                     ))}
                                                 </ul>
                                             )}
                                         </div>
                                 )}
-                                {activeButton === "pickup" && (
+                                {activeBtnShipPickUp === "pickup" && (
                                     <div>
                                         <h4 className="font-light text-xl mt-3">Select a store location</h4>
                                         <div className="w-full">
@@ -165,6 +192,37 @@ export default function Checkout({isAuthenticated}) {
                                         </div>
                                     </div>
                                 )}
+
+                              { isSubmitted  && (<div className='mt-3 flex flex-col justify-start items-start
+                                self-start text-base w-full'>
+                                    <p className='font-normal mb-3'>Select your shipping speed</p>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => handleClickChooseShippingMethod (freeShipping)}
+                                        className={`flex flex-col p-4 border-2 rounded-md
+                                    hover:cursor-pointer hover:border-gray-500 w-full text-left
+                                    font-normal ${activeBtnShippingMethod === freeShipping ? "border-black" : "border-gray-300"}
+                                        `}>
+
+                                        Free shipping
+                                        <p className='text-sm font-extralight pt-1'>Arrives by Mon, Jun 17</p>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => handleClickChooseShippingMethod (paidShipping)}
+                                        className={`mt-2 flex flex-col p-4 border-2 rounded-md
+                                    hover:cursor-pointer hover:border-gray-500 w-full text-left
+                                    font-normal ${activeBtnShippingMethod === paidShipping ? "border-black" : "border-gray-300"}
+                                        `}>
+                                        $20.00 Shipping
+                                        <p className='text-sm font-extralight pt-1'>Arrives by Wed, Jun 12</p>
+                                    </button>
+
+                                </div>)
+
+                                }
 
                                 <div className='mt-6'>
                                         <button
@@ -211,9 +269,7 @@ export default function Checkout({isAuthenticated}) {
                                     <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
 
                                     <Summary textSize='text-lg'/>
-
                                 </div>
-
                         </div>
                             {!isOpen &&
                                 (<hr className="lg:hidden mb-10 border-t-2 border-gray-300 w-full"/>)}
