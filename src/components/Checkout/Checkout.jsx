@@ -204,37 +204,7 @@ export default function Checkout({isAuthenticated}) {
                                         </div>
                                 )}
 
-                                {isContinueToPayment &&
-                                    <div>
-                                    <hr className="  border-t-2 border-gray-300 mt-10 "/>
-                                    <div className=' flex flex-col max-w-60'>
-                                    <div className='flex flex-col justify-start items-start gap-3'>
-                                    <h2 className='mt-8'>Payment</h2>
-                                    <p className='text-base mb-3'>Select payment method</p>
-                                    </div>
 
-                                        <Checkbox
-                                            checked={selectedPaymentMethod === "card"}
-                                            onChange={() => handlePaymentMethodChange ("card")}
-                                        />
-
-
-                                        <div className='flex flex-row hover:cursor-pointer '>
-                                        <Checkbox
-                                            iconCheckbox={null}
-                                            textLabel={null}
-                                            checked={selectedPaymentMethod === "paypal"}
-                                            onChange={() => handlePaymentMethodChange ("paypal")}
-                                        />
-                                            <img
-                                                onClick={() => handlePaymentMethodChange("paypal")}
-                                                src={payPal}
-                                                className='w-20 h-14 -ml-1'
-                                                alt="PayPal"/>
-                                        </div>
-                                    </div>
-                                        </div>
-                                    }
                                 {activeBtnShipPickUp === "pickup" && (
                                     <div>
                                         <h4 className="font-light text-xl mt-3">Select a store location</h4>
@@ -280,6 +250,38 @@ export default function Checkout({isAuthenticated}) {
 
                                 </div>)
 
+                                }
+
+                                {isContinueToPayment &&
+                                    <div>
+                                        <hr className="  border-t-2 border-gray-300 mt-10 "/>
+                                        <div className=' flex flex-col max-w-60'>
+                                            <div className='flex flex-col justify-start items-start gap-3'>
+                                                <h2 className='mt-8'>Payment</h2>
+                                                <p className='text-base mb-3'>Select payment method</p>
+                                            </div>
+
+                                            <Checkbox
+                                                checked={selectedPaymentMethod === "card"}
+                                                onChange={() => handlePaymentMethodChange ("card")}
+                                            />
+
+
+                                            <div className='flex flex-row hover:cursor-pointer '>
+                                                <Checkbox
+                                                    iconCheckbox={null}
+                                                    textLabel={null}
+                                                    checked={selectedPaymentMethod === "paypal"}
+                                                    onChange={() => handlePaymentMethodChange ("paypal")}
+                                                />
+                                                <img
+                                                    onClick={() => handlePaymentMethodChange("paypal")}
+                                                    src={payPal}
+                                                    className='w-20 h-14 -ml-1'
+                                                    alt="PayPal"/>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
 
                                  <div className='mt-6'>
