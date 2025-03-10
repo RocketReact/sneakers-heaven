@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaShippingFast } from "react-icons/fa";
+import { FcCheckmark } from "react-icons/fc";
 import { MdLocationOn } from "react-icons/md";
 import '../../index.css';
 import { FormProvider, useForm } from "react-hook-form";
@@ -113,8 +114,10 @@ export default function Checkout({isAuthenticated}) {
 
                          <div className="flex-2 order-2 lg:order-1 p-4 w-full">
                             <div className="flex flex-col relative ">
-                                <h2 className='mb-5'>Delivery Options</h2>
-                                <div className="flex flex-row space-x-3 ">
+                                {!isContinueToPayment && <>
+                                 <h2 className='mb-5'>Delivery Options </h2>
+
+                                 <div className="flex flex-row space-x-3 ">
 
                                     <button
                                         type="button"
@@ -124,7 +127,7 @@ export default function Checkout({isAuthenticated}) {
                                             ${activeBtnShipPickUp === "ship" ? "border-black border-2" : "border-gray-300 border-1"}
                                         `}
                                     >
-                                        <FaShippingFast size="25" /> Ship
+                                        <FaShippingFast size="25"/> Ship
                                     </button>
 
                                     <button
@@ -135,7 +138,7 @@ export default function Checkout({isAuthenticated}) {
                                             ${activeBtnShipPickUp === "pickup" ? "border-black border-2" : "border-gray-300 border-1"}
                                         `}
                                     >
-                                        <MdLocationOn size="25" /> Pick UP
+                                        <MdLocationOn size="25"/> Pick UP
                                     </button>
                                 </div>
 
@@ -144,23 +147,30 @@ export default function Checkout({isAuthenticated}) {
                                     isAuthenticated={isAuthenticated}
                                     loginText="Login"
                                 />
+                                </>}
 
                                 {activeBtnShipPickUp === "ship" && (
 
                                     ((customerData.length === 0) && !isContinueToPayment) || isActiveEdit
                                         ? <TextInputHtml />
-                                        :  <div className='flex flex-col
-                                            p-5 mt-3 border-2 border-gray-500 hover:border-gray-700 rounded-md items-start justify-start'>
+                                        :  <div className={`${isContinueToPayment? 'border-none' : 'flex flex-col p-5 mt-3 border-2 border-gray-500 hover:border-gray-700 rounded-md items-start justify-start'}`}
+                                        >
+                                        <div className="flex flex-row justify-between mb-3">
+
+                                            <div className='flex flex-row gap-3 max-w-100'><h2>Delivery Options </h2> <FcCheckmark size={20}/></div>
+
                                             <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
                                                 <button
                                                     onClick={() => setIsActiveEdit(true)}
                                                     className='hover:cursor-pointer underline underline-offset-3'> Edit </button>
                                             </div>
+                                        </div>
 
                                             {customerData && customerData.length > 0 && (
                                                 <ul className='flex flex-col font-extralight text-base text-left '>
                                                     {customerData.map((item) => (
                                                         <li key={item.id}>
+
                                                             <p className='font-normal'>Shipping Address</p>
                                                             <div>{item.email}</div>
                                                             <div>{item.firstName}</div>
