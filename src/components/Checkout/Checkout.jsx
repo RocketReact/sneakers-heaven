@@ -15,6 +15,8 @@ import {useSelector} from "react-redux";
 import Checkbox from "./Checkbox.jsx";
 import payPal from '../../img/paypal_PNG1.png'
 import GPay from '../../img/google-pay.webp'
+import { v4 as uuidv4 } from 'uuid';
+
 
 const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
 const paidShipping = "$20.00 Shipping, Arrives by Wed, Jun 12"
@@ -27,9 +29,10 @@ export default function Checkout({isAuthenticated}) {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isActiveEdit, setIsActiveEdit] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isCVVVisible, setIsCVVVisible] = useState(false);
     const methods = useForm({
         defaultValues: {
-            id: Date.now(),
+            id: uuidv4(),
             email: "",
             firstName: "",
             lastName: "",
@@ -55,35 +58,40 @@ export default function Checkout({isAuthenticated}) {
         setActiveBtnShippingMethod (activeBtnShippingMethod===buttonType ? null : buttonType);
     }
 
+    useEffect(() => {
+        if (isActiveEdit) {
+            setIsContinueToPayment(false);
+            setIsSubmitted(false)
+
+        }
+    }, [isActiveEdit]);
+
 
     const onSubmit = (data) => {
 
-       if (!isSubmitted) {
+        if (!isSubmitted) {
 
-        const cleanedData = {
-            id: Date.now(),
-            email: data.email,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            country: data.country,
-            city: data.city,
-            postalCode: data.postalCode,
-            phoneNumber: data.phoneNumber
+            const cleanedData = {
+                id: data.id,
+                email: data.email,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                country: data.country,
+                city: data.city,
+                postalCode: data.postalCode,
+                phoneNumber: data.phoneNumber,
+                shippingMethod: activeBtnShippingMethod
 
-        };
-        setCustomerData([cleanedData])
-        addUserData(cleanedData);
-        (customerData.length>0 && setIsSubmitted(true))
+            };
+            setCustomerData([cleanedData])
+            addUserData(cleanedData);
+            setIsSubmitted(true)
+            setIsContinueToPayment(true);
+            setIsActiveEdit(false)
 
-       } else {
-           const updatedData = {
-               ...customerData[0], shippingMethod: activeBtnShippingMethod
-           }
-           setCustomerData([updatedData])
-           setIsContinueToPayment (true)
-       }
 
-        setIsActiveEdit (false)
+        }
+
 
     };
     useEffect(() => {
@@ -122,61 +130,64 @@ export default function Checkout({isAuthenticated}) {
                     <div className="flex flex-col justify-center items-center m-5 md:flex-col
                     lg:flex-row lg:items-start space-y-4 md:space-y-0 md:space-x-4 md:mx-15 my-5  lg:mx-20 text-2xl">
 
-                         <div className="flex-2 order-2 lg:order-1 p-4 w-full">
+                        <div className="flex-2 order-2 lg:order-1 p-4 w-full">
                             <div className="flex flex-col relative ">
                                 {!isContinueToPayment && <>
-                                 <h2 className='mb-5'>Delivery Options </h2>
+                                    <h2 className='mb-5'>Delivery Options </h2>
 
-                                 <div className="flex flex-row space-x-3 ">
+                                    <div className="flex flex-row space-x-3 ">
 
-                                    <button
-                                        type="button"
-                                        onClick={() => handleClickShipPickUp("ship")}
-                                        className={`
+                                        <button
+                                            type="button"
+                                            onClick={() => handleClickShipPickUp("ship")}
+                                            className={`
                                             btnDelivery
                                             ${activeBtnShipPickUp === "ship" ? "border-black border-2" : "border-gray-300 border-1"}
                                         `}
-                                    >
-                                        <FaShippingFast size="25"/> Ship
-                                    </button>
+                                        >
+                                            <FaShippingFast size="25"/> Ship
+                                        </button>
 
-                                    <button
-                                        type="button"
-                                        onClick={() => handleClickShipPickUp("pickup")}
-                                        className={`
+                                        <button
+                                            type="button"
+                                            onClick={() => handleClickShipPickUp("pickup")}
+                                            className={`
                                             btnDelivery
                                             ${activeBtnShipPickUp === "pickup" ? "border-black border-2" : "border-gray-300 border-1"}
                                         `}
-                                    >
-                                        <MdLocationOn size="25"/> Pick UP
-                                    </button>
-                                </div>
+                                        >
+                                            <MdLocationOn size="25"/> Pick UP
+                                        </button>
+                                    </div>
 
-                                <Button
-                                    onClick={ () => navigate("/login")}
-                                    isAuthenticated={isAuthenticated}
-                                    loginText="Login"
-                                />
+                                    <Button
+                                        onClick={ () => navigate("/login")}
+                                        isAuthenticated={isAuthenticated}
+                                        loginText="Login"
+                                    />
                                 </>}
 
                                 {activeBtnShipPickUp === "ship" && (
 
-                                    ((customerData.length === 0) && !isContinueToPayment) || isActiveEdit
+                                    (customerData.length === 0)  || isActiveEdit
                                         ? <TextInputHtml />
                                         :  <div className={`${isContinueToPayment? 'border-none' : 'flex flex-col p-5 ' +
                                             'border-2 border-gray-500 hover:border-gray-700 rounded-md items-between justify-between'}`}
                                         >
-                                        <div className="flex flex-row justify-between mb-3">
+                                            <div className="flex flex-row justify-between mb-3">
 
-                                            <div className='flex flex-row gap-3 max-w-100'><h2>Delivery Options </h2> <FcCheckmark className='text-emerald-400' size={20} />
-                                            </div>
+                                                <div className='flex flex-row gap-3 max-w-100'><h2>Delivery Options </h2> <FcCheckmark className='text-emerald-400' size={20} />
+                                                </div>
 
-                                            <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
-                                                <button
-                                                    onClick={() => setIsActiveEdit(true)}
-                                                    className=' hover:cursor-pointer underline underline-offset-3'> Edit </button>
+                                                <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
+                                                    <button
+                                                        onClick={() => {
+                                                            setIsActiveEdit(!isActiveEdit);
+
+                                                        }}
+                                                        className=' hover:cursor-pointer underline underline-offset-3'> Edit </button>
+                                                </div>
                                             </div>
-                                        </div>
 
                                             {customerData && customerData.length > 0 && (
                                                 <ul className='flex flex-col font-extralight text-base text-left '>
@@ -223,7 +234,7 @@ export default function Checkout({isAuthenticated}) {
                                     </div>
                                 )}
 
-                              { isSubmitted  && !isContinueToPayment || isActiveEdit && (<div className='mt-3 flex flex-col justify-start items-start
+                                { !(customerData && customerData.length > 0 ) || isActiveEdit  && (<div className='mt-3 flex flex-col justify-start items-start
                                 self-start text-base w-full'>
                                     <p className='font-normal mb-3'>Select your shipping speed</p>
 
@@ -293,13 +304,13 @@ export default function Checkout({isAuthenticated}) {
                                             />
 
                                             <div className='flex flex-row hover:cursor-pointerg '>
-                                            <Checkbox
-                                                textLabel={null}
+                                                <Checkbox
+                                                    textLabel={null}
 
-                                                iconCheckbox={null}
-                                                checked={selectedPaymentMethod === "GooglePay"}
-                                                onChange={() => handlePaymentMethodChange ("GooglePay")}
-                                            />
+                                                    iconCheckbox={null}
+                                                    checked={selectedPaymentMethod === "GooglePay"}
+                                                    onChange={() => handlePaymentMethodChange ("GooglePay")}
+                                                />
                                                 <img
 
                                                     onClick={() => handlePaymentMethodChange("GooglePay")}
@@ -309,10 +320,68 @@ export default function Checkout({isAuthenticated}) {
                                             </div>
 
                                         </div>
+
+                                        {selectedPaymentMethod === "Card" && (
+
+                                            <div className='flex flex-col mt-5 w-full rounded-md
+                                          p-5 border-2 border-gray-300 justify-between
+                                          font-extralight text-base'>
+                                                <p className='font-normal self-start'>Add Card</p>
+                                                <div className='flex flex-row gap-3 mb-5 justify-between'>
+                                                    <label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder='Card Number'
+                                                            className=' mt-5 py-4 pr-40 pl-4 border border-gray-300 rounded-md'
+                                                            required={true}
+                                                        />
+                                                    </label>
+
+                                                    <label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder='MM/YY'
+                                                            className='mt-5 py-4 px-3 border border-gray-300 rounded-md'
+                                                        />
+
+                                                    </label>
+
+                                                    <label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder='CVV'
+                                                            className='mt-5 py-4 px-3 border border-gray-300 rounded-md'
+
+                                                        />
+
+                                                    </label>
+
+
+                                                </div>
+
+
+                                                <div className='flex flex-col relative'>
+                                                    <button
+                                                        className=' self-end underline underline-offset-4 hover:cursor-pointer'
+                                                        onClick={() => setIsCVVVisible (!isCVVVisible)}
+                                                    >Where is my CVV?</button>
+
+                                                    {isCVVVisible && (
+                                                        <div className='self-end absolute z-10 flex-col p-4 -mb-7 bg-black text-white'>
+                                                            <p>Find your CVV</p>
+                                                        </div>)
+                                                    }
+                                                </div>
+
+                                            </div>
+                                        )
+                                        }
+
                                     </div>
                                 }
 
-                                 <div className='mt-6'>
+
+                                <div className='mt-6'>
                                     <button
                                         type="submit"
                                         className="
@@ -321,7 +390,9 @@ export default function Checkout({isAuthenticated}) {
                                         text-xl mb-3
                                     "
                                     >
-                                        {!isSubmitted? 'Save & Continue' : 'Continue to Payment'}
+                                        {!isContinueToPayment ? 'Save & Continue'
+                                            : (selectedPaymentMethod ? 'Place Order' : 'Continue to Payment')}
+
 
                                     </button>
                                 </div>
@@ -334,38 +405,38 @@ export default function Checkout({isAuthenticated}) {
 
                         <div className='flex-1 order-1 lg:order-2 w-full'>
 
-                        <hr className=" lg:hidden  border-t-2 border-gray-300 mx-4"/>
+                            <hr className=" lg:hidden  border-t-2 border-gray-300 mx-4"/>
 
-                        <div className=" p-4 lg:self-start w-full">
-                           <div
-                               className='flex flex-row items-center justify-between lg:justify-center
+                            <div className=" p-4 lg:self-start w-full">
+                                <div
+                                    className='flex flex-row items-center justify-between lg:justify-center
                                gap-5 mb-5
                                '>
 
-                               <h2>In your bag</h2>
-                               <button
-                                   type="button"
-                                   onClick={() => setIsOpen(prev => !prev)}
-                                   className={`${isOpen ? "rotate-180" : "rotate-0"}
+                                    <h2>In your bag</h2>
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsOpen(prev => !prev)}
+                                        className={`${isOpen ? "rotate-180" : "rotate-0"}
                                 text-gray-400 hover:text-gray-600 hover:cursor-pointer mt-1
                                 lg:hidden 
                                 `}
-                               > ▼
+                                    > ▼
 
-                               </button>
-                           </div>
-
-
-                        <div className={`${isOpen? 'block' : 'hidden'} lg:block`}>
-                                <div className='flex flex-col items-center'>
-                                    <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
-
-                                    <Summary textSize='text-lg'/>
+                                    </button>
                                 </div>
-                        </div>
-                            {!isOpen &&
-                                (<hr className="lg:hidden  border-t-2 border-gray-300 w-full"/>)}
-                           </div>
+
+
+                                <div className={`${isOpen? 'block' : 'hidden'} lg:block`}>
+                                    <div className='flex flex-col items-center'>
+                                        <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
+
+                                        <Summary textSize='text-lg'/>
+                                    </div>
+                                </div>
+                                {!isOpen &&
+                                    (<hr className="lg:hidden  border-t-2 border-gray-300 w-full"/>)}
+                            </div>
                         </div>
                     </div>
                 </form>
