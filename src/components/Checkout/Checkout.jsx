@@ -48,8 +48,6 @@ export default function Checkout({isAuthenticated}) {
     });
     const {handleSubmit} = methods;
 
-
-
     useEffect(() => {
         if (isEditing) {
             dispatch ({type: 'SET_STEP', payload:'shipping'});
@@ -61,29 +59,18 @@ export default function Checkout({isAuthenticated}) {
 
     const onSubmit = (data) => {
         if (step === 'shipping') {
-            // при первом шаге (shipping) сохраняем клиента
-            const cleanedData = { ...data, deliverySpeed: deliverySpeed }; // уже есть выбранная скорость из state
-
-            dispatch({ type: 'SET_CUSTOMER_DATA', payload: [cleanedData] });
-            addUserData(cleanedData);
-            dispatch({ type: 'SET_STEP', payload: 'deliverySpeed' }); // перейдем на выбор скорости доставки
-            dispatch({ type: 'FORM_CHECKOUT_IS_SUBMITTED', payload: false });
-            dispatch({ type: 'TOGGLE_EDITING' });
-        } else if (step === 'deliverySpeed') {
-            // когда пользователь выбрал скорость доставки
-            const updatedCustomer = customerData.map(customer => ({
-                ...customer,
-                deliverySpeed: deliverySpeed, // обновим доставку в customerData
-            }));
-
-            dispatch({ type: 'SET_CUSTOMER_DATA', payload: updatedCustomer });
-            dispatch({ type: 'SET_STEP', payload: 'payment' }); // переходим к оплате
-            dispatch({ type: 'FORM_CHECKOUT_IS_SUBMITTED', payload: false });
+            if (customerData.length === 0 || isEditing) {
+                const cleanedData = {...data, deliverySpeed};
+                dispatch({type: 'SET_CUSTOMER_DATA', payload: [cleanedData]});
+                addUserData(cleanedData);
+                dispatch({type: 'TOGGLE_EDITING', payload: false}); // выключаем редактирование
+                dispatch({type: 'SET_STEP', payload: 'payment'});
+            }
         } else if (step === 'payment') {
-            // Здесь можно было бы обрабатывать отправку платежных данных
             console.log('Payment step completed');
         }
     };
+
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1024) {
@@ -98,8 +85,6 @@ export default function Checkout({isAuthenticated}) {
         return () => window.removeEventListener("resize", handleResize);
 
     }, [setIsOpen]);
-
-
 
 
     return (
@@ -177,7 +162,7 @@ export default function Checkout({isAuthenticated}) {
                                                 </div>
                                             </div>
 
-                                            {customerData && customerData.length > 0 && (
+                                            {customerData && customerData.length > 0  && (
                                                 <ul className='flex flex-col font-extralight text-base text-left '>
                                                     {customerData.map((item) => (
                                                         <li key={item.id}>
@@ -190,18 +175,14 @@ export default function Checkout({isAuthenticated}) {
                                                             <div>{item.city}</div>
                                                              <div>{item.postalCode}</div>
                                                             <div>{item.phoneNumber}</div>
-
-                                                                <>
-                                                                    <p className='font-normal mt-2'>Shipping Speed</p>
-                                                                    <div>{item.deliverySpeed}</div>
-                                                                </>
-
-
+                                                            <>
+                                                                <p className='font-normal mt-2'>Shipping Speed</p>
+                                                                <div>{item.deliverySpeed}</div>
+                                                            </>
                                                         </li>
                                                     ))}
                                                 </ul>
                                             )}
-
                                         </div>
                                 )}
 
@@ -254,18 +235,20 @@ export default function Checkout({isAuthenticated}) {
 
                                 {(step === 'payment') && <Payment/>}
                                     <div className='mt-6'>
-                                    <button
-                                        type="submit"
-                                        className="
-                                        w-50 bg-black text-white py-3 px-2 rounded-full
-                                        hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
-                                        text-xl mb-3
-                                    "
-                                    >
-                                        {(step!== 'payment')? 'Save & Continue'
-                                            : 'Continue to Payment'}
-
-                                    </button>
+                                        <button
+                                            type="submit"
+                                            className='w-50 bg-black text-white py-3 px-2 rounded-full
+                                            hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
+                                            text-xl mb-3'
+                                        >
+                                            {(step === 'payment')
+                                                ? 'Continue to Payment'
+                                                : (customerData.length === 0 || isEditing
+                                                        ? 'Save & Continue'
+                                                        : 'Continue to Payment'
+                                                )
+                                            }
+                                        </button>
                                 </div>
                             </div>
                         </div>
