@@ -2,7 +2,7 @@ import Checkbox from "../Checkout/Checkbox.jsx";
 import payPal from "../../img/paypal_PNG1.png";
 import {FaApplePay} from "react-icons/fa";
 import GPay from "../../img/google-pay.webp";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 
 
@@ -11,15 +11,37 @@ export default function Payment() {
     const handlePaymentMethodChange = (method) => {
         setSelectedPaymentMethod(prevMethod => prevMethod === method ? null : method);
     };
-    const [isCVVVisible, setIsCVVVisible] = useState(false);
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+    const tooltipRef = useRef(null);
+    const infoRef = useRef(null);
+    const toggleTooltip = () => {
+        setTooltipVisible(prev =>!prev)
+    }
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (
+                tooltipRef.current &&
+                !tooltipRef.current.contains(e.target) &&
+                infoRef.current &&
+                !infoRef.current.contains(e.target)
+            ) {
+                setTooltipVisible(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, [])
 
     return <div>
-        <hr className="  border-t-2 border-gray-300 mt-10"/>
-        <div className=' flex flex-col max-w-60 '>
+        <hr className="border-t-2 border-gray-300 mt-10"/>
+        <div className='flex flex-col max-w-60'>
             <div className='flex flex-col justify-start items-start gap-3'>
                 <h2 className='mt-8'>Payment</h2>
                 <p className='text-base mb-3'>Select payment method</p>
             </div>
+
 
             <Checkbox
 
@@ -77,12 +99,12 @@ export default function Payment() {
                                           p-5 border-2 border-gray-300 justify-between
                                           font-extralight text-base'>
                 <p className='font-normal self-start'>Add Card</p>
-                <div className='flex flex-row gap-3 mb-5 justify-between'>
-                    <label>
+                <div className='grid grid-cols-1 sm:grid-cols-4 gap-3 mb-5'>
+                    <label className='sm:col-span-2'>
                         <input
                             type="text"
                             placeholder='Card Number'
-                            className=' mt-5 py-4 pr-40 pl-4 border border-gray-300 rounded-md'
+                            className='mt-5 py-4 px-4 w-full  pl-4 border border-gray-300 rounded-md'
                             required={true}
                         />
                     </label>
@@ -91,7 +113,7 @@ export default function Payment() {
                         <input
                             type="text"
                             placeholder='MM/YY'
-                            className='mt-5 py-4 px-3 border border-gray-300 rounded-md'
+                            className='mt-5 py-4 px-4 w-full pl-4 border border-gray-300 rounded-md'
                         />
 
                     </label>
@@ -100,27 +122,33 @@ export default function Payment() {
                         <input
                             type="text"
                             placeholder='CVV'
-                            className='mt-5 py-4 px-3 border border-gray-300 rounded-md'
+                            className='mt-5 py-4 px-4 w-full pl-4 border border-gray-300 rounded-md'
 
                         />
 
                     </label>
-
-
                 </div>
 
-
-                <div className='flex flex-col relative'>
+                <div className='relative inline-block text-end'>
                     <button
-                        className=' self-end underline underline-offset-4 hover:cursor-pointer'
-                        onClick={() => setIsCVVVisible (!isCVVVisible)}
-                    >Where is my CVV?</button>
+                        ref={infoRef}
+                        onClick={toggleTooltip}
+                        className='relative hover:cursor-pointer text-sm underline underline-offset-4 text-gray-500 hover:text-black'
 
-                    {isCVVVisible && (
-                        <div className='self-end absolute z-10 flex-col p-4 -mb-7 bg-black text-white'>
-                            <p>Find your CVV</p>
+                    >
+                        Where is my CVV?
+                    </button>
+
+                    {tooltipVisible && (
+                        <div
+                            ref={tooltipRef}
+                            className='text-center absolute -mb-.5 mt-1 right-0 z-10 w-80 p-4 py-13 bg-black text-white rounded-md shadow-md text-xs'>
+                            <p>The CVV is a 3-digit number on the back of your card,
+                                usually next to the signature strip.
+                            </p>
                         </div>)
                     }
+
                 </div>
 
             </div>
