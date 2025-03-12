@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from "react";
 import checkoutReducer from "../../store/checkoutReducer/checkoutReducer.js";
-import { FaShippingFast, FaApplePay} from "react-icons/fa";
+import { FaShippingFast} from "react-icons/fa";
 import { FcCheckmark } from "react-icons/fc";
 import { MdLocationOn } from "react-icons/md";
 import '../../index.css';
@@ -31,13 +31,9 @@ export default function Checkout({isAuthenticated}) {
         deliverySpeed: freeShipping,
         customerData: [],
         isEditing: false,
-        isSubmitted: false
     })
     const { step, shippingMethod, deliverySpeed, customerData, isEditing } = state;
-
-
     const methods = useForm({
-
             defaultValues: {
             id: uuidv4(),
             email: "",
@@ -50,10 +46,7 @@ export default function Checkout({isAuthenticated}) {
             deliverySpeed: freeShipping
         }
     });
-
-    const {
-        handleSubmit,
-        formState: { isSubmitted } } = methods;
+    const {handleSubmit} = methods;
 
 
 

@@ -6,7 +6,6 @@ const initialCheckoutState = {
     deliverySpeed: freeShipping,
     customerData: [],
     isEditing: false,
-    isSubmitted: false
 }
 
 export default function checkoutReducer(state = initialCheckoutState, action) {
@@ -25,9 +24,6 @@ export default function checkoutReducer(state = initialCheckoutState, action) {
 
         case 'TOGGLE_EDITING':
             return {...state, isEditing: !state.isEditing};
-
-        case 'FORM_CHECKOUT_IS_SUBMITTED':
-            return {...state, isSubmitted: true};
                 default:
                     return state;
 
