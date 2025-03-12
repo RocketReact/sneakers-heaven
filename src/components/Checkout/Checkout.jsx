@@ -55,6 +55,7 @@ export default function Checkout({isAuthenticated}) {
             deliverySpeed: freeShipping
         }
     });
+
     const {
         handleSubmit,
         formState: { isSubmitted } } = methods;
@@ -71,19 +72,29 @@ export default function Checkout({isAuthenticated}) {
 
 
     const onSubmit = (data) => {
+        if (step === 'shipping') {
+            // при первом шаге (shipping) сохраняем клиента
+            const cleanedData = { ...data, deliverySpeed: deliverySpeed }; // уже есть выбранная скорость из state
 
-        if (!isSubmitted) {
-
-            const cleanedData = {...data, deliverySpeed: freeShipping};
-
-            dispatch({type: 'SET_CUSTOMER_DATA', payload:[cleanedData]})
+            dispatch({ type: 'SET_CUSTOMER_DATA', payload: [cleanedData] });
             addUserData(cleanedData);
-            dispatch ({type: 'FORM_CHECKOUT_IS_SUBMITTED'})
-            dispatch ({type: 'SET_STEP', payload: 'payment'});
-            dispatch ({type: 'TOGGLE_EDITING'})
+            dispatch({ type: 'SET_STEP', payload: 'deliverySpeed' }); // перейдем на выбор скорости доставки
+            dispatch({ type: 'FORM_CHECKOUT_IS_SUBMITTED', payload: false });
+            dispatch({ type: 'TOGGLE_EDITING' });
+        } else if (step === 'deliverySpeed') {
+            // когда пользователь выбрал скорость доставки
+            const updatedCustomer = customerData.map(customer => ({
+                ...customer,
+                deliverySpeed: deliverySpeed, // обновим доставку в customerData
+            }));
+
+            dispatch({ type: 'SET_CUSTOMER_DATA', payload: updatedCustomer });
+            dispatch({ type: 'SET_STEP', payload: 'payment' }); // переходим к оплате
+            dispatch({ type: 'FORM_CHECKOUT_IS_SUBMITTED', payload: false });
+        } else if (step === 'payment') {
+            // Здесь можно было бы обрабатывать отправку платежных данных
+            console.log('Payment step completed');
         }
-
-
     };
     useEffect(() => {
         const handleResize = () => {
@@ -123,7 +134,7 @@ export default function Checkout({isAuthenticated}) {
 
                         <div className="flex-2 order-2 lg:order-1 p-4 w-full">
                             <div className="flex flex-col relative ">
-                                {step!== 'payment' && <>
+                                {(step!== 'payment') && <>
                                     <h2 className='mb-5'>Delivery Options </h2>
 
                                     <div className="flex flex-row space-x-3 ">
@@ -193,12 +204,12 @@ export default function Checkout({isAuthenticated}) {
                                                             <div>{item.city}</div>
                                                              <div>{item.postalCode}</div>
                                                             <div>{item.phoneNumber}</div>
-                                                            {(step === 'payment') && (
+
                                                                 <>
                                                                     <p className='font-normal mt-2'>Shipping Speed</p>
                                                                     <div>{item.deliverySpeed}</div>
                                                                 </>
-                                                            )}
+
 
                                                         </li>
                                                     ))}
@@ -266,7 +277,7 @@ export default function Checkout({isAuthenticated}) {
                                             </div>
 
                                             <Checkbox
-                                                textLabel={null}
+
                                                 checked={selectedPaymentMethod === "Card"}
                                                 onChange={() => handlePaymentMethodChange ("Card")}
                                             />
@@ -274,7 +285,7 @@ export default function Checkout({isAuthenticated}) {
 
                                             <div className='flex flex-row hover:cursor-pointer '>
                                                 <Checkbox
-                                                    NewText={null}
+
                                                     iconCheckbox={null}
                                                     textLabel={null}
                                                     checked={selectedPaymentMethod === "PayPal"}
@@ -384,8 +395,8 @@ export default function Checkout({isAuthenticated}) {
                                         text-xl mb-3
                                     "
                                     >
-                                        {(step!== 'payment') ? 'Save & Continue'
-                                            : (selectedPaymentMethod ? 'Place Order' : 'Continue to Payment')}
+                                        {(step!== 'payment')? 'Save & Continue'
+                                            : 'Continue to Payment'}
 
 
                                     </button>
