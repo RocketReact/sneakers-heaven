@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../store/cart/cartSlice.js";
+import { addToCart } from "../../store/./cartSlice/cartSlice.js";
 import noImage from "../../img/no-image.jpg"; // Импорт изображения
 import {fetchProducts} from "../../store/productSlice/productSlice.js";
 

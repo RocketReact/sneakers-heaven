@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../../store/productSlice/productSlice.js";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
-import { addToCart, decreaseQuantity, removeFromCart } from "../../store/cart/cartSlice.js";
+import { addToCart, decreaseQuantity, removeFromCart } from "../../store/./cartSlice/cartSlice.js";
 import noImage from "../../img/no-image.jpg";
 import {Helmet} from "react-helmet-async";
 import generateProductLink from "../../generateURL/generateURL.js";

@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
+import checkoutReducer from "../../store/checkoutReducer/checkoutReducer.js";
+
 import { FaShippingFast, FaApplePay} from "react-icons/fa";
 import { FcCheckmark } from "react-icons/fc";
 import { MdLocationOn } from "react-icons/md";
@@ -22,16 +24,26 @@ const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
 const paidShipping = "$20.00 Shipping, Arrives by Wed, Jun 12"
 
 export default function Checkout({isAuthenticated}) {
-    const [customerData, setCustomerData ] = useState([])
-    const [activeBtnShipPickUp, setActiveBtnShipPickUp] = useState('ship');
-    const [isContinueToPayment, setIsContinueToPayment] = useState(false);
-    const [activeBtnShippingMethod, setActiveBtnShippingMethod] = useState(freeShipping);
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isActiveEdit, setIsActiveEdit] = useState(false);
+    const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
+    const navigate = useNavigate();
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [isCVVVisible, setIsCVVVisible] = useState(false);
+
+    const [state, dispatch] = useReducer(checkoutReducer,{
+        step: 'shipping',
+        shippingMethod: 'ship',
+        deliverySpeed: freeShipping,
+        customerData: [],
+        isEditing: false,
+        isSubmitted: false
+    })
+    const { step, shippingMethod, deliverySpeed, customerData, isEditing } = state;
+
+
     const methods = useForm({
-        defaultValues: {
+
+            defaultValues: {
             id: uuidv4(),
             email: "",
             firstName: "",
@@ -40,56 +52,35 @@ export default function Checkout({isAuthenticated}) {
             city: "",
             postalCode: "",
             phoneNumber: "",
-            shippingMethod:''
+            deliverySpeed: freeShipping
         }
     });
-    const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
-    const { handleSubmit } = methods;
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-
-    const navigate = useNavigate();
+    const {
+        handleSubmit,
+        formState: { isSubmitted } } = methods;
 
 
-    const handleClickShipPickUp = (buttonType) => {
-        setActiveBtnShipPickUp(activeBtnShipPickUp === buttonType ? null : buttonType);
-    };
-
-    const handleClickChooseShippingMethod = (buttonType) => {
-        setActiveBtnShippingMethod (activeBtnShippingMethod===buttonType ? null : buttonType);
-    }
 
     useEffect(() => {
-        if (isActiveEdit) {
-            setIsContinueToPayment(false);
-            setIsSubmitted(false)
+        if (isEditing) {
+            dispatch ({type: 'SET_STEP', payload:'shipping'});
+            dispatch ({type: 'FORM_CHECKOUT_IS_SUBMITTED'})
 
         }
-    }, [isActiveEdit]);
+    }, [isEditing]);
 
 
     const onSubmit = (data) => {
 
         if (!isSubmitted) {
 
-            const cleanedData = {
-                id: data.id,
-                email: data.email,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                country: data.country,
-                city: data.city,
-                postalCode: data.postalCode,
-                phoneNumber: data.phoneNumber,
-                shippingMethod: activeBtnShippingMethod
+            const cleanedData = {...data, deliverySpeed: freeShipping};
 
-            };
-            setCustomerData([cleanedData])
+            dispatch({type: 'SET_CUSTOMER_DATA', payload:[cleanedData]})
             addUserData(cleanedData);
-            setIsSubmitted(true)
-            setIsContinueToPayment(true);
-            setIsActiveEdit(false)
-
-
+            dispatch ({type: 'FORM_CHECKOUT_IS_SUBMITTED'})
+            dispatch ({type: 'SET_STEP', payload: 'payment'});
+            dispatch ({type: 'TOGGLE_EDITING'})
         }
 
 
@@ -132,17 +123,17 @@ export default function Checkout({isAuthenticated}) {
 
                         <div className="flex-2 order-2 lg:order-1 p-4 w-full">
                             <div className="flex flex-col relative ">
-                                {!isContinueToPayment && <>
+                                {step!== 'payment' && <>
                                     <h2 className='mb-5'>Delivery Options </h2>
 
                                     <div className="flex flex-row space-x-3 ">
 
                                         <button
                                             type="button"
-                                            onClick={() => handleClickShipPickUp("ship")}
+                                            onClick={() => dispatch({type: 'SET_SHIPPING_METHOD', payload:'ship'})}
                                             className={`
                                             btnDelivery
-                                            ${activeBtnShipPickUp === "ship" ? "border-black border-2" : "border-gray-300 border-1"}
+                                            ${shippingMethod === 'ship' ? "border-black border-2" : "border-gray-300 border-1"}
                                         `}
                                         >
                                             <FaShippingFast size="25"/> Ship
@@ -150,10 +141,10 @@ export default function Checkout({isAuthenticated}) {
 
                                         <button
                                             type="button"
-                                            onClick={() => handleClickShipPickUp("pickup")}
+                                            onClick={() => dispatch({type: 'SET_SHIPPING_METHOD', payload: 'pickup'})}
                                             className={`
                                             btnDelivery
-                                            ${activeBtnShipPickUp === "pickup" ? "border-black border-2" : "border-gray-300 border-1"}
+                                            ${shippingMethod === 'pickup' ? "border-black border-2" : "border-gray-300 border-1"}
                                         `}
                                         >
                                             <MdLocationOn size="25"/> Pick UP
@@ -167,11 +158,11 @@ export default function Checkout({isAuthenticated}) {
                                     />
                                 </>}
 
-                                {activeBtnShipPickUp === "ship" && (
+                                {shippingMethod === 'ship' && (
 
-                                    (customerData.length === 0)  || isActiveEdit
+                                    (customerData.length === 0)  || isEditing
                                         ? <TextInputHtml />
-                                        :  <div className={`${isContinueToPayment? 'border-none' : 'flex flex-col p-5 ' +
+                                        :  <div className={`${(step === 'payment')? 'border-none' : 'flex flex-col p-5 ' +
                                             'border-2 border-gray-500 hover:border-gray-700 rounded-md items-between justify-between'}`}
                                         >
                                             <div className="flex flex-row justify-between mb-3">
@@ -182,7 +173,7 @@ export default function Checkout({isAuthenticated}) {
                                                 <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
                                                     <button
                                                         onClick={() => {
-                                                            setIsActiveEdit(!isActiveEdit);
+                                                            dispatch({type: 'TOGGLE_EDITING'});
 
                                                         }}
                                                         className=' hover:cursor-pointer underline underline-offset-3'> Edit </button>
@@ -200,12 +191,12 @@ export default function Checkout({isAuthenticated}) {
                                                             <div>{item.lastName}</div>
                                                             <div>{item.country}</div>
                                                             <div>{item.city}</div>
-                                                            <div>{item.postalCode}</div>
+                                                             <div>{item.postalCode}</div>
                                                             <div>{item.phoneNumber}</div>
-                                                            {isContinueToPayment && (
+                                                            {(step === 'payment') && (
                                                                 <>
                                                                     <p className='font-normal mt-2'>Shipping Speed</p>
-                                                                    <div>{item.shippingMethod}</div>
+                                                                    <div>{item.deliverySpeed}</div>
                                                                 </>
                                                             )}
 
@@ -218,11 +209,11 @@ export default function Checkout({isAuthenticated}) {
                                 )}
 
 
-                                {activeBtnShipPickUp === "pickup" && (
+                                {shippingMethod === 'pickup' && (
                                     <div>
                                         <h4 className="font-light text-xl mt-3">Select a store location</h4>
                                         <div className="w-full">
-                                            <TextInput
+                                            < TextInput
                                                 id="storeLocation"
                                                 name="storeLocation"
                                                 label="Store Location*"
@@ -234,16 +225,16 @@ export default function Checkout({isAuthenticated}) {
                                     </div>
                                 )}
 
-                                { !(customerData && customerData.length > 0 ) || isActiveEdit  && (<div className='mt-3 flex flex-col justify-start items-start
+                                { !(customerData && customerData.length > 0 ) || isEditing  && (<div className='mt-3 flex flex-col justify-start items-start
                                 self-start text-base w-full'>
                                     <p className='font-normal mb-3'>Select your shipping speed</p>
 
                                     <button
                                         type="button"
-                                        onClick={() => handleClickChooseShippingMethod (freeShipping)}
+                                        onClick={() => dispatch ({type:'SET_DELIVERY_SPEED', payload: freeShipping})}
                                         className={`flex flex-col p-4 border-2 rounded-md
                                     hover:cursor-pointer hover:border-gray-500 w-full text-left
-                                    font-normal ${activeBtnShippingMethod === freeShipping ? "border-black" : "border-gray-300"}
+                                    font-normal ${deliverySpeed === freeShipping ? "border-black" : "border-gray-300"}
                                         `}>
 
                                         Free shipping
@@ -252,10 +243,10 @@ export default function Checkout({isAuthenticated}) {
 
                                     <button
                                         type="button"
-                                        onClick={() => handleClickChooseShippingMethod (paidShipping)}
+                                        onClick={() => dispatch ({type:'SET_DELIVERY_SPEED', payload: paidShipping})}
                                         className={`mt-2 flex flex-col p-4 border-2 rounded-md
                                     hover:cursor-pointer hover:border-gray-500 w-full text-left
-                                    font-normal ${activeBtnShippingMethod === paidShipping ? "border-black" : "border-gray-300"}
+                                    font-normal ${deliverySpeed === paidShipping ? "border-black" : "border-gray-300"}
                                         `}>
                                         $20.00 Shipping
                                         <p className='text-sm font-extralight pt-1'>Arrives by Wed, Jun 12</p>
@@ -265,7 +256,7 @@ export default function Checkout({isAuthenticated}) {
 
                                 }
 
-                                {isContinueToPayment &&
+                                {(step=== 'payment') &&
                                     <div>
                                         <hr className="  border-t-2 border-gray-300 mt-10"/>
                                         <div className=' flex flex-col max-w-60 '>
@@ -275,6 +266,7 @@ export default function Checkout({isAuthenticated}) {
                                             </div>
 
                                             <Checkbox
+                                                textLabel={null}
                                                 checked={selectedPaymentMethod === "Card"}
                                                 onChange={() => handlePaymentMethodChange ("Card")}
                                             />
@@ -282,6 +274,7 @@ export default function Checkout({isAuthenticated}) {
 
                                             <div className='flex flex-row hover:cursor-pointer '>
                                                 <Checkbox
+                                                    NewText={null}
                                                     iconCheckbox={null}
                                                     textLabel={null}
                                                     checked={selectedPaymentMethod === "PayPal"}
@@ -296,6 +289,7 @@ export default function Checkout({isAuthenticated}) {
 
 
                                             <Checkbox
+                                                NewText={null}
                                                 textLabel={null}
                                                 iconSize={41}
                                                 iconCheckbox={FaApplePay}
@@ -305,8 +299,8 @@ export default function Checkout({isAuthenticated}) {
 
                                             <div className='flex flex-row hover:cursor-pointerg '>
                                                 <Checkbox
+                                                    NewText={null}
                                                     textLabel={null}
-
                                                     iconCheckbox={null}
                                                     checked={selectedPaymentMethod === "GooglePay"}
                                                     onChange={() => handlePaymentMethodChange ("GooglePay")}
@@ -390,7 +384,7 @@ export default function Checkout({isAuthenticated}) {
                                         text-xl mb-3
                                     "
                                     >
-                                        {!isContinueToPayment ? 'Save & Continue'
+                                        {(step!== 'payment') ? 'Save & Continue'
                                             : (selectedPaymentMethod ? 'Place Order' : 'Continue to Payment')}
 
 

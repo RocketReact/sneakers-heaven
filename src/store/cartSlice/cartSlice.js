@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
-// Get data cart from localStorage
+// Get data cartSlice from localStorage
 const localCartFromStorage = () => {
     try {
         const savedCart = localStorage.getItem("cart");
@@ -9,7 +9,7 @@ const localCartFromStorage = () => {
             ? JSON.parse(savedCart)
             : { cartItems: [], totalQuantity: 0, totalPrice: 0 };
     } catch (error) {
-        console.error("Error downloading cart from localStorage", error);
+        console.error("Error downloading cartSlice from localStorage", error);
         return { cartItems: [], totalQuantity: 0, totalPrice: 0 };
     }
 };
@@ -24,7 +24,7 @@ const cartMiddleware = (store) => (next) => (action) => {
         try {
             localStorage.setItem("cart", JSON.stringify(state));
         } catch (error) {
-            console.error("Error saving cart to localStorage", error);
+            console.error("Error saving cartSlice to localStorage", error);
         }
     }
     return result;

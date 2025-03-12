@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
 import noImage from "../../img/no-image.jpg";
 import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
-import { addToCart } from "../../store/cart/cartSlice.js";
+import { addToCart } from "../../store/./cartSlice/cartSlice.js";
 
 export default function AllProducts() {
     const dispatch = useDispatch();
