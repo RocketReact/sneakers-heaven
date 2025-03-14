@@ -1,5 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
-import checkoutReducer from '../../store/checkoutReducer/checkoutReducer.js';
+import { useState, useEffect } from 'react';
 import { FaShippingFast} from 'react-icons/fa';
 import { FcCheckmark } from 'react-icons/fc';
 import { MdLocationOn } from 'react-icons/md';
@@ -12,10 +11,16 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../Button/Button.jsx';
 import {Bag, Summary} from '../Cart/Cart.jsx';
 import {Helmet} from 'react-helmet-async';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import Payment from '../Payment/Payment.jsx';
-
+import ShippingAddress from './ShippingAddress.jsx';
+import  {
+    setStep,
+    setShippingMethod,
+    setDeliverySpeed,
+    setCustomerData,
+    toggleEditing } from '../../store/checkoutSlice/checkoutSlice.js'
 
 
 const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
@@ -23,17 +28,11 @@ const paidShipping = '$20.00 Shipping, Arrives by Wed, Jun 12'
 
 export default function Checkout({isAuthenticated}) {
     const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
-    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
+    const { step, shippingMethod, deliverySpeed, customerData, isEditing } = useSelector((state) => state.checkoutSlice);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const [state, dispatch] = useReducer(checkoutReducer,{
-        step: 'shipping',
-        shippingMethod: 'ship',
-        deliverySpeed: freeShipping,
-        customerData: [],
-        isEditing: false,
-    })
-    const { step, shippingMethod, deliverySpeed, customerData, isEditing } = state;
     const methods = useForm({
             defaultValues: {
             id: uuidv4(),
@@ -51,9 +50,7 @@ export default function Checkout({isAuthenticated}) {
 
     useEffect(() => {
         if (isEditing) {
-            dispatch ({type: 'SET_STEP', payload:'shipping'});
-            dispatch ({type: 'FORM_CHECKOUT_IS_SUBMITTED'})
-
+            dispatch (setStep ('shipping'));
         }
     }, [isEditing]);
 
@@ -62,10 +59,10 @@ export default function Checkout({isAuthenticated}) {
         if (step === 'shipping') {
             if (customerData.length === 0 || isEditing) {
                 const cleanedData = {...data, id:uuidv4(), deliverySpeed};
-                dispatch({type: 'SET_CUSTOMER_DATA', payload: [cleanedData]});
+                dispatch(setCustomerData ([cleanedData]));
                 addUserData(cleanedData);
-                dispatch({type: 'TOGGLE_EDITING', payload: false}); // выключаем редактирование
-                dispatch({type: 'SET_STEP', payload: 'continue to order review'});
+                dispatch(toggleEditing (false)); // выключаем редактирование
+                dispatch(setStep ('continue to order review'));
             }
         } else if (step === 'continue to order review') {
 
@@ -113,7 +110,7 @@ export default function Checkout({isAuthenticated}) {
 
                                         <button
                                             type='button'
-                                            onClick={() => dispatch({type: 'SET_SHIPPING_METHOD', payload:'ship'})}
+                                            onClick={() => dispatch(setShippingMethod ('ship'))}
                                             className={`
                                             btnDelivery
                                             ${shippingMethod === 'ship' ? 'border-black border-2' : 'border-gray-300 border-1'}
@@ -124,7 +121,7 @@ export default function Checkout({isAuthenticated}) {
 
                                         <button
                                             type='button'
-                                            onClick={() => dispatch({type: 'SET_SHIPPING_METHOD', payload: 'pickup'})}
+                                            onClick={() => dispatch(setShippingMethod ('pickup'))}
                                             className={`
                                             btnDelivery
                                             ${shippingMethod === 'pickup' ? 'border-black border-2' : 'border-gray-300 border-1'}
@@ -156,7 +153,7 @@ export default function Checkout({isAuthenticated}) {
                                                 <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
                                                     <button
                                                         onClick={() => {
-                                                            dispatch({type: 'TOGGLE_EDITING'});
+                                                            dispatch(toggleEditing);
 
                                                         }}
                                                         className=' hover:cursor-pointer underline underline-offset-3'> Edit </button>
@@ -164,25 +161,7 @@ export default function Checkout({isAuthenticated}) {
                                             </div>
 
                                             {customerData && customerData.length > 0  && (
-                                                <ul className='flex flex-col font-extralight text-base text-left '>
-                                                    {customerData.map((item) => (
-                                                        <li key={item.id}>
-
-                                                            <p className='font-normal'>Shipping Address</p>
-                                                            <div>{item.email}</div>
-                                                            <div>{item.firstName}</div>
-                                                            <div>{item.lastName}</div>
-                                                            <div>{item.country}</div>
-                                                            <div>{item.city}</div>
-                                                             <div>{item.postalCode}</div>
-                                                            <div>{item.phoneNumber}</div>
-                                                            <>
-                                                                <p className='font-normal mt-2'>Shipping Speed</p>
-                                                                <div>{item.deliverySpeed}</div>
-                                                            </>
-                                                        </li>
-                                                    ))}
-                                                </ul>
+                                                <ShippingAddress/>
                                             )}
                                         </div>
                                 )}
@@ -210,7 +189,7 @@ export default function Checkout({isAuthenticated}) {
 
                                     <button
                                         type='button'
-                                        onClick={() => dispatch ({type:'SET_DELIVERY_SPEED', payload: freeShipping})}
+                                        onClick={() => dispatch (setDeliverySpeed (freeShipping))}
                                         className={`flex flex-col p-4 border-2 rounded-md
                                     hover:cursor-pointer hover:border-gray-500 w-full text-left
                                     font-normal ${deliverySpeed === freeShipping ? 'border-black' : 'border-gray-300'}
@@ -222,7 +201,7 @@ export default function Checkout({isAuthenticated}) {
 
                                     <button
                                         type='button'
-                                        onClick={() => dispatch ({type:'SET_DELIVERY_SPEED', payload: paidShipping})}
+                                        onClick={() => dispatch (setDeliverySpeed (paidShipping))}
                                         className={`mt-2 flex flex-col p-4 border-2 rounded-md
                                     hover:cursor-pointer hover:border-gray-500 w-full text-left
                                     font-normal ${deliverySpeed === paidShipping ? 'border-black' : 'border-gray-300'}

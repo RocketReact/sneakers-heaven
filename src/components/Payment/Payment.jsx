@@ -15,6 +15,7 @@ export default function Payment() {
     const handlePaymentMethodChange = (method) => {
         setSelectedPaymentMethod(prevMethod => prevMethod === method ? null : method);
     };
+    const [isCheckedBillAddress, setCheckedBillAddress] = useState(true);
     const [tooltipVisible, setTooltipVisible] = useState(false);
     const tooltipRef = useRef(null);
     const infoRef = useRef(null);
@@ -24,6 +25,7 @@ export default function Payment() {
     const [cardNumber, setCardNumber] = useState('');
     const [cvvCardNumber, setCvvCardNumber] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
+
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -91,6 +93,7 @@ export default function Payment() {
                     className='w-20 h-14 -ml-1 -mb-1'
                     alt="PayPal"/>
             </div>
+
 
 
             <Checkbox
@@ -220,6 +223,28 @@ export default function Payment() {
             </div>
         )
         }
+
+        {selectedPaymentMethod ==='Card' &&
+
+            <div className=' flex flex-col items-start mt-10 '>
+                <Checkbox
+                    textLabel={'Billing address same as Shipping'}
+                    iconCheckbox={null}
+                    checked={isCheckedBillAddress}
+                    onChange={()=> setCheckedBillAddress (!isCheckedBillAddress)}
+                />
+            <p className='font-extralight text-base text-start mt-5'
+            >
+            </p>
+
+
+            </div>
+        }
+        {selectedPaymentMethod === 'PayPal' &&
+        <p className='font-extralight text-base text-start mt-5'
+            >  You will be redirected to the PayPal site after reviewing your order.
+        </p>}
+
 
     </div>
 }
