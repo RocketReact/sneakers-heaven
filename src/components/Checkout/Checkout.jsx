@@ -153,7 +153,7 @@ export default function Checkout({isAuthenticated}) {
                                                 <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
                                                     <button
                                                         onClick={() => {
-                                                            dispatch(toggleEditing);
+                                                            dispatch(toggleEditing(true));
 
                                                         }}
                                                         className=' hover:cursor-pointer underline underline-offset-3'> Edit </button>
