@@ -1,9 +1,10 @@
 import {useSelector} from "react-redux";
 
-export default function ShippingAddress() {
+export default function ShippingAddress({isHidden, textSmall}) {
     const {customerData} = useSelector(state => state.checkoutSlice);
-    console.log("customerData in ShippingAddress:", customerData);
-    return <ul className='flex flex-col font-extralight text-base text-left '>
+    return <ul className={`${textSmall? ' text-sm text-gray-600': ' text-base'} text-left flex flex-col font-extralight`}
+
+      >
         {Array.isArray(customerData) && customerData?.map((item) => (
             <li key={item.id}>
 
@@ -16,8 +17,8 @@ export default function ShippingAddress() {
                 <div>{item.postalCode}</div>
                 <div>{item.phoneNumber}</div>
 
-                <div>
-                    <p className='font-normal mt-2'>Shipping Speed</p>
+                <div className={isHidden ? 'hidden' : ''}>
+                    <p className= 'font-normal mt-2'>Shipping Speed</p>
                     <div>{item.deliverySpeed}</div>
                 </div>
             </li>

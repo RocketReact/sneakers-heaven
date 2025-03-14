@@ -6,9 +6,7 @@ import GPay from "../../img/google-pay.webp";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import cvvVisa from '../../img/ch4_securityCardVisa.png';
 import cvvAmex from '../../img/ch4_securityCardAmex.png';
-
-
-
+import ShippingAddress from "../Checkout/ShippingAddress.jsx";
 
 export default function Payment() {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
@@ -236,15 +234,15 @@ export default function Payment() {
             <p className='font-extralight text-base text-start mt-5'
             >
             </p>
-
-
+                <ShippingAddress
+                    isHidden={true}
+                    textSmall={true}
+                />
             </div>
         }
         {selectedPaymentMethod === 'PayPal' &&
         <p className='font-extralight text-base text-start mt-5'
             >  You will be redirected to the PayPal site after reviewing your order.
         </p>}
-
-
     </div>
 }
