@@ -1,8 +1,12 @@
 import Checkbox from "../Checkout/Checkbox.jsx";
+import {useEffect, useRef, useState} from "react";
 import payPal from "../../img/paypal_PNG1.png";
 import {FaApplePay} from "react-icons/fa";
 import GPay from "../../img/google-pay.webp";
-import {useEffect, useRef, useState} from "react";
+import { BsFillShieldLockFill } from "react-icons/bs";
+import cvvVisa from '../../img/ch4_securityCardVisa.png';
+import cvvAmex from '../../img/ch4_securityCardAmex.png';
+
 
 
 
@@ -100,14 +104,25 @@ export default function Payment() {
                                           font-extralight text-base'>
                 <p className='font-normal self-start'>Add Card</p>
                 <div className='grid grid-cols-1 sm:grid-cols-4 gap-3 mb-5'>
-                    <label className='sm:col-span-2'>
+
+
+
+                    <label className='relative sm:col-span-2'>
                         <input
                             type="text"
                             placeholder='Card Number'
-                            className='mt-5 py-4 px-4 w-full  pl-4 border border-gray-300 rounded-md'
-                            required={true}
+                            className='mt-5 py-4 px-4 w-full pr-12 border border-gray-300 rounded-md'
+                            required={true}>
+                        </input>
+                        <BsFillShieldLockFill
+                            className='absolute text-emerald-400 bottom-2 right-4
+                            transform -translate-y-1/2 text-xl sm:text-lg lg:text-xl'
+                            size={20}
                         />
+
+
                     </label>
+
 
                     <label>
                         <input
@@ -142,10 +157,15 @@ export default function Payment() {
                     {tooltipVisible && (
                         <div
                             ref={tooltipRef}
-                            className='text-center absolute -mb-.5 mt-1 right-0 z-10 w-80 p-4 py-13 bg-black text-white rounded-md shadow-md text-xs'>
-                            <p>The CVV is a 3-digit number on the back of your card,
+                            className='text-center absolute -mb-.5 mt-1 right-0 z-10 w-110 p-4 py-7 bg-black text-white rounded-md shadow-md text-xs'>
+                            <p >The CVV is a 3-digit number on the back of your card,
                                 usually next to the signature strip.
                             </p>
+                            <div className='grid grid-cols-2 md:flex-row'>
+
+                            <img src={cvvVisa} alt="cvvVisa"/>
+                            <img src={cvvAmex} alt="cvvAmex"/>
+                           </div>
                         </div>)
                     }
 

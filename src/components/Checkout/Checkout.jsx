@@ -15,7 +15,7 @@ import {Helmet} from 'react-helmet-async';
 import {useSelector} from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import Payment from '../Payment/Payment.jsx';
-import {boolean} from "yup";
+
 
 
 const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
@@ -94,7 +94,7 @@ export default function Checkout({isAuthenticated}) {
                 <title> Checkout </title>
                 <meta name='robots' content='noindex, nofollow' />
             </Helmet>
-            <div className='text-center min-h-screen w-full'>
+            <div className='text-center mb-35 w-full'>
                 <h1 className='text-2xl mt-5'>Checkout</h1>
                 <span className='font-extralight '>
                     {totalQuantity} items {`${(totalPrice).toFixed(2)} $`}
