@@ -22,6 +22,7 @@ export default function Payment() {
         setTooltipVisible(prev =>!prev)
     }
     const [cardNumber, setCardNumber] = useState('');
+    const [cvvCardNumber, setCvvCardNumber] = useState('');
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -40,13 +41,13 @@ export default function Payment() {
         }
     }, [])
 
-    const formatCardNumber =(value) => {
-        return value
-            .replace(/\D/g, '')
-            .slice(0, 16)
-            .replace(/(.{4})/g, '$1 ')
-            .trim()
-    }
+    const formatCardNumber =(value) =>
+         value.replace(/\D/g, '')
+        .slice(0, 16)
+        .replace(/(.{4})/g, '$1 ')
+        .trim()
+    const formatCVV =(value) =>
+        value.replace(/\D/g, '').slice(0, 3)
 
 
     return <div>
@@ -145,13 +146,21 @@ export default function Payment() {
                         <input
                             type="text"
                             placeholder='MM/YY'
+                            required={true}
                             className='mt-5 py-4 px-4 w-full pl-4 border border-gray-300 rounded-md'
+
                         />
 
                     </label>
 
                     <label>
                         <input
+                            value={cvvCardNumber}
+                            onChange={(e)=> {
+                                const formattedCVV = formatCVV(e.currentTarget.value)
+                                setCvvCardNumber(formattedCVV);
+                            }}
+                            required={true}
                             type="text"
                             placeholder='CVV'
                             className='mt-5 py-4 px-4 w-full pl-4 border border-gray-300 rounded-md'
