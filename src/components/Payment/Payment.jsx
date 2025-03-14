@@ -21,6 +21,8 @@ export default function Payment() {
     const toggleTooltip = () => {
         setTooltipVisible(prev =>!prev)
     }
+    const [cardNumber, setCardNumber] = useState('');
+
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (
@@ -37,6 +39,15 @@ export default function Payment() {
             document.removeEventListener("mousedown", handleClickOutside);
         }
     }, [])
+
+    const formatCardNumber =(value) => {
+        return value
+            .replace(/\D/g, '')
+            .slice(0, 16)
+            .replace(/(.{4})/g, '$1 ')
+            .trim()
+    }
+
 
     return <div>
         <hr className="border-t-2 border-gray-300 mt-10"/>
@@ -112,7 +123,13 @@ export default function Payment() {
                             type="text"
                             placeholder='Card Number'
                             className='mt-5 py-4 px-4 w-full pr-12 border border-gray-300 rounded-md'
-                            required={true}>
+                            required={true}
+                            value={cardNumber}
+                            onChange={(e)=> {
+                                const formatted = formatCardNumber(e.currentTarget.value);
+                                setCardNumber (formatted);
+                            }}
+                        >
                         </input>
                         <BsFillShieldLockFill
                             className='absolute text-emerald-400 bottom-2 right-4
@@ -167,9 +184,7 @@ export default function Payment() {
                                 usually next to the signature strip.
                             </p>
 
-
                             <div className='flex flex-col sm:flex-row mt-4'>
-
                             <img src={cvvVisa} alt="cvvVisa"/>
                             <img src={cvvAmex} alt="cvvAmex"/>
                            </div>
