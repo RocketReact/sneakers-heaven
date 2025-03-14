@@ -23,6 +23,7 @@ export default function Payment() {
     }
     const [cardNumber, setCardNumber] = useState('');
     const [cvvCardNumber, setCvvCardNumber] = useState('');
+    const [expiryDate, setExpiryDate] = useState('');
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -44,10 +45,20 @@ export default function Payment() {
     const formatCardNumber =(value) =>
          value.replace(/\D/g, '')
         .slice(0, 16)
-        .replace(/(.{4})/g, '$1 ')
+        .replace(/(.{4})/g, '$1')
         .trim()
     const formatCVV =(value) =>
         value.replace(/\D/g, '').slice(0, 3)
+
+    const formatExpiryDate = (value) => {
+        const numericValue = value.replace(/\D/g, '').slice(0, 4);
+
+        if (numericValue.length >= 3) {
+            return `${numericValue.slice(0,2)}/${numericValue.slice(2)}`;
+        }
+
+        return numericValue;
+    };
 
 
     return <div>
@@ -144,6 +155,10 @@ export default function Payment() {
 
                     <label>
                         <input
+                            value={expiryDate}
+                            onChange={(e)=> {
+                                setExpiryDate(formatExpiryDate(e.currentTarget.value));
+                            }}
                             type="text"
                             placeholder='MM/YY'
                             required={true}
