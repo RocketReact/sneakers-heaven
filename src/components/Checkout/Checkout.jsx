@@ -94,7 +94,7 @@ export default function Checkout({isAuthenticated}) {
                 <title> Checkout </title>
                 <meta name='robots' content='noindex, nofollow' />
             </Helmet>
-            <div className='text-center mb-35 w-full'>
+            <div className='text-center mb-20 w-full'>
                 <h1 className='text-2xl mt-5'>Checkout</h1>
                 <span className='font-extralight '>
                     {totalQuantity} items {`${(totalPrice).toFixed(2)} $`}

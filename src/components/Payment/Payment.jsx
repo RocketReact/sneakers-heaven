@@ -146,6 +146,7 @@ export default function Payment() {
 
                 <div className='relative inline-block text-end'>
                     <button
+                        type='button'
                         ref={infoRef}
                         onClick={toggleTooltip}
                         className='relative hover:cursor-pointer text-sm underline underline-offset-4 text-gray-500 hover:text-black'
@@ -155,13 +156,19 @@ export default function Payment() {
                     </button>
 
                     {tooltipVisible && (
+
                         <div
                             ref={tooltipRef}
-                            className='text-center absolute -mb-.5 mt-1 right-0 z-10 w-110 p-4 py-7 bg-black text-white rounded-md shadow-md text-xs'>
+                            className='flex flex-col text-center absolute -mb-.5 mt-1
+                            right-0 z-10 w-70 sm:w-110  p-4 py-7 bg-black
+                            text-white rounded-md shadow-md text-xs '>
+
                             <p >The CVV is a 3-digit number on the back of your card,
                                 usually next to the signature strip.
                             </p>
-                            <div className='grid grid-cols-2 md:flex-row'>
+
+
+                            <div className='flex flex-col sm:flex-row mt-4'>
 
                             <img src={cvvVisa} alt="cvvVisa"/>
                             <img src={cvvAmex} alt="cvvAmex"/>
