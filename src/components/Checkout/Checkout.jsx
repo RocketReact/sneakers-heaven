@@ -15,35 +15,23 @@ import {useDispatch, useSelector} from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import Payment from '../Payment/Payment.jsx';
 import ShippingAddress from './ShippingAddress.jsx';
-import  {
-    setStep,
-    setShippingMethod,
-    setDeliverySpeed,
-    setCustomerData,
-    toggleEditing,
-    setOpenToggleWhatInBag} from '../../store/checkoutSlice/checkoutSlice.js'
+import  {setStep, setShippingMethod, setDeliverySpeed, setCustomerData,
+         toggleEditing, setOpenToggleWhatInBag} from '../../store/checkoutSlice/checkoutSlice.js'
 
 
 const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
 const paidShipping = '$20.00 Shipping, Arrives by Wed, Jun 12'
 
 export default function Checkout({isAuthenticated}) {
-    const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
-    const { step, shippingMethod, deliverySpeed, customerData, isEditing, isOpenToggleWhatInBag } = useSelector((state) => state.checkoutSlice);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
+    const { step, shippingMethod, deliverySpeed, customerData, isEditing, isOpenToggleWhatInBag } = useSelector
+    ((state) => state.checkoutSlice);
 
     const methods = useForm({
-            defaultValues: {
-            id: uuidv4(),
-            email: '',
-            firstName: '',
-            lastName: '',
-            country: '',
-            city: '',
-            postalCode: '',
-            phoneNumber: '',
-            deliverySpeed: freeShipping
+            defaultValues: {id: uuidv4(), email: '',firstName: '',lastName: '',country: '',
+            city: '',postalCode: '',phoneNumber: '',deliverySpeed: freeShipping
         }
     });
     const {handleSubmit} = methods;
@@ -75,15 +63,10 @@ export default function Checkout({isAuthenticated}) {
                 setOpenToggleWhatInBag(false);
             }
         };
-
         window.addEventListener('resize', handleResize);
-
         handleResize();
-
         return () => window.removeEventListener('resize', handleResize);
-
     }, [isOpenToggleWhatInBag]);
-
 
     return (
         <FormProvider {...methods}>
@@ -99,7 +82,7 @@ export default function Checkout({isAuthenticated}) {
                 </span>
                 <form onSubmit={handleSubmit(onSubmit )}>
                     <div className='flex flex-col justify-center items-center m-5 md:flex-col
-                    lg:flex-row lg:items-start space-y-4 md:space-y-0 md:space-x-4 md:mx-15 my-5  lg:mx-20 text-2xl'>
+                    lg:flex-row lg:items-start space-y-4 md:space-y-0 md:space-x-4 md:mx-15 my-5 lg:mx-20 text-2xl'>
 
                         <div className='flex-2 order-2 lg:order-1 p-4 w-full'>
                             <div className='flex flex-col relative '>
@@ -252,7 +235,6 @@ export default function Checkout({isAuthenticated}) {
 
                                     </button>
                                 </div>
-
 
                                 <div className={`${isOpenToggleWhatInBag? 'block' : 'hidden'} lg:block`}>
                                     <div className='flex flex-col items-center'>
