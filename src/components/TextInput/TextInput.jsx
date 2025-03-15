@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 const TextInput = ({ id, label, name, rules = {}, ...rest }) => {
     const formContext = useFormContext();
     if (!formContext) {
-        console.error("TextInput must be used within a FormProvider.");
         return null;
     }
 
