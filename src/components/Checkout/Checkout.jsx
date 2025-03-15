@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FaShippingFast} from 'react-icons/fa';
 import { FcCheckmark } from 'react-icons/fc';
 import { MdLocationOn } from 'react-icons/md';
@@ -20,7 +20,8 @@ import  {
     setShippingMethod,
     setDeliverySpeed,
     setCustomerData,
-    toggleEditing } from '../../store/checkoutSlice/checkoutSlice.js'
+    toggleEditing,
+    setOpenToggleWhatInBag} from '../../store/checkoutSlice/checkoutSlice.js'
 
 
 const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
@@ -28,8 +29,7 @@ const paidShipping = '$20.00 Shipping, Arrives by Wed, Jun 12'
 
 export default function Checkout({isAuthenticated}) {
     const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
-    const [isOpen, setIsOpen] = useState(false);
-    const { step, shippingMethod, deliverySpeed, customerData, isEditing } = useSelector((state) => state.checkoutSlice);
+    const { step, shippingMethod, deliverySpeed, customerData, isEditing, isOpenToggleWhatInBag } = useSelector((state) => state.checkoutSlice);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -72,7 +72,7 @@ export default function Checkout({isAuthenticated}) {
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1024) {
-                setIsOpen(false);
+                setOpenToggleWhatInBag(false);
             }
         };
 
@@ -82,7 +82,7 @@ export default function Checkout({isAuthenticated}) {
 
         return () => window.removeEventListener('resize', handleResize);
 
-    }, [isOpen]);
+    }, [isOpenToggleWhatInBag]);
 
 
     return (
@@ -243,8 +243,8 @@ export default function Checkout({isAuthenticated}) {
                                     <h2>In your bag</h2>
                                     <button
                                         type='button'
-                                        onClick={() => setIsOpen(prev => !prev)}
-                                        className={`${isOpen ? 'rotate-180' : 'rotate-0'}
+                                        onClick={() => dispatch(setOpenToggleWhatInBag(true))}
+                                        className={`${isOpenToggleWhatInBag ? 'rotate-180' : 'rotate-0'}
                                 text-gray-400 hover:text-gray-600 hover:cursor-pointer mt-1
                                 lg:hidden 
                                 `}
@@ -254,14 +254,14 @@ export default function Checkout({isAuthenticated}) {
                                 </div>
 
 
-                                <div className={`${isOpen? 'block' : 'hidden'} lg:block`}>
+                                <div className={`${isOpenToggleWhatInBag? 'block' : 'hidden'} lg:block`}>
                                     <div className='flex flex-col items-center'>
                                         <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
 
                                         <Summary textSize='text-lg'/>
                                     </div>
                                 </div>
-                                {!isOpen &&
+                                {!isOpenToggleWhatInBag &&
                                     (<hr className='lg:hidden  border-t-2 border-gray-300 w-full'/>)}
                             </div>
                         </div>
