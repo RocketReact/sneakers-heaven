@@ -1,5 +1,5 @@
 import Checkbox from "../Checkout/Checkbox.jsx";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import payPal from "../../img/paypal_PNG1.png";
 import {FaApplePay} from "react-icons/fa";
 import GPay from "../../img/google-pay.webp";
@@ -7,22 +7,27 @@ import { BsFillShieldLockFill } from "react-icons/bs";
 import cvvVisa from '../../img/ch4_securityCardVisa.png';
 import cvvAmex from '../../img/ch4_securityCardAmex.png';
 import ShippingAddress from "../Checkout/ShippingAddress.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    setSelectedPaymentMethod,
+    setCheckedBillAddress,
+    setTooltipVisibleCVV,
+    setCardNumber,
+    setCvvCardNumber,
+    setExpiryDateCard} from '../../store/paymentSlice/paymentSlice.js'
 
 export default function Payment() {
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-    const handlePaymentMethodChange = (method) => {
-        setSelectedPaymentMethod(prevMethod => prevMethod === method ? null : method);
-    };
-    const [isCheckedBillAddress, setCheckedBillAddress] = useState(true);
-    const [tooltipVisible, setTooltipVisible] = useState(false);
     const tooltipRef = useRef(null);
     const infoRef = useRef(null);
-    const toggleTooltip = () => {
-        setTooltipVisible(prev =>!prev)
-    }
-    const [cardNumber, setCardNumber] = useState('');
-    const [cvvCardNumber, setCvvCardNumber] = useState('');
-    const [expiryDate, setExpiryDate] = useState('');
+    const dispatch = useDispatch();
+
+    const {
+        selectedPaymentMethod,
+        isCheckedBillAddress,
+        isTooltipVisibleCVV,
+        cardNumber,
+        cvvCardNumber,
+        expiryDateCard} = useSelector((state) => state.paymentSlice);
 
 
     useEffect(() => {
@@ -33,14 +38,14 @@ export default function Payment() {
                 infoRef.current &&
                 !infoRef.current.contains(e.target)
             ) {
-                setTooltipVisible(false);
+                dispatch(setTooltipVisibleCVV(false));
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         }
-    }, [])
+    }, [tooltipRef, infoRef, dispatch])
 
     const formatCardNumber =(value) =>
          value.replace(/\D/g, '')
@@ -73,7 +78,7 @@ export default function Payment() {
             <Checkbox
 
                 checked={selectedPaymentMethod === "Card"}
-                onChange={() => handlePaymentMethodChange ("Card")}
+                onChange={() => dispatch (setSelectedPaymentMethod("Card"))}
             />
 
 
@@ -83,10 +88,10 @@ export default function Payment() {
                     iconCheckbox={null}
                     textLabel={null}
                     checked={selectedPaymentMethod === "PayPal"}
-                    onChange={() => handlePaymentMethodChange ("PayPal")}
+                    onChange={() => dispatch (setSelectedPaymentMethod("PayPal"))}
                 />
                 <img
-                    onClick={() => handlePaymentMethodChange("PayPal")}
+                    onClick={() => dispatch(setSelectedPaymentMethod("PayPal"))}
                     src={payPal}
                     className='w-20 h-14 -ml-1 -mb-1'
                     alt="PayPal"/>
@@ -100,7 +105,7 @@ export default function Payment() {
                 iconSize={41}
                 iconCheckbox={FaApplePay}
                 checked={selectedPaymentMethod === "ApplePay"}
-                onChange={() => handlePaymentMethodChange ("ApplePay")}
+                onChange={() => dispatch (setSelectedPaymentMethod("ApplePay"))}
             />
 
             <div className='flex flex-row hover:cursor-pointerg '>
@@ -109,11 +114,11 @@ export default function Payment() {
                     textLabel={null}
                     iconCheckbox={null}
                     checked={selectedPaymentMethod === "GooglePay"}
-                    onChange={() => handlePaymentMethodChange ("GooglePay")}
+                    onChange={() => dispatch (setSelectedPaymentMethod("GooglePay"))}
                 />
                 <img
 
-                    onClick={() => handlePaymentMethodChange("GooglePay")}
+                    onClick={() => dispatch(setSelectedPaymentMethod("GooglePay"))}
                     src={GPay}
                     className='w-11 h-10.5 hover:cursor-pointer '
                     alt="GooglePay"/>
@@ -140,7 +145,7 @@ export default function Payment() {
                             value={cardNumber}
                             onChange={(e)=> {
                                 const formatted = formatCardNumber(e.currentTarget.value);
-                                setCardNumber (formatted);
+                                dispatch (setCardNumber (formatted));
                             }}
                         >
                         </input>
@@ -156,9 +161,9 @@ export default function Payment() {
 
                     <label>
                         <input
-                            value={expiryDate}
+                            value={expiryDateCard}
                             onChange={(e)=> {
-                                setExpiryDate(formatExpiryDate(e.currentTarget.value));
+                                dispatch (setExpiryDateCard(formatExpiryDate(e.currentTarget.value)));
                             }}
                             type="text"
                             placeholder='MM/YY'
@@ -174,7 +179,7 @@ export default function Payment() {
                             value={cvvCardNumber}
                             onChange={(e)=> {
                                 const formattedCVV = formatCVV(e.currentTarget.value)
-                                setCvvCardNumber(formattedCVV);
+                                dispatch(setCvvCardNumber(formattedCVV));
                             }}
                             required={true}
                             type="text"
@@ -190,14 +195,14 @@ export default function Payment() {
                     <button
                         type='button'
                         ref={infoRef}
-                        onClick={toggleTooltip}
+                        onClick={() => dispatch(setTooltipVisibleCVV(true))}
                         className='relative hover:cursor-pointer text-sm underline underline-offset-4 text-gray-500 hover:text-black'
 
                     >
                         Where is my CVV?
                     </button>
 
-                    {tooltipVisible && (
+                    {isTooltipVisibleCVV && (
 
                         <div
                             ref={tooltipRef}
@@ -229,7 +234,7 @@ export default function Payment() {
                     textLabel={'Billing address same as Shipping'}
                     iconCheckbox={null}
                     checked={isCheckedBillAddress}
-                    onChange={()=> setCheckedBillAddress (!isCheckedBillAddress)}
+                    onChange={()=> dispatch (setCheckedBillAddress (false))}
                 />
             <p className='font-extralight text-base text-start mt-5'
             >

@@ -4,6 +4,7 @@ import cartReducer from "././cartSlice/cartSlice.js";
 import { cartMiddleware } from '././cartSlice/cartSlice.js'
 import filterReducer from "./searchSlice/searchSlice.js"
 import checkoutSlice from "./checkoutSlice/checkoutSlice.js";
+import paymentSlice from "./paymentSlice/paymentSlice.js";
 
  const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ import checkoutSlice from "./checkoutSlice/checkoutSlice.js";
         filter: filterReducer,
         cart: cartReducer,
         checkoutSlice: checkoutSlice,
+        paymentSlice: paymentSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(cartMiddleware)
