@@ -71,8 +71,9 @@ const Payment = forwardRef ((props, ref) => {
         useEffect(() => {
             if (isCheckedBillAddress && customerData?.length > 0) {
                 dispatch(setBillAddress(customerData[0]));
-            } else {
-                dispatch(setBillAddress({
+            } else if (!isCheckedBillAddress) {
+                // Важно проверить, что billAddress действительно имеет значения, чтобы избежать лишних обновлений
+                const emptyAddress = {
                     email: '',
                     firstName: '',
                     lastName: '',
@@ -80,9 +81,16 @@ const Payment = forwardRef ((props, ref) => {
                     city: '',
                     postalCode: '',
                     phoneNumber: '',
-                }));
+                };
+
+                const hasValues = Object.values(billAddress).some(value => value !== '');
+
+                if (hasValues) {
+                    dispatch(setBillAddress(emptyAddress));
+                }
             }
         }, [isCheckedBillAddress, customerData, dispatch]);
+
 
 
 
@@ -273,7 +281,23 @@ const Payment = forwardRef ((props, ref) => {
                     textLabel={'Billing address same as Shipping'}
                     iconCheckbox={null}
                     checked={isCheckedBillAddress}
-                    onChange={()=> dispatch (setCheckedBillAddress (false))}
+                    onChange={()=> {
+                        const newValue = !isCheckedBillAddress;
+                        dispatch(setCheckedBillAddress(newValue))
+
+                        if (!newValue) {
+                            dispatch(setBillAddress({
+                                email: '',
+                                firstName: '',
+                                lastName: '',
+                                country: '',
+                                city: '',
+                                postalCode: '',
+                                phoneNumber: '',
+                            }));
+
+                        }
+                    }}
                 />
 
                 {isCheckedBillAddress &&
