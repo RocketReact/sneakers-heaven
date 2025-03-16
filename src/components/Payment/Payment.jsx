@@ -1,5 +1,5 @@
 import Checkbox from "../Checkout/Checkbox.jsx";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, forwardRef, useImperativeHandle} from "react";
 import payPal from "../../img/paypal_PNG1.png";
 import {FaApplePay} from "react-icons/fa";
 import GPay from "../../img/google-pay.webp";
@@ -13,7 +13,7 @@ import {setSelectedPaymentMethod, setCheckedBillAddress, setTooltipVisibleCVV,
         setCardNumber, setCvvCardNumber, setExpiryDateCard, setBillAddress} from '../../store/paymentSlice/paymentSlice.js'
 
 
-export default function Payment() {
+const Payment = forwardRef ((props, ref) => {
     const tooltipRef = useRef(null);
     const infoRef = useRef(null);
     const dispatch = useDispatch();
@@ -27,6 +27,45 @@ export default function Payment() {
         expiryDateCard,
         billAddress,
           } = useSelector((state) => state.paymentSlice);
+
+    const formatCardNumber = (value) =>
+        value.replace(/\D/g, '')
+            .slice(0, 16)
+            .replace(/(.{4})/g, '$1 ')
+            .trim();
+
+    const formatCVV = (value) =>
+        value.replace(/\D/g, '').slice(0, 3);
+
+    const formatExpiryDate = (value) =>
+        value.replace(/\D/g, '').slice(0, 4).replace(/^(\d{2})(\d{0,2})$/, (_, p1, p2) => p2 ? `${p1}/${p2}` : p1);
+
+    useImperativeHandle(ref, () => ({
+        validatePayment() {
+            if (selectedPaymentMethod === 'Card') {
+                const numericCardNumber = formatCardNumber(cardNumber).replace(/\s+/g, '');
+                if (!numericCardNumber || numericCardNumber.length !== 16) {
+                    alert('Type correct Card Number (min 16 num)');
+                    return false;
+                }
+
+                const formattedExpiryDate = formatExpiryDate(expiryDateCard);
+                if (!formattedExpiryDate || !/^\d{2}\/\d{2}$/.test(formattedExpiryDate)) {
+                    alert('Type correct expiry Card date MM/YY');
+                    return false;
+                }
+
+                const numericCVV = formatCVV(cvvCardNumber);
+                if (!numericCVV || numericCVV.length !== 3) {
+                    alert('Type correct CVV-code (3 num)');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }));
+
 
 
     useEffect(() => {
@@ -46,23 +85,6 @@ export default function Payment() {
         }
     }, [tooltipRef, infoRef, dispatch])
 
-    const formatCardNumber =(value) =>
-         value.replace(/\D/g, '')
-        .slice(0, 16)
-        .replace(/(.{4})/g, '$1 ')
-        .trim()
-    const formatCVV =(value) =>
-        value.replace(/\D/g, '').slice(0, 3)
-
-    const formatExpiryDate = (value) => {
-        const numericValue = value.replace(/\D/g, '').slice(0, 4);
-
-        if (numericValue.length >= 3) {
-            return `${numericValue.slice(0,2)}/${numericValue.slice(2)}`;
-        }
-
-        return numericValue;
-    };
 
 
     return <div>
@@ -244,7 +266,7 @@ export default function Payment() {
             </div>
         }
 
-        {isCheckedBillAddress===false &&
+        {isCheckedBillAddress===false && selectedPaymentMethod ==='Card'&&
             <TextInputHtml
                 HiddenEmail={true}
             />
@@ -257,3 +279,6 @@ export default function Payment() {
         </p>}
     </div>
 }
+)
+
+export default Payment

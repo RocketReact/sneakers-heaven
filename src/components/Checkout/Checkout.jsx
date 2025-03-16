@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import {useEffect, useRef} from 'react';
 import { FaShippingFast} from 'react-icons/fa';
 import { FcCheckmark } from 'react-icons/fc';
 import { MdLocationOn } from 'react-icons/md';
@@ -25,6 +25,7 @@ const paidShipping = '$20.00 Shipping, Arrives by Wed, Jun 12'
 export default function Checkout({isAuthenticated}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const paymentRef = useRef(null);
     const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
     const { step, shippingMethod, deliverySpeed, customerData, isEditing, isOpenToggleWhatInBag } = useSelector
     ((state) => state.checkout);
@@ -59,6 +60,11 @@ export default function Checkout({isAuthenticated}) {
             }
         } else if (step === 'continue to order review') {
 
+            if (paymentRef.current && paymentRef.current.validatePayment()) {
+         console.log('Payment is Valid');
+    }
+        } else {
+            console.log('Payment is invalid');
         }
     };
 
@@ -201,7 +207,8 @@ export default function Checkout({isAuthenticated}) {
                                 </div>)
                                 }
 
-                                {(step === 'continue to order review') && <Payment/>}
+                                {(step === 'continue to order review') && <Payment ref={paymentRef}
+                                />}
                                     <div className='mt-6'>
                                         <button
                                             type='submit'

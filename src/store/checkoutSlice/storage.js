@@ -17,7 +17,7 @@ export const saveStateCheckout = (state) => {
     console.warn ('Could not save state to localStorage' , error);}
 };
 
-export const clearStateCheckout = () => {
+export default function clearStateCheckout  ()  {
     try {
         localStorage.removeItem("checkoutState");
     } catch (error) {
