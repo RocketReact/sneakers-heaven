@@ -8,13 +8,10 @@ import cvvVisa from '../../img/ch4_securityCardVisa.png';
 import cvvAmex from '../../img/ch4_securityCardAmex.png';
 import ShippingAddress from "../Checkout/ShippingAddress.jsx";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    setSelectedPaymentMethod,
-    setCheckedBillAddress,
-    setTooltipVisibleCVV,
-    setCardNumber,
-    setCvvCardNumber,
-    setExpiryDateCard} from '../../store/paymentSlice/paymentSlice.js'
+import TextInputHtml from "../TextInput/TextInputHtml.jsx";
+import {setSelectedPaymentMethod, setCheckedBillAddress, setTooltipVisibleCVV,
+        setCardNumber, setCvvCardNumber, setExpiryDateCard, setBillAddress} from '../../store/paymentSlice/paymentSlice.js'
+
 
 export default function Payment() {
     const tooltipRef = useRef(null);
@@ -27,7 +24,9 @@ export default function Payment() {
         isTooltipVisibleCVV,
         cardNumber,
         cvvCardNumber,
-        expiryDateCard} = useSelector((state) => state.paymentSlice);
+        expiryDateCard,
+        billAddress,
+          } = useSelector((state) => state.paymentSlice);
 
 
     useEffect(() => {
@@ -229,22 +228,29 @@ export default function Payment() {
 
         {selectedPaymentMethod ==='Card' &&
 
-            <div className=' flex flex-col items-start mt-10 '>
+            <div className=' flex flex-col items-start mt-10 gap-5'>
                 <Checkbox
                     textLabel={'Billing address same as Shipping'}
                     iconCheckbox={null}
                     checked={isCheckedBillAddress}
                     onChange={()=> dispatch (setCheckedBillAddress (false))}
                 />
-            <p className='font-extralight text-base text-start mt-5'
-            >
-            </p>
-                <ShippingAddress
+
+                {isCheckedBillAddress &&
+                    <ShippingAddress
                     isHidden={true}
                     textSmall={true}
-                />
+                />}
             </div>
         }
+
+        {isCheckedBillAddress===false &&
+            <TextInputHtml
+                HiddenEmail={true}
+            />
+        }
+
+
         {selectedPaymentMethod === 'PayPal' &&
         <p className='font-extralight text-base text-start mt-5'
             >  You will be redirected to the PayPal site after reviewing your order.

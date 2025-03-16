@@ -64,12 +64,13 @@ export function Name () {
 }
 
 
-export default function TextInputHtml () {
+export default function TextInputHtml ({HiddenEmail}) {
 
     return (
             <div >
         {/* Поле E-mail */}
-    <TextInput
+    <div className={`${HiddenEmail? 'hidden' : ''}`}>
+        <TextInput
         id="email"
         name="email"
         label="Email*"
@@ -81,7 +82,7 @@ export default function TextInputHtml () {
             },
         }}
     />
-
+    </div>
 
     {/* Имена пользователя */}
     <div className="flex-col">

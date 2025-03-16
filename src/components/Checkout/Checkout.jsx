@@ -27,7 +27,7 @@ export default function Checkout({isAuthenticated}) {
     const navigate = useNavigate();
     const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
     const { step, shippingMethod, deliverySpeed, customerData, isEditing, isOpenToggleWhatInBag } = useSelector
-    ((state) => state.checkoutSlice);
+    ((state) => state.checkout);
 
     const methods = useForm({
             defaultValues: {id: uuidv4(), email: '',firstName: '',lastName: '',country: '',
@@ -41,6 +41,11 @@ export default function Checkout({isAuthenticated}) {
             dispatch (setStep ('shipping'));
         }
     }, [isEditing]);
+    useEffect(() => {
+        if (isEditing && customerData.length>0) {
+            methods.reset(customerData[0])
+        }
+    }, [isEditing, customerData, methods]);
 
 
     const onSubmit = (data) => {

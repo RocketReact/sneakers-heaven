@@ -6,7 +6,8 @@ const initialState = {
     isTooltipVisibleCVV: false,
     cardNumber: '',
     cvvCardNumber: '',
-    expiryDateCard: ''
+    expiryDateCard: '',
+    billAddress: [],
 }
 
 const paymentSlice = createSlice ( {
@@ -19,6 +20,7 @@ const paymentSlice = createSlice ( {
         setCardNumber: (state, action) => {state.cardNumber = action.payload },
         setCvvCardNumber: (state, action) => {state.cvvCardNumber = action.payload },
         setExpiryDateCard: (state, action) => {state.expiryDateCard = action.payload },
+        setBillAddress: (state, action) => {state.billAddress = action.payload },
     }
 }
 )
@@ -30,7 +32,8 @@ export const {
     setTooltipVisibleCVV,
     setCardNumber,
     setCvvCardNumber,
-    setExpiryDateCard
+    setExpiryDateCard,
+    setBillAddress
 } = paymentSlice.actions;
 
 export default paymentSlice.reducer

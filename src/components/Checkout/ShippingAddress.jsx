@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux";
 
 export default function ShippingAddress({isHidden, textSmall}) {
-    const {customerData} = useSelector(state => state.checkoutSlice);
+    const {customerData} = useSelector(state => state.checkout);
     return <ul className={`${textSmall? ' text-sm text-gray-600': ' text-base'} text-left flex flex-col font-extralight`}
 
       >
