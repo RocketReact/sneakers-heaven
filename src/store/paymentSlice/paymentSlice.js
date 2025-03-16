@@ -7,7 +7,15 @@ const initialState = {
     cardNumber: '',
     cvvCardNumber: '',
     expiryDateCard: '',
-    billAddress: [],
+    billAddress: {
+                  email: '',
+                  firstName: '',
+                  lastName: '',
+                  country: '',
+                  city: '',
+                  postalCode: '',
+                  phoneNumber: ''
+},
 }
 
 const paymentSlice = createSlice ( {

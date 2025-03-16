@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 
-const TextInput = ({ id, label, name, rules = {}, ...rest }) => {
+const TextInput = ({ id, name, label, onChange, rules = {}, ...rest }) => {
     const formContext = useFormContext();
     if (!formContext) {
         return null;
@@ -12,14 +12,14 @@ const TextInput = ({ id, label, name, rules = {}, ...rest }) => {
     return (
         <div className="relative mt-6">
             <input
-                type="text"
                 id={id}
+                type="text"
                 {...register(name, rules)}
                 className={`peer w-full px-2 pt-5 pb-2 border-2 rounded-md text-base focus:outline-none transition-all 
                     ${errors[name] ? "border-red-500" : "border-gray-300"}`}
                 {...rest}
-            />
 
+            />
             <label
                 htmlFor={id}
                 className={`absolute left-2 bg-white px-1 transition-all duration-300

@@ -17,6 +17,7 @@ const Payment = forwardRef ((props, ref) => {
     const tooltipRef = useRef(null);
     const infoRef = useRef(null);
     const dispatch = useDispatch();
+    const customerData = useSelector((state) => state.checkout);
 
     const {
         selectedPaymentMethod,
@@ -27,6 +28,7 @@ const Payment = forwardRef ((props, ref) => {
         expiryDateCard,
         billAddress,
           } = useSelector((state) => state.paymentSlice);
+
 
     const formatCardNumber = (value) =>
         value.replace(/\D/g, '')
@@ -66,9 +68,25 @@ const Payment = forwardRef ((props, ref) => {
         }
     }));
 
+        useEffect(() => {
+            if (isCheckedBillAddress && customerData?.length > 0) {
+                dispatch(setBillAddress(customerData[0]));
+            } else {
+                dispatch(setBillAddress({
+                    email: '',
+                    firstName: '',
+                    lastName: '',
+                    country: '',
+                    city: '',
+                    postalCode: '',
+                    phoneNumber: '',
+                }));
+            }
+        }, [isCheckedBillAddress, customerData, dispatch]);
 
 
-    useEffect(() => {
+
+        useEffect(() => {
         const handleClickOutside = (e) => {
             if (
                 tooltipRef.current &&
@@ -266,11 +284,13 @@ const Payment = forwardRef ((props, ref) => {
             </div>
         }
 
-        {isCheckedBillAddress===false && selectedPaymentMethod ==='Card'&&
+        {isCheckedBillAddress===false && selectedPaymentMethod === 'Card' && (
             <TextInputHtml
                 HiddenEmail={true}
+                values={billAddress}
             />
-        }
+        )}
+
 
 
         {selectedPaymentMethod === 'PayPal' &&

@@ -1,4 +1,6 @@
 import TextInput from "./TextInput.jsx";
+import {useFormContext} from "react-hook-form";
+import {useEffect} from "react";
 
 export function Email () {
     return <TextInput
@@ -64,7 +66,15 @@ export function Name () {
 }
 
 
-export default function TextInputHtml ({HiddenEmail}) {
+export default function TextInputHtml ({HiddenEmail, values}) {
+    const formContext = useFormContext();
+    useEffect(() => {
+        if (formContext && values) {
+            Object.entries(values).forEach(([field, value]) => {
+                formContext.setValue(field, value);
+            });
+        }
+    }, [values, formContext]);
 
     return (
             <div >
@@ -95,6 +105,8 @@ export default function TextInputHtml ({HiddenEmail}) {
                     rules={{
                         required: "First name is required",
                     }}
+
+
                 />
             </div>
             <div className="w-full">
@@ -105,6 +117,8 @@ export default function TextInputHtml ({HiddenEmail}) {
                     rules={{
                         required: "Last name is required",
                     }}
+
+
                 />
             </div>
         </div>
@@ -121,6 +135,8 @@ export default function TextInputHtml ({HiddenEmail}) {
                     rules={{
                         required: "Country is required",
                     }}
+
+
                 />
             </div>
             <div className="w-full">
@@ -131,6 +147,8 @@ export default function TextInputHtml ({HiddenEmail}) {
                     rules={{
                         required: "City is required",
                     }}
+
+
                 />
             </div>
             <div className="w-full font-stretch-50%">
@@ -141,6 +159,8 @@ export default function TextInputHtml ({HiddenEmail}) {
                     rules={{
                         required: "Postal code is required",
                     }}
+
+
                 />
             </div>
         </div>
@@ -160,7 +180,11 @@ export default function TextInputHtml ({HiddenEmail}) {
                             value: /^[0-9]+$/,
                             message: "Invalid phone number",
                         },
+
+
                     }}
+
+
                 />
             </div>
         </div>
