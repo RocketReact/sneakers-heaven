@@ -49,7 +49,7 @@ export default function Payment() {
     const formatCardNumber =(value) =>
          value.replace(/\D/g, '')
         .slice(0, 16)
-        .replace(/(.{4})/g, '$1')
+        .replace(/(.{4})/g, '$1 ')
         .trim()
     const formatCVV =(value) =>
         value.replace(/\D/g, '').slice(0, 3)
