@@ -67,14 +67,13 @@ export function Name () {
 
 
 export default function TextInputHtml ({HiddenEmail, values}) {
-    const formContext = useFormContext();
+    const {reset} = useFormContext();
     useEffect(() => {
-        if (formContext && values) {
-            Object.entries(values).forEach(([field, value]) => {
-                formContext.setValue(field, value);
-            });
+        if (values) {
+            reset(values);
         }
-    }, [values, formContext]);
+    }, [values, reset]);
+
 
     return (
             <div >
