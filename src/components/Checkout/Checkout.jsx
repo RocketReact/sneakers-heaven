@@ -29,7 +29,7 @@ export default function Checkout({isAuthenticated}) {
     const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
     const { step, shippingMethod, deliverySpeed, customerData, isEditing, isOpenToggleWhatInBag } = useSelector
     ((state) => state.checkout);
-
+    const selectedPaymentMethod = useSelector((state) => state.paymentSlice.selectedPaymentMethod);
     const methods = useForm({
             defaultValues: {id: uuidv4(), email: '',firstName: '',lastName: '',country: '',
             city: '',postalCode: '',phoneNumber: '',deliverySpeed: freeShipping
@@ -42,6 +42,7 @@ export default function Checkout({isAuthenticated}) {
             dispatch (setStep ('shipping'));
         }
     }, [isEditing]);
+
     useEffect(() => {
         if (isEditing && customerData.length>0) {
             methods.reset(customerData[0])
@@ -58,15 +59,11 @@ export default function Checkout({isAuthenticated}) {
                 dispatch(toggleEditing (false)); // выключаем редактирование
                 dispatch(setStep ('continue to order review'));
             }
-        } else if (step === 'continue to order review') {
-
-            if (paymentRef.current && paymentRef.current.validatePayment()) {
-         console.log('Payment is Valid');
+        } else if (customerData.length > 0 && selectedPaymentMethod) {
+              dispatch(setStep ('confirm order & processing payment'));
+          }
     }
-        } else {
-            console.log('Payment is invalid');
-        }
-    };
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -78,6 +75,14 @@ export default function Checkout({isAuthenticated}) {
         handleResize();
         return () => window.removeEventListener('resize', handleResize);
     }, [isOpenToggleWhatInBag]);
+
+    const buttonTextMap = {
+        'continue to order review': 'Continue to Order Review',
+        'confirm order & processing payment': 'Processing Payment',
+        'shipping': 'Save & Continue',
+    };
+
+
 
     return (
         <FormProvider {...methods}>
@@ -207,8 +212,10 @@ export default function Checkout({isAuthenticated}) {
                                 </div>)
                                 }
 
-                                {(step === 'continue to order review') && <Payment ref={paymentRef}
-                                />}
+                                {(step === 'continue to order review') &&
+                                    <Payment
+                                    ref={paymentRef}
+                                    />}
                                     <div className='mt-6'>
                                         <button
                                             type='submit'
@@ -216,10 +223,10 @@ export default function Checkout({isAuthenticated}) {
                                             hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
                                             text-xl mb-3'
                                         >
-                                            {(step === 'continue to order review')
-                                                ? 'Continue to Order Review'
-                                                : 'Save & Continue'
-                                            }
+
+
+                                            {buttonTextMap[step]}
+
                                         </button>
                                 </div>
                             </div>
@@ -263,6 +270,7 @@ export default function Checkout({isAuthenticated}) {
                 </form>
             </div>
         </FormProvider>
-    );
-};
+    )
+}
+
 
