@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    selectedPaymentMethod:'',
+    selectedPaymentMethod:null,
     isCheckedBillAddress:true,
     isTooltipVisibleCVV: false,
     cardNumber: '',
@@ -17,6 +17,7 @@ const initialState = {
                   phoneNumber: ''
 },
     isEditingPayment: false,
+    isPaymentFormSubmitted: false,
 }
 
 const paymentSlice = createSlice ( {
@@ -31,6 +32,7 @@ const paymentSlice = createSlice ( {
         setExpiryDateCard: (state, action) => {state.expiryDateCard = action.payload },
         setBillAddress: (state, action) => {state.billAddress = action.payload },
         setEditingPayment: (state) => {state.isEditingPayment = !state.payload },
+        setPaymentFormSubmitted: (state, action) => {state.paymentFormSubmitted = action.payload },
     }
 }
 )
@@ -44,7 +46,8 @@ export const {
     setCvvCardNumber,
     setExpiryDateCard,
     setBillAddress,
-    setEditingPayment
+    setEditingPayment,
+    setPaymentFormSubmitted
 } = paymentSlice.actions;
 
 export default paymentSlice.reducer

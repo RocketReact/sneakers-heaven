@@ -10,10 +10,11 @@ import cvvAmex from '../../img/ch4_securityCardAmex.png';
 import ShippingAddress from "../Checkout/ShippingAddress.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import TextInputHtml from "../TextInput/TextInputHtml.jsx";
-import {setSelectedPaymentMethod, setCheckedBillAddress, setTooltipVisibleCVV,
-    setCardNumber, setCvvCardNumber, setExpiryDateCard, setBillAddress, setEditingPayment} from '../../store/paymentSlice/paymentSlice.js'
+import {
+    setSelectedPaymentMethod, setTooltipVisibleCVV, setPaymentFormSubmitted,
+    setCardNumber, setCvvCardNumber, setExpiryDateCard, setBillAddress, setEditingPayment, setCheckedBillAddress
+} from '../../store/paymentSlice/paymentSlice.js'
 import {FcCheckmark} from "react-icons/fc";
-import {toggleEditing} from "../../store/checkoutSlice/checkoutSlice.js";
 
 
 const Payment = forwardRef(({onSubmit}, ref) => {
@@ -31,6 +32,7 @@ const Payment = forwardRef(({onSubmit}, ref) => {
         expiryDateCard,
         billAddress,
         isEditingPayment,
+        isPaymentFormSubmitted,
     } = useSelector((state) => state.paymentSlice);
 
 
@@ -84,7 +86,7 @@ const Payment = forwardRef(({onSubmit}, ref) => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         }
-    }, [tooltipRef, infoRef, dispatch]);
+    }, [dispatch]);
 
     const paymentIcons = {
         'PayPal': <img src={payPal} className='w-20 h-8' alt="PayPal" />,
@@ -99,14 +101,33 @@ const Payment = forwardRef(({onSubmit}, ref) => {
     };
 
     useImperativeHandle(ref, () => ({
-        handleSubmit: () => onSubmit && onSubmit()
+        handleSubmit: () => {
+            if (selectedPaymentMethod==='Card') {
+                if (cardNumber.length<19 || cvvCardNumber.length<3 || expiryDateCard.length<5) {
+                    return false
+                }
+                const hasBillingData = Object.values(billAddress).some(value =>
+                    typeof value === 'string' && value.trim() !== ''
+                );
+
+                if (hasBillingData) {
+                    dispatch(setCheckedBillAddress(true));
+                }
+            }
+            if (selectedPaymentMethod) {
+                dispatch(setPaymentFormSubmitted(true))
+                return true
+            }
+            return false
+
+        }
     }));
 
 
     return <div>
         <hr className="border-t-2 border-gray-300 mt-10"/>
 
-        {(!selectedPaymentMethod  || isEditingPayment)? <div>
+        {(!selectedPaymentMethod || isEditingPayment ||!isPaymentFormSubmitted)? <div>
 
                 <h3 className='text-start'> Payment </h3>
                 <div className='flex flex-col max-w-60 mt-8'>
@@ -119,6 +140,8 @@ const Payment = forwardRef(({onSubmit}, ref) => {
                     <Checkbox
                         checked={selectedPaymentMethod === "Card"}
                         onChange={() => dispatch (setSelectedPaymentMethod("Card"))}
+                        iconCheckbox={LuCreditCard}
+                        textLabel="Credit or Debit Card"
                     />
 
 
@@ -255,7 +278,7 @@ const Payment = forwardRef(({onSubmit}, ref) => {
                             checked={isCheckedBillAddress}
                             onChange={()=> {
                                 const newValue = !isCheckedBillAddress;
-                                dispatch(setCheckedBillAddress(newValue))
+                                dispatch( setCheckedBillAddress(newValue))
 
                                 if (!newValue) {
                                     dispatch(setBillAddress({
@@ -301,6 +324,7 @@ const Payment = forwardRef(({onSubmit}, ref) => {
                         <button
                             onClick={() => {
                                 dispatch(setEditingPayment(true));
+                                dispatch(setPaymentFormSubmitted(false));
                             }}
                             className=' hover:cursor-pointer underline underline-offset-3'> Edit </button>
                     </div>

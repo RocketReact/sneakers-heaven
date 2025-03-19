@@ -51,17 +51,44 @@ export default function Checkout({isAuthenticated}) {
 
 
     const onSubmit = (data) => {
+        console.log("onSubmit called", { step, data });
+
         if (step === 'shipping') {
+            console.log("Handling shipping step");
             if (customerData.length === 0 || isEditing) {
-                const cleanedData = {...data, id:uuidv4(), deliverySpeed};
-                dispatch(setCustomerData ([cleanedData]));
+                console.log("Processing customer data", { customerData, isEditing });
+                const cleanedData = {...data, id: uuidv4(), deliverySpeed};
+                dispatch(setCustomerData([cleanedData]));
                 addUserData(cleanedData);
-                dispatch(toggleEditing (false)); // выключаем редактирование
-                dispatch(setStep ('continue to order review'));
+                dispatch(toggleEditing(false));
+                dispatch(setStep('continue to order review'));
+                console.log("Shipping step completed");
+            } else {
+                console.log("Skipping shipping data processing - data exists and not editing");
             }
-        } else if (customerData.length > 0 && selectedPaymentMethod) {
-              dispatch(setStep ('confirm order & processing payment'));
-          }
+        } else if (step === 'continue to order review') {
+            console.log("Handling payment review step");
+            if (paymentRef.current) {
+                console.log("Payment ref exists, calling handleSubmit");
+                const isPaymentValid = paymentRef.current.handleSubmit();
+                console.log("Payment validation result:", isPaymentValid);
+
+                if (isPaymentValid && customerData.length > 0 && selectedPaymentMethod) {
+                    console.log("All conditions met, proceeding to next step");
+                    dispatch(setStep('confirm order & processing payment'));
+                } else {
+                    console.error("Conditions not met:", {
+                        isPaymentValid,
+                        customerDataExists: customerData.length > 0,
+                        selectedPaymentMethod
+                    });
+                }
+            } else {
+                console.error("Payment ref is null");
+            }
+        } else {
+            console.log("Unhandled step:", step);
+        }
     }
 
 
@@ -218,15 +245,24 @@ export default function Checkout({isAuthenticated}) {
                                     />}
                                     <div className='mt-6'>
                                         <button
-                                            type='submit'
+                                            type="button" // Изменение типа с 'submit' на 'button'
+                                            onClick={() => {
+                                                if (step === 'shipping') {
+                                                    handleSubmit(onSubmit)();
+                                                } else if (step === 'continue to order review') {
+                                                    if (paymentRef.current) {
+                                                        const isPaymentValid = paymentRef.current.handleSubmit();
+                                                        if (isPaymentValid) {
+                                                            dispatch(setStep('confirm order & processing payment'));
+                                                        }
+                                                    }
+                                                }
+                                            }}
                                             className='min-w-50 bg-black text-white py-3 px-2 rounded-full
-                                            hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
-                                            text-xl mb-3'
+                                                      hover:bg-gray-400 transition-all hover:cursor-pointer font-extralight
+                                                       text-xl mb-3'
                                         >
-
-
                                             {buttonTextMap[step]}
-
                                         </button>
                                 </div>
                             </div>
