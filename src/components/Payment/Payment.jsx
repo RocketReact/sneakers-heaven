@@ -123,11 +123,16 @@ const Payment = forwardRef(({onSubmit}, ref) => {
         }
     }));
 
+    useEffect(() => {
+        if (isPaymentFormSubmitted) {
+            dispatch(setEditingPayment(false));
+        }
+    }, [isPaymentFormSubmitted, dispatch]);
 
     return <div>
         <hr className="border-t-2 border-gray-300 mt-10"/>
 
-        {(!selectedPaymentMethod || isEditingPayment ||!isPaymentFormSubmitted)? <div>
+        {(!selectedPaymentMethod || !isPaymentFormSubmitted || isEditingPayment)? <div>
 
                 <h3 className='text-start'> Payment </h3>
                 <div className='flex flex-col max-w-60 mt-8'>

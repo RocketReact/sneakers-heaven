@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Payment from '../Payment/Payment.jsx';
 import ShippingAddress from './ShippingAddress.jsx';
 import  {setStep, setShippingMethod, setDeliverySpeed, setCustomerData,
-         toggleEditing, setOpenToggleWhatInBag} from '../../store/checkoutSlice/checkoutSlice.js'
+         toggleEditingDelivery, setOpenToggleWhatInBag} from '../../store/checkoutSlice/checkoutSlice.js'
 
 
 const freeShipping = 'Free shipping, Arrives by Mon, Jun 17'
@@ -27,7 +27,7 @@ export default function Checkout({isAuthenticated}) {
     const navigate = useNavigate();
     const paymentRef = useRef(null);
     const {totalQuantity, totalPrice } = useSelector((state) => state.cart);
-    const { step, shippingMethod, deliverySpeed, customerData, isEditing, isOpenToggleWhatInBag } = useSelector
+    const { step, shippingMethod, deliverySpeed, customerData, isEditingDelivery, isOpenToggleWhatInBag } = useSelector
     ((state) => state.checkout);
     const selectedPaymentMethod = useSelector((state) => state.paymentSlice.selectedPaymentMethod);
     const methods = useForm({
@@ -38,56 +38,35 @@ export default function Checkout({isAuthenticated}) {
     const {handleSubmit} = methods;
 
     useEffect(() => {
-        if (isEditing) {
+        if (isEditingDelivery) {
             dispatch (setStep ('shipping'));
         }
-    }, [isEditing]);
+    }, [isEditingDelivery]);
 
     useEffect(() => {
-        if (isEditing && customerData.length>0) {
+        if (isEditingDelivery && customerData.length>0) {
             methods.reset(customerData[0])
         }
-    }, [isEditing, customerData, methods]);
+    }, [isEditingDelivery, customerData, methods]);
 
 
     const onSubmit = (data) => {
-        console.log("onSubmit called", { step, data });
 
         if (step === 'shipping') {
-            console.log("Handling shipping step");
-            if (customerData.length === 0 || isEditing) {
-                console.log("Processing customer data", { customerData, isEditing });
+            if (customerData.length === 0 || isEditingDelivery) {
                 const cleanedData = {...data, id: uuidv4(), deliverySpeed};
                 dispatch(setCustomerData([cleanedData]));
                 addUserData(cleanedData);
-                dispatch(toggleEditing(false));
+                dispatch(toggleEditingDelivery(false));
                 dispatch(setStep('continue to order review'));
-                console.log("Shipping step completed");
-            } else {
-                console.log("Skipping shipping data processing - data exists and not editing");
             }
-        } else if (step === 'continue to order review') {
-            console.log("Handling payment review step");
+        } else if (step === 'continue to order review' ) {
             if (paymentRef.current) {
-                console.log("Payment ref exists, calling handleSubmit");
                 const isPaymentValid = paymentRef.current.handleSubmit();
-                console.log("Payment validation result:", isPaymentValid);
-
                 if (isPaymentValid && customerData.length > 0 && selectedPaymentMethod) {
-                    console.log("All conditions met, proceeding to next step");
                     dispatch(setStep('confirm order & processing payment'));
-                } else {
-                    console.error("Conditions not met:", {
-                        isPaymentValid,
-                        customerDataExists: customerData.length > 0,
-                        selectedPaymentMethod
-                    });
                 }
-            } else {
-                console.error("Payment ref is null");
             }
-        } else {
-            console.log("Unhandled step:", step);
         }
     }
 
@@ -109,8 +88,7 @@ export default function Checkout({isAuthenticated}) {
         'shipping': 'Save & Continue',
     };
 
-
-
+console.log(step)
     return (
         <FormProvider {...methods}>
             <Helmet>
@@ -166,20 +144,19 @@ export default function Checkout({isAuthenticated}) {
 
                                 {shippingMethod === 'ship' && (
 
-                                    (customerData.length === 0)  || isEditing
+                                    (customerData.length === 0)  || isEditingDelivery
                                         ? <TextInputHtml />
-                                        :  <div className={`${(step === 'continue to order review')? 'border-none' : 'flex flex-col p-5 ' +
-                                            'border-2 border-gray-500 hover:border-gray-700 rounded-md items-between justify-between'}`}
+                                        :  <div className='border-none flex flex-col pt-5 items-between justify-between'
                                         >
                                             <div className='flex flex-row justify-between mb-3'>
 
-                                                <div className='flex flex-row gap-3 max-w-100'><h2>Delivery Options </h2> <FcCheckmark className='text-emerald-400' size={20} />
+                                                <div className='flex flex-row gap-3 max-w-100'><h3>Delivery Options </h3> <FcCheckmark className='text-emerald-400' size={20} />
                                                 </div>
 
                                                 <div className='self-end text-sm font-bold text-gray-400 hover:text-gray-500'>
                                                     <button
                                                         onClick={() => {
-                                                            dispatch(toggleEditing(true));
+                                                            dispatch(toggleEditingDelivery(true));
 
                                                         }}
                                                         className=' hover:cursor-pointer underline underline-offset-3'> Edit </button>
@@ -189,6 +166,7 @@ export default function Checkout({isAuthenticated}) {
                                             {customerData && customerData.length > 0  && (
                                                 <ShippingAddress/>
                                             )}
+
                                         </div>
                                 )}
 
@@ -209,7 +187,7 @@ export default function Checkout({isAuthenticated}) {
                                     </div>
                                 )}
 
-                                { !(customerData && customerData.length > 0 ) || isEditing  && (<div className='mt-3 flex flex-col justify-start items-start
+                                { !(customerData && customerData.length > 0 ) || isEditingDelivery  && (<div className='mt-3 flex flex-col justify-start items-start
                                 self-start text-base w-full'>
                                     <p className='font-normal mb-3'>Select your shipping speed</p>
 
@@ -239,13 +217,13 @@ export default function Checkout({isAuthenticated}) {
                                 </div>)
                                 }
 
-                                {(step === 'continue to order review') &&
+                                {(step === 'continue to order review' || step==='confirm order & processing payment') &&
                                     <Payment
                                     ref={paymentRef}
                                     />}
                                     <div className='mt-6'>
                                         <button
-                                            type="button" // Изменение типа с 'submit' на 'button'
+                                            type="button"
                                             onClick={() => {
                                                 if (step === 'shipping') {
                                                     handleSubmit(onSubmit)();

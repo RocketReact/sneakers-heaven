@@ -7,7 +7,7 @@ const initialState = {
     shippingMethod: "ship",
     deliverySpeed: freeShipping,
     customerData: [],
-    isEditing: false,
+    isEditingDelivery: false,
     isOpenToggleWhatInBag: false,
 };
 
@@ -19,7 +19,7 @@ const checkoutSlice = createSlice({
         setShippingMethod: (state, action) => { state.shippingMethod = action.payload },
         setDeliverySpeed: (state, action) => { state.deliverySpeed = action.payload },
         setCustomerData: (state, action) => { state.customerData = action.payload },
-        toggleEditing: (state) => { state.isEditing = !state.isEditing },
+        toggleEditingDelivery: (state) => { state.isEditingDelivery = !state.isEditingDelivery },
         setOpenToggleWhatInBag: (state) => {state.isOpenToggleWhatInBag = !state.isOpenToggleWhatInBag},
     }
 });
@@ -30,6 +30,7 @@ export const {
     setShippingMethod,
     setDeliverySpeed,
     setCustomerData,
-    toggleEditing,
-    setOpenToggleWhatInBag} = checkoutSlice.actions;
+    toggleEditingDelivery,
+    setOpenToggleWhatInBag
+    } = checkoutSlice.actions;
 export default checkoutSlice.reducer;
