@@ -1,6 +1,6 @@
 import TemplateProductCategory from "../../TemplateCategory/TemplateCategory.jsx";
 
-const Electronics = () => {
+export default  function Electronics () {
 
     return (
         <div>
@@ -11,5 +11,4 @@ const Electronics = () => {
     );
 };
 
-export default Electronics;
 

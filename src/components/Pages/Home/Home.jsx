@@ -21,8 +21,6 @@ const Home = () => {
                 <meta property="og:type" content="website" />
             </Helmet>
             <Banner />
-
-
             <AllProducts/>
             <section className=" text-gray-800 m-10 lg:mr-40 lg:ml-40">
                 <h1 className="text-center font-bold text-2xl mb-5 mt-10">

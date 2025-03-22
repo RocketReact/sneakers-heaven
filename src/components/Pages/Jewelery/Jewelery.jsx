@@ -1,6 +1,6 @@
 import TemplateProductCategory from "../../TemplateCategory/TemplateCategory.jsx";
 
-const Jewelery = () => {
+export default function Jewelery ()  {
 
     return (
 
@@ -15,4 +15,3 @@ const Jewelery = () => {
 };
 
 
-export default Jewelery;

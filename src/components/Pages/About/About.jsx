@@ -98,7 +98,7 @@ export default function About() {
                     <div className="bg-white p-6 rounded-lg shadow-md text-center">
                         <img
                             className="w-24 h-24 mx-auto rounded-full"
-                            src= {imageSEO}
+                            src={imageSEO}
                             alt="Team Member"
                         />
                         <h3 className="mt-4 text-xl font-semibold text-gray-900">Leonardo DiCaprio</h3>
@@ -108,7 +108,7 @@ export default function About() {
                     <div className="bg-white p-6 rounded-lg shadow-md text-center">
                         <img
                             className="w-24 h-24 mx-auto rounded-full"
-                            src= {imageCTO}
+                            src={imageCTO}
                             alt="Team Member"
                         />
                         <h3 className="mt-4 text-xl font-semibold text-gray-900">Scarlett Johansson </h3>
@@ -118,7 +118,7 @@ export default function About() {
                     <div className="bg-white p-6 rounded-lg shadow-md text-center">
                         <img
                             className="w-24 h-24 mx-auto rounded-full"
-                            src= {imageDesigner}
+                            src={imageDesigner}
                             alt="Team Member"
                         />
                         <h3 className="mt-4 text-xl font-semibold text-gray-900">Tom Cruise</h3>

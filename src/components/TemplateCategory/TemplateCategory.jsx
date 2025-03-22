@@ -6,13 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../store/./cartSlice/cartSlice.js";
 import noImage from "../../img/no-image.jpg"; // Импорт изображения
 import {fetchProducts} from "../../store/productSlice/productSlice.js";
+import {Helmet} from "react-helmet-async";
 
 
 export default function TemplateCategory() {
-    const { id } = useParams();
+    const { id }= useParams();
     const dispatch = useDispatch();
     const { products, status } = useSelector((state) => state.products);
-
+    const metaDescription = `Buy ${id} in our online-store. 
+                                    We offer everyday items as well as 
+                                    exclusive goods with fast delivery.`
     useEffect(() => {
         if (status === "idle") {
             dispatch(fetchProducts());
@@ -32,8 +35,17 @@ export default function TemplateCategory() {
 
         dispatch(addToCart(productWithQuantity));
     };
-
+    console.log (`https://sneakerheaven/products/${id?.toLowerCase().replace(/\s+/g, '-')}`)
     return (
+        <>
+            <Helmet>
+                <title>{id}</title>
+                <meta name="description" content={metaDescription} />
+                <meta property="og:title" content={`${id} - Интернет-магазин`} />
+                <meta property="og:description" content={metaDescription} />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content={`https://sneakerheaven/products/${id}`} />
+            </Helmet>
        <div><h1 className="text-3xl font-bold text-center my-6"> {id}</h1>
 
         <div className="grid grid-cols-2 gap-6
@@ -74,5 +86,6 @@ export default function TemplateCategory() {
             ): status ==='failed' ? (<p className='text-center text-red-500'> Failed to load products.</p> ) : null}
         </div>
        </div>
+        </>
     );
 }

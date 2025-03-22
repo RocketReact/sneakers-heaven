@@ -1,6 +1,6 @@
 import TemplateProductCategory from "../../TemplateCategory/TemplateCategory.jsx";
 
-   const Women = () => {
+export default function  Women () {
 
             return (
                 <div>
@@ -11,4 +11,3 @@ import TemplateProductCategory from "../../TemplateCategory/TemplateCategory.jsx
             );
         };
 
-        export default Women;
