@@ -5,7 +5,7 @@ import { fetchProducts } from "../../store/productSlice/productSlice.js";
 import { Link, useNavigate } from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
 import noImage from "../../img/no-image.jpg";
-import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
+import ProductRating from "../ProductsRaiting/ProductRating.jsx";
 import { addToCart } from "../../store/./cartSlice/cartSlice.js";
 
 export default function AllProducts() {
