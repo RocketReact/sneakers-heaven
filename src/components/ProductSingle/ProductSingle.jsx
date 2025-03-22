@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../../store/productSlice/productSlice.js";
@@ -11,7 +11,6 @@ import BuyNowShakingBtn from "./BuyNowShakingBtn";
 
 export default function ProductSingle() {
     const { id } = useParams();
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { products, status } = useSelector((state) => state.products);
     const cartItems = useSelector((state) => state.cart.cartItems);
@@ -20,14 +19,12 @@ export default function ProductSingle() {
     const productInCart = cartItems.find((item) => item.id === product?.id);
     const productQuantity = productInCart ? productInCart.quantity : 0;
 
-    // Загружаем список продуктов
     useEffect(() => {
         if (status === "idle" && products.length === 0) {
             dispatch(fetchProducts());
         }
     }, [status,products.length, dispatch]);
 
-    // Функции для изменений количества товара в корзине
     const handleIncreaseQuantity = () => {
         if (product) {
             dispatch(addToCart({...product, quantity: 1})); // Увеличиваем количество товара
