@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import { Link, useParams } from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
-import ProductRating from "../ProductsRaiting/ ProductRating.jsx";
+import ProductRating from "../ProductsRaiting/ProductRating.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../store/./cartSlice/cartSlice.js";
 import noImage from "../../img/no-image.jpg"; // Импорт изображения
