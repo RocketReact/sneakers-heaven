@@ -3,6 +3,7 @@ import {useEffect, useRef, forwardRef, useImperativeHandle} from "react";
 import payPal from "../../img/paypal_PNG1.png";
 import {FaApplePay} from "react-icons/fa";
 import { LuCreditCard } from "react-icons/lu";
+import {FcCheckmark} from "react-icons/fc";
 import GPay from "../../img/google-pay.webp";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import cvvVisa from '../../img/ch4_securityCardVisa.png';
@@ -14,10 +15,11 @@ import {
     setSelectedPaymentMethod, setTooltipVisibleCVV, setPaymentFormSubmitted,
     setCardNumber, setCvvCardNumber, setExpiryDateCard, setBillAddress, setEditingPayment, setCheckedBillAddress
 } from '../../store/paymentSlice/paymentSlice.js'
-import {FcCheckmark} from "react-icons/fc";
+import {setStep} from "../../store/checkoutSlice/checkoutSlice.js";
 
 
-const Payment = forwardRef(({onSubmit}, ref) => {
+
+const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
     const tooltipRef = useRef(null);
     const infoRef = useRef(null);
     const dispatch = useDispatch();
@@ -89,15 +91,15 @@ const Payment = forwardRef(({onSubmit}, ref) => {
     }, [dispatch]);
 
     const paymentIcons = {
-        'PayPal': <img src={payPal} className='w-20 h-8' alt="PayPal" />,
+        'PayPal': <img src={payPal} className='w-20 h-14 -ml-1 -mt-2 ' alt="PayPal" />,
         'Card': (
-            <div className='flex gap-2'>
+            <div className='flex gap-2 mt-1'>
                 <LuCreditCard />
                 <p className='text-base font-extralight'> Credit Card </p>
             </div>
         ),
-        'ApplePay': <FaApplePay />,
-        'GooglePay': <img src={GPay} className='w-11 h-8' alt="GooglePay" />
+        'ApplePay': <FaApplePay size={41}/>,
+        'GooglePay': <img src={GPay} className='w-11 h-11' alt="GooglePay" />
     };
 
     useImperativeHandle(ref, () => ({
@@ -132,9 +134,11 @@ const Payment = forwardRef(({onSubmit}, ref) => {
     return <div>
         <hr className="border-t-2 border-gray-300 mt-10"/>
 
-        {(!selectedPaymentMethod || !isPaymentFormSubmitted || isEditingPayment)? <div>
+        {
+        (isEditingPayment || !selectedPaymentMethod || !isPaymentFormSubmitted) ?
 
-                <h3 className='text-start'> Payment </h3>
+            <div>
+                <h3 className='text-start mt-5'> Payment </h3>
                 <div className='flex flex-col max-w-60 mt-8'>
                     <div className='flex flex-col justify-start items-start gap-3'>
 
@@ -184,7 +188,7 @@ const Payment = forwardRef(({onSubmit}, ref) => {
                         <img
                             onClick={() => dispatch(setSelectedPaymentMethod("GooglePay"))}
                             src={GPay}
-                            className='w-11 h-10.5 hover:cursor-pointer'
+                            className='w-11 h-11 hover:cursor-pointer'
                             alt="GooglePay"/>
                     </div>
                 </div>
@@ -320,7 +324,7 @@ const Payment = forwardRef(({onSubmit}, ref) => {
                     </p>}
             </div> :
             <div>
-                <div className='flex flex-row justify-between mb-3'>
+                <div className='flex flex-row justify-between mb-3 mt-5'>
                     <div className='flex flex-row gap-3'>
                         <h3> Payment </h3> <FcCheckmark className='text-emerald-400' size={20} />
                     </div>
@@ -330,13 +334,16 @@ const Payment = forwardRef(({onSubmit}, ref) => {
                             onClick={() => {
                                 dispatch(setEditingPayment(true));
                                 dispatch(setPaymentFormSubmitted(false));
+                                dispatch(setStep('continue to order review'))
                             }}
                             className=' hover:cursor-pointer underline underline-offset-3'> Edit </button>
                     </div>
                 </div>
 
-                <p className='text-start text-base mt-5 mb-2'> Payment Method </p>
-                {paymentIcons[selectedPaymentMethod]}
+                <p className='text-start text-base mt-5'> Payment Method </p>
+                <div>{paymentIcons[selectedPaymentMethod]}</div>
+                <hr className="border-t-2 border-gray-300 mt-1"/>
+
             </div>
         }
     </div>

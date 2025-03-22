@@ -220,6 +220,7 @@ console.log(step)
                                 {(step === 'continue to order review' || step==='confirm order & processing payment') &&
                                     <Payment
                                     ref={paymentRef}
+                                    currentStep={step}
                                     />}
                                     <div className='mt-6'>
                                         <button

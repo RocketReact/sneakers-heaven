@@ -31,8 +31,8 @@ const paymentSlice = createSlice ( {
         setCvvCardNumber: (state, action) => {state.cvvCardNumber = action.payload },
         setExpiryDateCard: (state, action) => {state.expiryDateCard = action.payload },
         setBillAddress: (state, action) => {state.billAddress = action.payload },
-        setEditingPayment: (state) => {state.isEditingPayment = !state.payload },
-        setPaymentFormSubmitted: (state) => {state.paymentFormSubmitted = !state.payload },
+        setEditingPayment: (state, action) => {state.isEditingPayment = action.payload },
+        setPaymentFormSubmitted: (state, action) => {state.isPaymentFormSubmitted = action.payload },
     }
 }
 )
