@@ -11,7 +11,6 @@ export const Bag = ({ textTitle, textPrice, textBtn}) => {
     const dispatch = useDispatch();
 
     return <div className="flex-2 w-full mb-7">
-        <hr className="md:hidden border-t-2 border-gray-300 w-full"/>
         <ul className='mt-7'>
             {cartItems.map((product, index) => (
                 <li

@@ -1,5 +1,9 @@
-import Checkbox from "../Checkout/Checkbox.jsx";
 import {useEffect, useRef, forwardRef, useImperativeHandle} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import Checkbox from "../Checkout/Checkbox.jsx";
+import TextInputHtml from "../TextInput/TextInputHtml.jsx";
+import ShippingAddress from "../Checkout/ShippingAddress.jsx";
+import {Bag, Summary} from '../Cart/Cart.jsx'
 import payPal from "../../img/paypal_PNG1.png";
 import {FaApplePay} from "react-icons/fa";
 import { LuCreditCard } from "react-icons/lu";
@@ -8,12 +12,10 @@ import GPay from "../../img/google-pay.webp";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import cvvVisa from '../../img/ch4_securityCardVisa.png';
 import cvvAmex from '../../img/ch4_securityCardAmex.png';
-import ShippingAddress from "../Checkout/ShippingAddress.jsx";
-import {useDispatch, useSelector} from "react-redux";
-import TextInputHtml from "../TextInput/TextInputHtml.jsx";
 import {
     setSelectedPaymentMethod, setTooltipVisibleCVV, setPaymentFormSubmitted,
-    setCardNumber, setCvvCardNumber, setExpiryDateCard, setBillAddress, setEditingPayment, setCheckedBillAddress
+    setCardNumber, setCvvCardNumber, setExpiryDateCard,
+    setBillAddress, setEditingPayment, setCheckedBillAddress
 } from '../../store/paymentSlice/paymentSlice.js'
 import {setStep} from "../../store/checkoutSlice/checkoutSlice.js";
 
@@ -342,7 +344,15 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
 
                 <p className='text-start text-base mt-5'> Payment Method </p>
                 <div>{paymentIcons[selectedPaymentMethod]}</div>
-                <hr className="border-t-2 border-gray-300 mt-1"/>
+                <hr className="border-1 border-gray-300 w-full"/>
+
+
+                <div className='flex flex-col items-center mt-5 lg:hidden'>
+                    <h3 className='self-start mb-3 '>Order Review</h3>
+                    <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
+                    <Summary textSize='text-lg'/>
+                </div>
+
 
             </div>
         }
