@@ -16,14 +16,19 @@ import ProductSearch from "./components/ProductSearch/ProductSearch.jsx";
 import Checkout from "./components/Checkout/Checkout.jsx";
 import Payment from "./components/Payment/Payment.jsx";
 import {useState} from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {HelmetProvider} from "react-helmet-async";
+import Notification from "./components/Notification/Notification.jsx";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
       <HelmetProvider>
        <Router>
+             <Notification/>
              <HeaderTop/>
+
            <Routes>
                <Route path="/" element={<Home />} />
                <Route path="/about" element={<About />} />
@@ -43,6 +48,17 @@ function App() {
                <Route path="/payment" element={<Payment/>} />
                <Route path="*" element={<NotFoundPage />} />
            </Routes>
+           <ToastContainer
+               position="top-right"
+               autoClose={5000}
+               hideProgressBar={false}
+               newestOnTop
+               closeOnClick
+               rtl={false}
+               pauseOnFocusLoss
+               draggable
+               pauseOnHover
+           />
        </Router>
       </HelmetProvider>
   )

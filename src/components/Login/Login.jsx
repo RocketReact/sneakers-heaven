@@ -1,7 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import {Email, Password} from '../TextInput/TextInputHtml.jsx'
 import {addUserData} from "../../data/userRegisterData.js";
-import { ToastContainer } from "react-toastify";
 import {notifySuccess, notifyError} from "../Notification/Notification.jsx";
 import Button from "../Button/Button.jsx";
 import {Helmet} from "react-helmet-async";
@@ -89,7 +88,7 @@ export default function Login ({isAuthenticated, setIsAuthenticated}) {
 
 
                 />
-                <ToastContainer/>
+
             </form>
         </FormProvider>
     );

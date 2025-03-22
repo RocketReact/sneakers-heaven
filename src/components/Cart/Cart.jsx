@@ -6,9 +6,11 @@ import generateProductLink from "../../generateURL/generateURL.js";
 import noImage from "../../img/no-image.jpg";
 import {Helmet} from "react-helmet-async";
 
+
 export const Bag = ({ textTitle, textPrice, textBtn}) => {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const dispatch = useDispatch();
+
 
     return <div className="flex-2 w-full mb-7">
         <ul className='mt-7'>
@@ -42,7 +44,8 @@ export const Bag = ({ textTitle, textPrice, textBtn}) => {
                         <div className="space-x-2 text-start ">
                             <button
                                 className={`${textBtn || 'text-base'} text-md btn `}
-                                onClick={() => dispatch(addToCart(product))}
+                                onClick={() => dispatch(addToCart(product))
+                                }
                             >
                                 +
                             </button>
@@ -81,6 +84,7 @@ export const Summary = ({textSize}) => {
 export default function Cart () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
 
     return (
             <div className="flex flex-col mb-10 ml-20 mr-20 min-h-screen font-extralight ">

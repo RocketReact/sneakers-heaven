@@ -1,7 +1,6 @@
 import { Email, Name } from '../../TextInput/TextInputHtml.jsx';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import {notifySuccess} from "../../Notification/Notification.jsx";
-import {ToastContainer} from "react-toastify";
 import {Helmet} from "react-helmet-async";
 
 
@@ -23,7 +22,6 @@ export default function ContactForm() {
     } = methods;
 
     const onSubmit = (data) => {
-        console.log('Отправленные данные:', data);
         reset()
         notifySuccess ('' +
             'We received your message, ' +
@@ -82,7 +80,6 @@ export default function ContactForm() {
                 >
                     Submit
                 </button>
-                <ToastContainer/>
             </form>
             </div>
         </FormProvider>
