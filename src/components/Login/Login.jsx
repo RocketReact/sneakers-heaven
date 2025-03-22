@@ -86,7 +86,6 @@ export default function Login ({isAuthenticated, setIsAuthenticated}) {
                     isAuthenticated={isAuthenticated}
                     onLogOut={logOut}
 
-
                 />
 
             </form>

@@ -35,7 +35,6 @@ export default function TemplateCategory() {
 
         dispatch(addToCart(productWithQuantity));
     };
-    console.log (`https://sneakerheaven/products/${id?.toLowerCase().replace(/\s+/g, '-')}`)
     return (
         <>
             <Helmet>

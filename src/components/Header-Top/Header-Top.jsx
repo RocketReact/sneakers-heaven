@@ -1,6 +1,6 @@
 import { FiSearch } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { RiAccountCircleFill } from "react-icons/ri";
 import logo from "../../img/logo.png"
@@ -13,20 +13,61 @@ const HeaderTop = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+    const menuRef = useRef(null);
+    const burgerRef = useRef(null);
 
     const toggleSearch = () => {
         setIsSearchOpen(!isSearchOpen);
     }
 
-    // Функция для переключения меню
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (
+                isMenuOpen &&
+                menuRef.current &&
+                !menuRef.current.contains(e.target) &&
+                burgerRef.current &&
+                !burgerRef.current.contains(e.target)
+            ) {
+                setIsMenuOpen(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, [isMenuOpen]);
+
+
+    {/*Block Scrolling when isMenuOpen on Mobile & Tablet */}
+
+    useEffect(() => {
+        if (isMenuOpen) {
+            const scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
+        } else {
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+            }
+        }
+    }, [isMenuOpen]);
+
     return (
         <div className="bg-white shadow-md justify-between items-center">
             <nav className="flex justify-between items-center p-6 mx-3 md:mx-15">
-                {/* Логотип */}
+                {/* Logo */}
 
 
                 <div className='shrink-0'>
@@ -37,7 +78,7 @@ const HeaderTop = () => {
 
                 <div className=' md:hidden lg:flex'>
 
-                {/* Основное меню для больших экранов */}
+                {/* Main Menu large screen */}
                 <ul className="hidden md:flex space-x-8">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About</Link></li>
@@ -92,8 +133,9 @@ const HeaderTop = () => {
 
                     </Link>
 
-                    {/* Иконка гамбургера для мобильных устройств */}
+                    {/* Burger icon */}
                     <button
+                        ref={burgerRef}
                         onClick={toggleMenu}
                         className=" lg:hidden hover:cursor-pointer w-9 h-9 flex justify-center items-center"
                     >
@@ -108,9 +150,11 @@ const HeaderTop = () => {
                 </div>
             </nav>
 
-            {/* Мобильное меню с фиксированным положением */}
+            {/* Mobile Menu */}
             {isMenuOpen && (
-                <div className=" fixed top-16 right-0 h-[calc(100%-4rem)] w-[50vw] bg-white z-50 p-4 shadow-lg">
+                <div
+                    ref={menuRef}
+                    className=" fixed top-16 right-0 h-[calc(100%-4rem)] w-[50vw] bg-white z-50 p-4 shadow-lg">
                     <ul className="space-y-4 text-black text-lg mt-8">
                         <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
                         <li><Link to="/about" onClick={toggleMenu}>About</Link></li>

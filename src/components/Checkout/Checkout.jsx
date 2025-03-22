@@ -88,7 +88,6 @@ export default function Checkout({isAuthenticated}) {
         'shipping': 'Save & Continue',
     };
 
-console.log(step)
     return (
         <FormProvider {...methods}>
             <Helmet>

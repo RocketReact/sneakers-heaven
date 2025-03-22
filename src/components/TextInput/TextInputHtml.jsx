@@ -77,7 +77,7 @@ export default function TextInputHtml ({HiddenEmail, values}) {
 
     return (
             <div >
-        {/* Поле E-mail */}
+        {/* E-mail */}
     <div className={`${HiddenEmail? 'hidden' : ''}`}>
         <TextInput
         id="email"
@@ -93,7 +93,7 @@ export default function TextInputHtml ({HiddenEmail, values}) {
     />
     </div>
 
-    {/* Имена пользователя */}
+    {/* User Names */}
     <div className="flex-col">
         <div className="flex flex-row space-x-3">
             <div className="w-full">
@@ -123,7 +123,7 @@ export default function TextInputHtml ({HiddenEmail, values}) {
         </div>
     </div>
 
-    {/* Адрес */}
+    {/* Address */}
     <div className="flex-col">
         <div className="flex flex-row space-x-3">
             <div className="w-full">
@@ -165,7 +165,7 @@ export default function TextInputHtml ({HiddenEmail, values}) {
         </div>
     </div>
 
-    {/* Номер телефона */}
+    {/* Phone Number */}
     <div className="flex-col">
         <div className="flex flex-row space-x-3 ">
             <div className="w-full">
