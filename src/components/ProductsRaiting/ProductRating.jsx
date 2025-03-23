@@ -2,13 +2,19 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+/**
+ * Displays product star rating with structured data for SEO
+ * @param {string} mainRatingDiv - Optional CSS class for rating container
+ */
 export default function ProductRating({ mainRatingDiv }) {
     const maxStars = 5;
 
+    // Get product from store using URL parameter
     const { id } = useParams();
     const { products } = useSelector((state) => state.products);
     const product = products.find((product) => product.id === Number(id));
 
+    // Skip rendering if product not found
     if (!product) {
         return <></>;
     }
@@ -16,8 +22,10 @@ export default function ProductRating({ mainRatingDiv }) {
 
     return (
         <>
+            {/* Star rating display */}
             <div className={`${mainRatingDiv || 'items-center'} flex flex-col gap-4`}>
                 <div className='flex mt-3'>
+                    {/* Generate 5 stars with filled/empty states based on rating */}
                     {[...Array(maxStars)].map((_, i) => (
                         <svg
                             key={i}
@@ -36,13 +44,14 @@ export default function ProductRating({ mainRatingDiv }) {
                     ))}
                 </div>
 
+                {/* Numeric rating and review count */}
                 <span className='text-grey-700 text-sm'>
                     {rating.rate ? rating.rate.toFixed(1) : 'No Rating'}
                     <span className='text-grey-500'> ({rating.count || 0} Reviews)</span>
                 </span>
             </div>
 
-            {/* JSON-LD for schema.org */}
+            {/* Schema.org structured data for rich snippets in search results */}
             <Helmet>
                 <script type="application/ld+json">
                     {`
