@@ -21,47 +21,66 @@ import 'react-toastify/dist/ReactToastify.css';
 import {HelmetProvider} from "react-helmet-async";
 import Notification from "./components/Notification/Notification.jsx";
 
-function App() {
+/**
+ * Main application component with routing configuration
+ */
+export default function App() {
+    // Authentication state for login/protected features
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-  return (
-      <HelmetProvider>
-       <Router>
-             <Notification/>
-             <HeaderTop/>
 
-           <Routes>
-               <Route path="/" element={<Home />} />
-               <Route path="/about" element={<About />} />
-               <Route path="/contact" element={<ContactForm/>} />
-               <Route path="/products/:id" element={<Men/>} />
-               <Route path="/products/:id" element={<Women/>} />
-               <Route path='/products/:id' element={<Jewelery />} />
-               <Route path="/products/:id" element={<Electronics/>} />
-               <Route path="/shop-all" element={<AllProducts/>} />
-               <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
-               <Route path="/products/ProductsSearch" element={<ProductSearch/>} />
-               <Route path="/login" element={<Login
-                   isAuthenticated ={isAuthenticated} setIsAuthenticated ={setIsAuthenticated}/>} />
+    return (
+        <HelmetProvider>
+            <Router>
+                {/* Global notifications listener */}
+                <Notification/>
 
-               <Route path="/cart" element={<CartPage isAuthenticated={isAuthenticated}/>} />
-               <Route path="/checkout" element={<Checkout/>} />
-               <Route path="/payment" element={<Payment/>} />
-               <Route path="*" element={<NotFoundPage />} />
-           </Routes>
-           <ToastContainer
-               position="top-right"
-               autoClose={5000}
-               hideProgressBar={false}
-               newestOnTop
-               closeOnClick
-               rtl={false}
-               pauseOnFocusLoss
-               draggable
-               pauseOnHover
-           />
-       </Router>
-      </HelmetProvider>
-  )
+                {/* Global header */}
+                <HeaderTop/>
+
+                {/* Application routes */}
+                <Routes>
+                    {/* Main pages */}
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<ContactForm/>} />
+
+                    {/* Category pages - note: all use the same URL pattern */}
+                    <Route path="/products/:id" element={<Men/>} />
+                    <Route path="/products/:id" element={<Women/>} />
+                    <Route path='/products/:id' element={<Jewelery />} />
+                    <Route path="/products/:id" element={<Electronics/>} />
+
+                    {/* Product pages */}
+                    <Route path="/shop-all" element={<AllProducts/>} />
+                    <Route path="/product/:id/:words?" element={<ProductSingle/>}/>
+                    <Route path="/products/ProductsSearch" element={<ProductSearch/>} />
+
+                    {/* User account pages */}
+                    <Route path="/login" element={<Login
+                        isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>} />
+
+                    {/* Checkout flow */}
+                    <Route path="/cart" element={<CartPage isAuthenticated={isAuthenticated}/>} />
+                    <Route path="/checkout" element={<Checkout/>} />
+                    <Route path="/payment" element={<Payment/>} />
+
+                    {/* Fallback for unknown routes */}
+                    <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+
+                {/* Toast notifications container */}
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+            </Router>
+        </HelmetProvider>
+    )
 }
-
-export default App
