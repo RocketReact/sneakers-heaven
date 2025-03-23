@@ -4,36 +4,39 @@ import { fetchProductsSearch, setSearchQuery } from "../../store/searchSlice/sea
 import generateProductLink from "../../generateURL/generateURL.js";
 import { Link } from "react-router-dom";
 
+/**
+ * Search component with real-time filtering and result display
+ * @param {Function} closeSearch - Function to close search dropdown
+ */
 export default function ProductSearch({ closeSearch }) {
     const dispatch = useDispatch();
     const { searchingItems, searchQuery, status } = useSelector((state) => state.filter);
 
-    // Реф для отслеживания области компонента поиска
+    // Ref for tracking search component area
     const searchContainer = useRef(null);
 
+    // Fetch search data on component load
     useEffect(() => {
         if (status === "idle") {
             dispatch(fetchProductsSearch());
         }
     }, [dispatch, status]);
 
+    // Handle search input change
     const handleSearch = (e) => {
         dispatch(setSearchQuery(e.target.value));
     };
 
-    // Добавляем обработчик клика вне компонента
+    // Close search when clicking outside component
     useEffect(() => {
         const handleClickOutside = (event) => {
-            // Проверяем, кликает ли пользователь вне контейнера
             if (searchContainer.current && !searchContainer.current.contains(event.target)) {
-                closeSearch(); // Закрываем поиск
+                closeSearch();
             }
         };
 
-        // Навешиваем обработчик на событие `mousedown` (или можно `click`)
         document.addEventListener("mousedown", handleClickOutside);
 
-        // Удаляем обработчик при размонтировании компонента
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
@@ -41,6 +44,7 @@ export default function ProductSearch({ closeSearch }) {
 
     return (
         <div ref={searchContainer}>
+            {/* Search input */}
             <input
                 type="text"
                 placeholder="Search..."
@@ -49,6 +53,7 @@ export default function ProductSearch({ closeSearch }) {
                 className="p-1 mb-1 mt-2 border-e-emerald-300 rounded-md min-w-full"
             />
 
+            {/* Loading state or search results */}
             {status === "loading" ? (
                 <p>Loading...</p>
             ) : (
