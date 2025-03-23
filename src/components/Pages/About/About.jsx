@@ -5,11 +5,13 @@ import imageCTO from '../../../img/johansson scarlett.webp'
 import imageDesigner from '../../../img/tom cruise.webp'
 import { Helmet } from "react-helmet-async";
 
-
+/**
+ * About page
+ */
 export default function About() {
     return (
         <div className="bg-gray-100 py-16 px-6 lg:px-8 font-extralight">
-
+            {/* SEO metadata and social sharing tags */}
             <Helmet>
                 <title>About Us | Sneaker Haven </title>
                 <meta name="description" content="
@@ -34,6 +36,7 @@ export default function About() {
                 <link rel="canonical" href="http://localhost:3000/about-us"/>
             </Helmet>
 
+            {/* Page header */}
             <div className="max-w-7xl mx-auto text-center">
                 <h1 className="text-4xl text-gray-900 sm:text-5xl font-extralight">
                     About Us
@@ -43,7 +46,9 @@ export default function About() {
                 </p>
             </div>
 
+            {/* Mission, Vision, Values cards */}
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+                {/* Mission card */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
                    <span aria-hidden="true">
                        <FaHandshake
@@ -52,14 +57,14 @@ export default function About() {
                        />
                    </span>
 
-                        <h3 className="mt-4 text-xl font-semibold text-gray-900">Our Mission</h3>
+                    <h3 className="mt-4 text-xl font-semibold text-gray-900">Our Mission</h3>
                     <p className="mt-2 text-gray-600">
                         To deliver outstanding services that empower our clients to achieve their goals.
                     </p>
                 </div>
 
+                {/* Vision card */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
-
                     <span aria-hidden="true">
                     <GiOctogonalEye
                         className="h-16 mx-auto size-30 text-blue-400"
@@ -73,10 +78,10 @@ export default function About() {
                     </p>
                 </div>
 
+                {/* Values card */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
                     <GiMaterialsScience
                         className="h-16 mx-auto size-30 text-yellow-400"
-
                     />
 
                     <h3 className="mt-4 text-xl font-semibold text-gray-900">Our Values</h3>
@@ -86,6 +91,7 @@ export default function About() {
                 </div>
             </div>
 
+            {/* Team section */}
             <div className="mt-16 max-w-4xl mx-auto text-center">
                 <h2 className="text-2xl font-extralight text-gray-900 sm:text-3xl">
                     Meet Our Team
@@ -94,7 +100,9 @@ export default function About() {
                     We take pride in our talented and passionate team who make everything possible.
                 </p>
 
+                {/* Team members grid */}
                 <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {/* CEO card */}
                     <div className="bg-white p-6 rounded-lg shadow-md text-center">
                         <img
                             className="w-24 h-24 mx-auto rounded-full"
@@ -105,6 +113,7 @@ export default function About() {
                         <p className="text-gray-600">CEO</p>
                     </div>
 
+                    {/* CTO card */}
                     <div className="bg-white p-6 rounded-lg shadow-md text-center">
                         <img
                             className="w-24 h-24 mx-auto rounded-full"
@@ -115,6 +124,7 @@ export default function About() {
                         <p className="text-gray-600">CTO</p>
                     </div>
 
+                    {/* Designer card */}
                     <div className="bg-white p-6 rounded-lg shadow-md text-center">
                         <img
                             className="w-24 h-24 mx-auto rounded-full"
