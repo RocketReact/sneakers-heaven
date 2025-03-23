@@ -1,10 +1,16 @@
 import { Helmet } from "react-helmet-async";
 import {useNavigate} from "react-router-dom";
 
+/**
+ * 404 page component with navigation to shop
+ */
 export default function NotFoundPage () {
+    // For programmatic navigation
     const navigate = useNavigate();
+
     return (
         <div className="flex flex-col text-center mt-5 font-extralight">
+            {/* SEO metadata */}
             <Helmet>
                 <title>Page Not Found | YourSite</title>
                 <meta name="robots" content="noindex, nofollow" />
@@ -14,15 +20,14 @@ export default function NotFoundPage () {
             </Helmet>
             <h1 className='text-4xl'> Page Not Found </h1>
             <div>
+                {/* Redirect button */}
                 <button
                     className='mt-5 py-3 px-2 bg-black text-white rounded-full
                      hover:cursor-pointer hover:bg-gray-400 hover:scale-105
                      duration-200 active:scale-95'
                     onClick={() => navigate ('/shop-all')}
-
                 >Go Shopping</button>
             </div>
         </div>
     )
-
 }
