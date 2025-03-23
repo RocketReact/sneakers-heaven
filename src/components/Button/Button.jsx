@@ -1,4 +1,6 @@
 
+//Reused Button on Login & Checkout
+
 export default function Button({ isAuthenticated, onClick, onLogOut, styleBtn, loginText, logoutText }) {
    const defaultStyleBtn = '' +
        'ml-5 text-sm font-bold text-gray-400 ' +
