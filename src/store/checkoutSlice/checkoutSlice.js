@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // Default shipping option for initial state
-const freeShipping = "Free shipping, Arrives by Mon, Jun 17";
+const freeShipping = "Free shipping, Arrives by Mon, Jun 17"
 
 /**
  * Initial checkout state with default shipping options
