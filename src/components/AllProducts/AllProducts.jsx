@@ -6,66 +6,76 @@ import { Link, useNavigate } from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
 import noImage from "../../img/no-image.jpg";
 import ProductRating from "../ProductsRaiting/ProductRating.jsx";
-import { addToCart } from "../../store/./cartSlice/cartSlice.js";
+import { addToCart } from "../../store/cartSlice/cartSlice.js";
 
+/**
+ * AllProducts component - Displays product catalog with filtering and pagination
+ * Fetches products from the store, handles category filtering and pagination
+ * Allows adding products to cart and navigating to product details
+ */
 export default function AllProducts() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { products, status, error, filteredCategory } = useSelector((state) => state.products);
     const cartItems = useSelector((state) => state.cart.cartItems);
 
-    // Состояние для управления номером текущей страницы
+    // Current page state for pagination
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Количество товаров на одной странице
+    // Number of products to display per page
     const itemsPerPage = 12;
 
+    // Fetch products on component mount if not already loaded
     useEffect(() => {
         if (status === "idle") {
             dispatch(fetchProducts());
         }
     }, [status, dispatch]);
 
+    // Handle different loading states
     if (status === "loading") return <p>Loading...</p>;
     if (status === "failed") return <p>Failed: {error}</p>;
     if (status === "succeeded" && products.length === 0) return <p>No products found.</p>;
 
-    // Фильтрация продуктов по категории
+    // Extract unique categories and filter products by selected category
     const categories = [...new Set(products.map((product) => product.category))];
     const filteredProducts = filteredCategory
         ? products.filter((product) => product.category === filteredCategory)
         : products;
 
-    // Вычисляем общее количество страниц
+    // Calculate total number of pages based on filtered products
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
-    // Вычисляем, какие товары показывать на текущей странице
+    // Get products for current page
     const currentProducts = filteredProducts.slice(
-        (currentPage - 1) * itemsPerPage, // начальный индекс
-        currentPage * itemsPerPage        // конечный индекс
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
     );
 
-    // Логика для обработки добавления товара в корзину
+    /**
+     * Handle adding product to cart and navigate to cart page
+     * If product already exists in cart, increment quantity
+     */
     const handleRedirect = (product) => {
         const productInCart = cartItems.find((item) => item.id === product.id);
         !productInCart
             ? dispatch(addToCart({ ...product, quantity: 1 }))
             : dispatch(addToCart({ ...productInCart, quantity: productInCart.quantity + 1 }));
 
-        navigate("/cart"); // Перенаправляем на страницу корзины
+        navigate("/cart");
     };
 
-    // Функция для переключения страниц
+    // Update current page when user clicks on pagination controls
     const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber); // Устанавливаем текущую страницу
+        setCurrentPage(pageNumber);
     };
 
     return (
         <div className="text-1xl text-center m-7 lg:mr-20 lg:ml-20 xl:mr-20 xl:ml-20 ">
-            {/* Панель фильтров */}
+            {/* Product filter panel */}
             <ProductFilter categories={categories} />
 
-            {/* Сетка товаров */}
+            {/* Product grid layout */}
             <div className="grid grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 lg:m-20 xl:m20">
                 <h2 className="sr-only">Products</h2>
                 {currentProducts.map((product) => (
@@ -92,7 +102,7 @@ export default function AllProducts() {
                 ))}
             </div>
 
-            {/* Постраничная навигация */}
+            {/* Pagination controls */}
             <div className="pagination-controls flex justify-center items-center space-x-2 mt-8 ">
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
@@ -101,7 +111,7 @@ export default function AllProducts() {
                 >
                     Previous
                 </button>
-                {/* Отображение номеров страниц */}
+                {/* Page number buttons */}
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button
                         key={index}
