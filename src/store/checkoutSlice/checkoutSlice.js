@@ -29,6 +29,7 @@ const checkoutSlice = createSlice({
         setCustomerData: (state, action) => { state.customerData = action.payload },
         toggleEditingDelivery: (state) => { state.isEditingDelivery = !state.isEditingDelivery },
         setOpenToggleWhatInBag: (state) => {state.isOpenToggleWhatInBag = !state.isOpenToggleWhatInBag},
+
     }
 });
 
@@ -39,6 +40,6 @@ export const {
     setDeliverySpeed,
     setCustomerData,
     toggleEditingDelivery,
-    setOpenToggleWhatInBag
+    setOpenToggleWhatInBag,
 } = checkoutSlice.actions;
 export default checkoutSlice.reducer;
