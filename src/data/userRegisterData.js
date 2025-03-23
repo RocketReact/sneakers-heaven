@@ -1,19 +1,27 @@
+// In-memory storage for user registration data
 let userRegisterData = [];
-// Получение данных из localStorage при инициализации
+
+// Initialize from localStorage if data exists
 const storedData = localStorage.getItem("userRegisterData");
 if (storedData) {
-    userRegisterData = JSON.parse(storedData); // если данные есть, загрузим их
+    userRegisterData = JSON.parse(storedData);
 }
 
-// Функция для добавления нового пользователя
+/**
+ * Add new user to storage and persist to localStorage
+ * @param {Object} newData - User data to store
+ */
 const addUserData = (newData) => {
     userRegisterData.push(newData);
-    localStorage.setItem("userRegisterData", JSON.stringify(userRegisterData)); // Обновляем данные в localStorage
+    localStorage.setItem("userRegisterData", JSON.stringify(userRegisterData));
 };
 
-// Функция для получения всех данных пользователей
+/**
+ * Get all registered user data
+ * @returns {Array} Array of user data objects
+ */
 const getUserRegisterData = () => {
     return userRegisterData;
 };
-// Экспортируем функции
+
 export { addUserData, getUserRegisterData };
