@@ -12,5 +12,5 @@ createRoot(document.getElementById('root')).render(
         <Provider store={store}> {/* Make Redux store available throughout app */}
             <App />
         </Provider>
-    </StrictMode>,
+    </StrictMode>
 )
