@@ -19,14 +19,22 @@ import {
 } from '../../store/paymentSlice/paymentSlice.js'
 import {setStep} from "../../store/checkoutSlice/checkoutSlice.js";
 
-
-
+/**
+ * Payment component - Handles payment method selection and card details
+ * @param {Object} props - Component props
+ * @param {Function} props.onSubmit - Submit handler
+ * @param {string} props.currentStep - Current checkout step
+ * @param {Object} ref - Forwarded ref for parent control
+ */
 const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
-    const tooltipRef = useRef(null);
-    const infoRef = useRef(null);
     const dispatch = useDispatch();
     const customerData = useSelector((state) => state.checkout);
 
+    // Refs for tooltip functionality
+    const tooltipRef = useRef(null);
+    const infoRef = useRef(null);
+
+    // Payment state from Redux
     const {
         selectedPaymentMethod,
         isCheckedBillAddress,
@@ -39,7 +47,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
         isPaymentFormSubmitted,
     } = useSelector((state) => state.paymentSlice);
 
-
+    // Input formatters for card details
     const formatCardNumber = (value) =>
         value.replace(/\D/g, '')
             .slice(0, 16)
@@ -52,7 +60,9 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
     const formatExpiryDate = (value) =>
         value.replace(/\D/g, '').slice(0, 4).replace(/^(\d{2})(\d{0,2})$/, (_, p1, p2) => p2 ? `${p1}/${p2}` : p1);
 
-
+    // Checkbox checked as default =>
+    // Set Billing Address the same as Shipping
+    //Checkbox unchecked => clear Billing Address
     useEffect(() => {
         if (isCheckedBillAddress && customerData?.length > 0) {
             dispatch(setBillAddress(customerData[0]));
@@ -75,6 +85,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
         }
     }, [isCheckedBillAddress, customerData, dispatch]);
 
+    // Handle click outside CVV tooltip to close it
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (
@@ -92,6 +103,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
         }
     }, [dispatch]);
 
+    // Icons for different payment methods
     const paymentIcons = {
         'PayPal': <img src={payPal} className='w-20 h-14 -ml-1 -mt-2 ' alt="PayPal" />,
         'Card': (
@@ -104,6 +116,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
         'GooglePay': <img src={GPay} className='w-11 h-11' alt="GooglePay" />
     };
 
+    // Expose validation method to parent component via ref
     useImperativeHandle(ref, () => ({
         handleSubmit: () => {
             if (selectedPaymentMethod==='Card') {
@@ -127,6 +140,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
         }
     }));
 
+    // Exit editing mode after successful submission
     useEffect(() => {
         if (isPaymentFormSubmitted) {
             dispatch(setEditingPayment(false));
@@ -136,6 +150,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
     return <div>
         <hr className="border-t-2 border-gray-300 mt-10"/>
 
+        {/* Payment form view - shown when editing or not yet submitted */}
         {
         (isEditingPayment || !selectedPaymentMethod || !isPaymentFormSubmitted) ?
 
@@ -147,7 +162,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                         <p className='text-base mb-3'>Select payment method</p>
                     </div>
 
-
+                    {/* Credit card payment option */}
                     <Checkbox
                         checked={selectedPaymentMethod === "Card"}
                         onChange={() => dispatch (setSelectedPaymentMethod("Card"))}
@@ -155,7 +170,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                         textLabel="Credit or Debit Card"
                     />
 
-
+                    {/* PayPal payment option */}
                     <div className='flex flex-row hover:cursor-pointer '>
                         <Checkbox
                             iconCheckbox={null}
@@ -170,6 +185,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                             alt="PayPal"/>
                     </div>
 
+                    {/* Apple Pay payment option */}
                     <Checkbox
                         NewText={null}
                         textLabel={null}
@@ -179,6 +195,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                         onChange={() => dispatch (setSelectedPaymentMethod("ApplePay"))}
                     />
 
+                    {/* Google Pay payment option */}
                     <div className='flex flex-row hover:cursor-pointer'>
                         <Checkbox
                             NewText={null}
@@ -195,6 +212,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                     </div>
                 </div>
 
+                {/* Credit card details form */}
                 {selectedPaymentMethod === "Card" && (
                     <div className='flex flex-col mt-5 w-full rounded-md
                                           p-5 border-2 border-gray-300 justify-between
@@ -202,6 +220,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                         <p className='font-normal self-start'>Add Card</p>
                         <div className='grid grid-cols-1 sm:grid-cols-4 gap-3 mb-5'>
 
+                            {/* Card number input */}
                             <label className='relative sm:col-span-2'>
                                 <input
                                     type="text"
@@ -222,6 +241,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                                 />
                             </label>
 
+                            {/* Expiry date input */}
                             <label>
                                 <input
                                     value={expiryDateCard}
@@ -235,6 +255,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                                 />
                             </label>
 
+                            {/* CVV input */}
                             <label>
                                 <input
                                     value={cvvCardNumber}
@@ -250,6 +271,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                             </label>
                         </div>
 
+                        {/* CVV help tooltip */}
                         <div className='relative inline-block text-end'>
                             <button
                                 type='button'
@@ -281,6 +303,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                     </div>
                 )}
 
+                {/* Billing address section */}
                 {selectedPaymentMethod ==='Card' &&
                     <div className=' flex flex-col items-start mt-10 gap-5'>
                         <Checkbox
@@ -305,6 +328,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                             }}
                         />
 
+                        {/* Show shipping address when same as billing */}
                         {isCheckedBillAddress &&
                             <ShippingAddress
                                 isHidden={true}
@@ -313,6 +337,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                     </div>
                 }
 
+                {/* Custom billing address form */}
                 {isCheckedBillAddress===false && selectedPaymentMethod === 'Card' && (
                     <TextInputHtml
                         HiddenEmail={true}
@@ -320,11 +345,13 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                     />
                 )}
 
+                {/* PayPal instructions */}
                 {selectedPaymentMethod === 'PayPal' &&
                     <p className='font-extralight text-base text-start mt-5'
                     >  You will be redirected to the PayPal site after reviewing your order.
                     </p>}
             </div> :
+            //{/* Payment summary view - shown after successful submission */}
             <div>
                 <div className='flex flex-row justify-between mb-3 mt-5'>
                     <div className='flex flex-row gap-3'>
@@ -342,18 +369,17 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                     </div>
                 </div>
 
+                {/* Selected payment method display */}
                 <p className='text-start text-base mt-5'> Payment Method </p>
                 <div>{paymentIcons[selectedPaymentMethod]}</div>
                 <hr className="border-1 border-gray-300 w-full"/>
 
-
+                {/* Order summary for mobile */}
                 <div className='flex flex-col items-center mt-5 lg:hidden'>
                     <h3 className='self-start mb-3 '>Order Review</h3>
                     <Bag textTitle='text-lg' textPrice='text-lg' textBtn=''/>
                     <Summary textSize='text-lg'/>
                 </div>
-
-
             </div>
         }
     </div>
