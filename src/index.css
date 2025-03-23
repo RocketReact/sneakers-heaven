@@ -1,47 +1,53 @@
-
+/* Import Tailwind CSS framework */
 @import "tailwindcss";
 
-
+/* Base button style */
 .btn {
   @apply w-7 h-7
 }
 
+/* Button hover state with scaling effect */
 .btn:hover {
   @apply scale-120 transition-transform duration-300 cursor-pointer bg-emerald-300 rounded-full
 }
+
+/* Button active (pressed) state */
 .btn:active {
   @apply scale-100;
 }
 
+/* Delete button variant */
 .btnDelete {
   @apply p-1.5
 }
 
+/* Shake animation keyframes for attention-grabbing elements */
 @keyframes tilt-shake {
   0%, 100% {
-    transform: rotate(0deg) translateY(0); /* Начальная и конечная позиция */
+    transform: rotate(0deg) translateY(0); /* Start and end position */
   }
   25% {
-    transform: rotate(5deg) translateY(-3px); /* Правая сторона поднимается */
+    transform: rotate(5deg) translateY(-3px); /* Right side up */
   }
   50% {
-    transform: rotate(0deg) translateY(0); /* Возврат в центр */
+    transform: rotate(0deg) translateY(0); /* Back to center */
   }
   75% {
-    transform: rotate(-5deg) translateY(-3px); /* Левая сторона поднимается */
+    transform: rotate(-5deg) translateY(-3px); /* Left side up */
   }
 }
 
+/* Utility class for shake animation */
 .animate-shake {
-  animation: tilt-shake 0.1s ease-in infinite; /* Эффект длится 0.5 секунд и повторяется бесконечно */
+  animation: tilt-shake 0.1s ease-in infinite; /* Fast repeating shake */
 }
 
-
-
+/* Delete button hover state */
 .btnDelete:hover {
   @apply scale-110 transition-transform duration-300 cursor-pointer bg-emerald-300 rounded
 }
 
+/* Delivery option button style */
 .btnDelivery {
   @apply flex justify-center text-xl
   font-light w-full rounded-md
