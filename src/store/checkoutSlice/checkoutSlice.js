@@ -1,16 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Default shipping option for initial state
 const freeShipping = "Free shipping, Arrives by Mon, Jun 17";
 
+/**
+ * Initial checkout state with default shipping options
+ * Tracks multistep checkout process
+ */
 const initialState = {
-    step: "shipping",
-    shippingMethod: "ship",
-    deliverySpeed: freeShipping,
-    customerData: [],
-    isEditingDelivery: false,
-    isOpenToggleWhatInBag: false,
+    step: "shipping",              // Current checkout step
+    shippingMethod: "ship",        // Delivery method (ship or pickup)
+    deliverySpeed: freeShipping,   // Selected shipping speed
+    customerData: [],              // Customer address and contact info
+    isEditingDelivery: false,      // Whether delivery details are being edited
+    isOpenToggleWhatInBag: false,  // Mobile UI state for cart summary
 };
 
+/**
+ * Checkout slice for managing checkout flow state
+ */
 const checkoutSlice = createSlice({
     name: "checkout",
     initialState,
@@ -24,7 +32,7 @@ const checkoutSlice = createSlice({
     }
 });
 
-
+// Export actions and reducer
 export const {
     setStep,
     setShippingMethod,
@@ -32,5 +40,5 @@ export const {
     setCustomerData,
     toggleEditingDelivery,
     setOpenToggleWhatInBag
-    } = checkoutSlice.actions;
+} = checkoutSlice.actions;
 export default checkoutSlice.reducer;
