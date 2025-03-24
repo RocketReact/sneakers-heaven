@@ -1,4 +1,23 @@
-# React + Vite
+# Sneakers Heaven
+Online Store vs Cart, Checkout & Different Payments.
+
+## Technology
+- React
+- Redux
+- React Router
+- AsyncThunk
+- Slice
+- Tailwind CSS
+- Helmet
+- React Icon
+
+## Install & Run
+```bash
+npm install
+npm start
+
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
