@@ -77,13 +77,13 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                 phoneNumber: '',
             };
 
-            const hasValues = Object.values(billAddress).some(value => value !== '');
+            const hasValues = billAddress && Object.values(billAddress).some(value => value !== '');
 
             if (hasValues) {
                 dispatch(setBillAddress(emptyAddress));
             }
         }
-    }, [isCheckedBillAddress, customerData, dispatch]);
+    }, [isCheckedBillAddress, customerData, billAddress, dispatch]);
 
     // Handle click outside CVV tooltip to close it
     useEffect(() => {
