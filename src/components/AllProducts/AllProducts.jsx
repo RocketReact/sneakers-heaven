@@ -32,6 +32,11 @@ export default function AllProducts() {
         }
     }, [status, dispatch]);
 
+    // Reset to first page when category filter changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [filteredCategory]);
+
     // Handle different loading states
     if (status === "loading") return <p>Loading...</p>;
     if (status === "failed") return <p>Failed: {error}</p>;
@@ -58,11 +63,18 @@ export default function AllProducts() {
      */
     const handleRedirect = (product) => {
         const productInCart = cartItems.find((item) => item.id === product.id);
-        !productInCart
+
+        // Dispatch action and then navigate after it's processed
+        const action = !productInCart
             ? dispatch(addToCart({ ...product, quantity: 1 }))
             : dispatch(addToCart({ ...productInCart, quantity: productInCart.quantity + 1 }));
 
-        navigate("/cart");
+        // For async action creators, you can use Promise.then()
+        if (action.then) {
+            action.then(() => navigate("/cart"));
+        } else {
+            navigate("/cart");
+        }
     };
 
     // Update current page when user clicks on pagination controls
@@ -87,7 +99,8 @@ export default function AllProducts() {
                                 className="w-full h-auto max-h-96 object-contain rounded-lg p-2"
                             />
                             <h3 className="mt-4 text-sm text-gray-700 hover:underline">{product.title}</h3>
-                            <ProductRating rating={product.rating} />
+                            {/* Pass a default rating if product.rating is undefined */}
+                            <ProductRating rating={product.rating || {}} />
                             <p className="mt-1 text-lg font-medium text-gray-900">{product.price} $</p>
                         </Link>
                         <button
@@ -102,37 +115,39 @@ export default function AllProducts() {
                 ))}
             </div>
 
-            {/* Pagination controls */}
-            <div className="pagination-controls flex justify-center items-center space-x-2 mt-8 ">
-                <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="hover:cursor-pointer hover:scale-105 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    Previous
-                </button>
-                {/* Page number buttons */}
-                {Array.from({ length: totalPages }, (_, index) => (
+            {/* Pagination controls - only show if there are products */}
+            {totalPages > 0 && (
+                <div className="flex justify-center items-center space-x-2 mt-8 ">
                     <button
-                        key={index}
-                        onClick={() => handlePageChange(index + 1)}
-                        className={`hover:cursor-pointer hover:scale-105 px-3 py-1 rounded ${
-                            currentPage === index + 1
-                                ? "bg-blue-600 text-white"
-                                : "border bg-gray-100 text-gray-600"
-                        }`}
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="hover:cursor-pointer hover:scale-105 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {index + 1}
+                        Previous
                     </button>
-                ))}
-                <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="hover:cursor-pointer hover:scale-105 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    Next
-                </button>
-            </div>
+                    {/* Page number buttons */}
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handlePageChange(index + 1)}
+                            className={`hover:cursor-pointer hover:scale-105 px-3 py-1 rounded ${
+                                currentPage === index + 1
+                                    ? "bg-blue-600 text-white"
+                                    : "border bg-gray-100 text-gray-600"
+                            }`}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="hover:cursor-pointer hover:scale-105 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        Next
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
