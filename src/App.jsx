@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import ProductSingle from "./components/ProductSingle/ProductSingle.jsx";
 import Home from "./components/Pages/Home/Home.jsx";
 import About from "./components/Pages/About/About.jsx";
@@ -30,7 +30,7 @@ export default function App() {
 
     return (
         <HelmetProvider>
-            <Router>
+            <HashRouter>
                 {/* Global notifications listener */}
                 <Notification/>
 
@@ -81,7 +81,7 @@ export default function App() {
                     draggable
                     pauseOnHover
                 />
-            </Router>
+            </HashRouter>
         </HelmetProvider>
     )
 }
