@@ -91,7 +91,7 @@ export const Summary = ({textSize}) => {
 
     return <div className={`${textSize || 'text-base'} flex-1 text-2xl max-w-md mt-5 ml:mt-0 `}>
         <h2 className="mb-5 ">Summary</h2>
-        <h3>Total Price: {totalPrice?.toFixed(2)} $</h3>
+        <h3>Total Price: {(totalPrice || 0).toFixed(2)} $</h3>
         <h4>Total Quantity: {totalQuantity}</h4>
     </div>
 }
