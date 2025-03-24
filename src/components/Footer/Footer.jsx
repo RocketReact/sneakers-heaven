@@ -1,23 +1,32 @@
+import SectionFooter from "./SectionFooter.jsx";
+
 
 export default function Footer() {
 
-    return <div className='mx-10 lg:mx-20'>
+    return <footer className='mx-10 lg:mx-20 '>
+        <div className='flex flex-col'>
 
-        <hr/>
-        <div>Resources</div>
+            <SectionFooter/>
 
-        <hr/>
-        <div>Help</div>
-
-        <hr/>
-        <div>Company</div>
-
-        <hr/>
-        <div>Promotions & Discounts</div>
+            <div >
+                <hr className='lg:hidden' />
+                <h3>Help</h3>
+            </div>
 
 
+            <div >
+                <hr className='lg:hidden' />
+                <h3>Company</h3>
+            </div>
 
-    </div>
+            <div >
+                <hr className='lg:hidden' />
+                <h3>Promotions & Discounts</h3>
+            </div>
+
+        </div>
+
+    </footer>
 
 
 }

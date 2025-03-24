@@ -1,4 +1,3 @@
-import HeaderTop from "./components/Header-Top/Header-Top.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProductSingle from "./components/ProductSingle/ProductSingle.jsx";
 import Home from "./components/Pages/Home/Home.jsx";
