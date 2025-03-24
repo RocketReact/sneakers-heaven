@@ -83,6 +83,7 @@ export default function Footer() {
 
                     </div>
 
+                    {/* Social & Copyright notice */}
                     <div className='flex flex-col items-center lg:flex-row lg:justify-between space-y-3 my-5 '>
                         <p className='my-4 text-black lg:my-0 lg:self-start'>
                         © 2025 Sneakers Heaven, Online Store. All Rights Reserved</p>
@@ -99,11 +100,8 @@ export default function Footer() {
                     </div>
                     {/* Bottom footer section with copyright and legal links */}
                     <div>
-                        {/* Horizontal divider visible only on mobile */}
-
-                        {/* Copyright text and legal links - stacked on mobile, row on desktop */}
+                        {/* Legal links - stacked on mobile, row on desktop */}
                         <div className='flex flex-col gap-1 lg:flex-row lg:gap-5 text-cyan-800'>
-                            {/* Copyright notice */}
                             {/* Legal links */}
                             <Link to=''> <h5>Terms of Sale</h5> </Link>
                             <Link to=''> <h5>Terms of Use</h5> </Link>
