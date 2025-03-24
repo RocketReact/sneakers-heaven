@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 
 export default function Footer() {
 
-    return <footer className='mx-10 lg:mx-20 mt-10'>
+    return <footer className='mx-10 lg:mx-20 mt-10 '>
         <div className='flex flex-col mb-20 '>
-            <div className='flex flex-col lg:items-center lg:justify-between lg:flex-row '>
+            <div className='flex flex-col lg:justify-between lg:flex-row '>
             <SectionFooter textSection='Resources'
                            resourcesLinks={[
                                {text: 'Gift Cards', to: ''},
@@ -43,7 +43,7 @@ export default function Footer() {
                                {text: 'Student', to: ''},
                                {text: 'Military', to: ''},
                                {text: 'Teacher', to: ''},
-                               {text: 'First Responders & Medical Professionals', to: ''},
+                               {text: 'Medical Professionals', to: ''},
                                {text: 'Birthday', to: ''},
                            ]}
             />
@@ -51,11 +51,11 @@ export default function Footer() {
 
           <div>
             <hr className='lg:hidden' />
-            <p className='my-4'>© 2025 Sneakers Heaven, Online Store. All Rights Reserved</p>
-            <div className='flex flex-col gap-1 text-cyan-800'>
-              <Link to=''> <h5>Terms of Sale</h5> </Link>
-              <Link to=''> <h5>Terms of Use</h5> </Link>
-              <Link to=''> <h5>Nike Privacy Policy</h5> </Link>
+            <div className='flex flex-col gap-1 lg:flex-row lg:gap-5 text-cyan-800'>
+                <p className='my-4 lg:my-0 text-black'>© 2025 Sneakers Heaven, Online Store. All Rights Reserved</p>
+                <Link to=''> <h5>Terms of Sale</h5> </Link>
+                <Link to=''> <h5>Terms of Use</h5> </Link>
+                <Link to=''> <h5>Nike Privacy Policy</h5> </Link>
             </div>
           </div>
         </div>
