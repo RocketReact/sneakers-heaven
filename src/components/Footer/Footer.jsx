@@ -2,6 +2,13 @@
 import SectionFooter from "./SectionFooter.jsx";
 import {Link} from "react-router-dom";
 import {Helmet} from 'react-helmet-async';
+import { IoLogoInstagram } from "react-icons/io5";
+import { FaFacebook, FaYoutube, FaLinkedin, FaTiktok  } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
+
+
+
 
 export default function Footer() {
     return (
@@ -26,6 +33,7 @@ export default function Footer() {
 
             {/* Main footer container with responsive padding */}
             <footer className='mx-10 lg:mx-20 mt-10 '>
+                <hr className='hidden lg:block'/>
                 <div className='flex flex-col mb-20 '>
                     {/* Footer sections container - stacked on mobile, row on desktop */}
                     <div className='flex flex-col lg:justify-between lg:flex-row '>
@@ -71,15 +79,31 @@ export default function Footer() {
                                            {text: 'Birthday', to: ''},
                                        ]}
                         />
+                        <hr className='lg:hidden' />
+
+                    </div>
+
+                    <div className='flex flex-col items-center lg:flex-row lg:justify-between space-y-3 my-5 '>
+                        <p className='my-4 text-black lg:my-0 lg:self-start'>
+                        © 2025 Sneakers Heaven, Online Store. All Rights Reserved</p>
+
+                    <div className='flex flex-row gap-5 lg:self-end'>
+                        <IoLogoInstagram size={30}/>
+                        <FaFacebook size={30}/>
+                        <FaYoutube size={30}/>
+                        <FaXTwitter size={30}/>
+                        <FaLinkedin size={30}/>
+                        <FaTiktok size={30}/>
+                    </div>
+
                     </div>
                     {/* Bottom footer section with copyright and legal links */}
                     <div>
                         {/* Horizontal divider visible only on mobile */}
-                        <hr className='lg:hidden' />
+
                         {/* Copyright text and legal links - stacked on mobile, row on desktop */}
                         <div className='flex flex-col gap-1 lg:flex-row lg:gap-5 text-cyan-800'>
                             {/* Copyright notice */}
-                            <p className='my-4 lg:my-0 text-black'>© 2025 Sneakers Heaven, Online Store. All Rights Reserved</p>
                             {/* Legal links */}
                             <Link to=''> <h5>Terms of Sale</h5> </Link>
                             <Link to=''> <h5>Terms of Use</h5> </Link>
