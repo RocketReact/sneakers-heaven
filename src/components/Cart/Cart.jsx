@@ -109,7 +109,7 @@ export default function Cart () {
     const navigate = useNavigate();
 
     return (
-        <div className="flex flex-col mb-10 ml-20 mr-20 min-h-screen font-extralight ">
+        <div className="flex flex-col mb-10 mx-20 min-h-screen font-extralight ">
             {/* SEO optimization with Helmet */}
             <Helmet>
                 <title>Cart</title>
