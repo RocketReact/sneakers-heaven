@@ -264,10 +264,10 @@ export default function Checkout({isAuthenticated}) {
 
                         {/* Order summary sidebar */}
                         <div className='flex-1 order-1 lg:order-2 w-full'>
-                            <hr className='lg:hidden border-t-2 border-gray-300 mx-4'/>
+                            <div className='mx-4 lg:hidden'><hr/></div>
 
                             <div className='p-4 lg:self-start w-full'>
-                                <div className='flex flex-row items-center justify-between lg:justify-center gap-5 mb-5'>
+                                <div className='flex flex-row items-center justify-between lg:justify-center gap-5 mb-2'>
                                     <h2>In your bag</h2>
 
                                     {/* Mobile toggle for cart items */}
@@ -291,10 +291,11 @@ export default function Checkout({isAuthenticated}) {
                                     </div>
                                 </div>
 
-                                {!isOpenToggleWhatInBag && (
-                                    <hr className='lg:hidden border-t-2 border-gray-300 w-full'/>
-                                )}
+
                             </div>
+                            {!isOpenToggleWhatInBag && (
+                                <div className='mx-4 lg:hidden'><hr/></div>
+                            )}
                         </div>
                     </div>
                 </form>

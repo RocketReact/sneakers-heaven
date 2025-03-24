@@ -74,7 +74,7 @@ export const Bag = ({ textTitle, textPrice, textBtn}) => {
                 </li>
             ))}
         </ul>
-        <hr className=" border-t-2 border-gray-300" />
+        <hr/>
     </div>
 }
 

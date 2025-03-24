@@ -71,7 +71,7 @@ export default function AllProducts() {
     };
 
     return (
-        <div className="text-1xl text-center m-7 lg:mr-20 lg:ml-20 xl:mr-20 xl:ml-20 ">
+        <div className="text-1xl text-center m-7 lg:mx-20">
             {/* Product filter panel */}
             <ProductFilter categories={categories} />
 

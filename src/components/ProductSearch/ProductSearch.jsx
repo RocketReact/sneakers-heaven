@@ -67,7 +67,6 @@ export default function ProductSearch({ closeSearch }) {
                                         <p>{product.price} $</p>
                                     </h3>
                                 </Link>
-                                <hr className="text-gray-200" />
                             </div>
                         ))
                     ) : (

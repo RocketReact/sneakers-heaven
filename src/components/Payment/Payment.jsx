@@ -147,8 +147,8 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
         }
     }, [isPaymentFormSubmitted, dispatch]);
 
-    return <div>
-        <hr className="border-t-2 border-gray-300 mt-10"/>
+    return <div className='mt-10'>
+        <hr/>
 
         {/* Payment form view - shown when editing or not yet submitted */}
         {
@@ -372,7 +372,7 @@ const Payment = forwardRef(({onSubmit, currentStep}, ref) => {
                 {/* Selected payment method display */}
                 <p className='text-start text-base mt-5'> Payment Method </p>
                 <div>{paymentIcons[selectedPaymentMethod]}</div>
-                <hr className="border-1 border-gray-300 w-full"/>
+                <hr/>
 
                 {/* Order summary for mobile */}
                 <div className='flex flex-col items-center mt-5 lg:hidden'>
