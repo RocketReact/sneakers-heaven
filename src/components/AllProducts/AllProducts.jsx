@@ -117,7 +117,7 @@ export default function AllProducts() {
 
             {/* Pagination controls - only show if there are products */}
             {totalPages > 0 && (
-                <div className="flex justify-center items-center space-x-2 mt-8 ">
+                <div className="flex justify-center items-center space-x-2 mt-8 text-sm ">
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
