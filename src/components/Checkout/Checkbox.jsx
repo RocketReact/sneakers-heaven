@@ -34,7 +34,7 @@ export default function Checkbox({
 
                 {/* Custom checkbox circle */}
                 <span
-                    className={`flex justify-center items-center size-5 rounded-full border-1 ${
+                    className={`flex justify-center items-center size-5 rounded-full border ${
                         checked ? "bg-emerald-400 border-emerald-400" : "bg-white border-emerald-300"
                     }`}
                 >

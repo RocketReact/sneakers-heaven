@@ -54,4 +54,4 @@
   mt-3 pt-3 pb-3 gap-3 hover:cursor-pointer
 }
 
-hr {@apply border-1 border-gray-300}
+hr {@apply border border-gray-300}

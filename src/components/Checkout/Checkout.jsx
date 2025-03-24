@@ -126,7 +126,7 @@ export default function Checkout({isAuthenticated}) {
                                             onClick={() => dispatch(setShippingMethod ('ship'))}
                                             className={`
                                             btnDelivery
-                                            ${shippingMethod === 'ship' ? 'border-black border-2' : 'border-gray-300 border-1'}
+                                            ${shippingMethod === 'ship' ? 'border-black border-2' : 'border-gray-300 border'}
                                         `}
                                         >
                                             <FaShippingFast size='25'/> Ship
@@ -138,7 +138,7 @@ export default function Checkout({isAuthenticated}) {
                                             onClick={() => dispatch(setShippingMethod ('pickup'))}
                                             className={`
                                             btnDelivery
-                                            ${shippingMethod === 'pickup' ? 'border-black border-2' : 'border-gray-300 border-1'}
+                                            ${shippingMethod === 'pickup' ? 'border-black border-2' : 'border-gray-300 border'}
                                         `}
                                         >
                                             <MdLocationOn size='25'/> Pick UP
