@@ -48,7 +48,7 @@ export default function Checkout({isAuthenticated}) {
         if (isEditingDelivery) {
             dispatch (setStep ('shipping'));
         }
-    }, [isEditingDelivery]);
+    }, [isEditingDelivery, dispatch]);
 
     // Load saved data when editing
     useEffect(() => {
@@ -105,7 +105,7 @@ export default function Checkout({isAuthenticated}) {
             </Helmet>
             <div className='text-center mb-20 w-full'>
                 <h1 className='text-2xl mt-5'>Checkout</h1>
-                <span className='font-extralight '>
+                <span className='font-extralight'>
                     {totalQuantity} items {`${(totalPrice).toFixed(2)} $`}
                 </span>
                 <form onSubmit={handleSubmit(onSubmit )}>
