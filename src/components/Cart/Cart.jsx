@@ -3,7 +3,7 @@ import { addToCart, removeFromCart, decreaseQuantity, clearCart } from "../../st
 import { FaTrash } from "react-icons/fa";
 import {Link, useNavigate} from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
-import noImage from "../../img/no-image.jpg";
+import noImage from "../../../src/assets/img/no-image.jpg";
 import {Helmet} from "react-helmet-async";
 
 /**

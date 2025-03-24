@@ -4,7 +4,7 @@ import ProductFilter from "../ProductFilter/ProductFilter.jsx";
 import { fetchProducts } from "../../store/productSlice/productSlice.js";
 import { Link, useNavigate } from "react-router-dom";
 import generateProductLink from "../../generateURL/generateURL.js";
-import noImage from "../../img/no-image.jpg";
+import noImage from "../../../src/assets/img/no-image.jpg";
 import ProductRating from "../ProductsRaiting/ProductRating.jsx";
 import { addToCart } from "../../store/cartSlice/cartSlice.js";
 
@@ -71,12 +71,12 @@ export default function AllProducts() {
     };
 
     return (
-        <div className="text-1xl text-center m-7 lg:mx-20">
+        <div className="text-xl text-center m-7 lg:mx-20">
             {/* Product filter panel */}
             <ProductFilter categories={categories} />
 
             {/* Product grid layout */}
-            <div className="grid grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 lg:m-20 xl:m20">
+            <div className="grid grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8 lg:m-20 xl:m-20">
                 <h2 className="sr-only">Products</h2>
                 {currentProducts.map((product) => (
                     <div key={product.id} className="group">
@@ -107,7 +107,7 @@ export default function AllProducts() {
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="hover:cursor-pointer hover:scale-104 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="hover:cursor-pointer hover:scale-105 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Previous
                 </button>
@@ -116,7 +116,7 @@ export default function AllProducts() {
                     <button
                         key={index}
                         onClick={() => handlePageChange(index + 1)}
-                        className={`hover:cursor-pointer hover:scale-104 px-3 py-1 rounded ${
+                        className={`hover:cursor-pointer hover:scale-105 px-3 py-1 rounded ${
                             currentPage === index + 1
                                 ? "bg-blue-600 text-white"
                                 : "border bg-gray-100 text-gray-600"
@@ -128,7 +128,7 @@ export default function AllProducts() {
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className="hover:cursor-pointer hover:scale-104 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="hover:cursor-pointer hover:scale-105 px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Next
                 </button>
