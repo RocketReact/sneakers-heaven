@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { RiAccountCircleFill } from "react-icons/ri";
-import logo from "../../img/logo.png"
-import burger from "../../img/burger.svg"
+import logo from "../../../src/assets/img/logo.png"
+import burger from "../../../src/assets/img/burger.svg"
 import ProductSearch from "../ProductSearch/ProductSearch.jsx";
 import {useSelector} from "react-redux";
 

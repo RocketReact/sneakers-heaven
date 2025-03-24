@@ -5,7 +5,7 @@
     justify-content: flex-end;
     align-items: center;
     height: 80vh;
-    background: url("/src/img/nike-pegasus.webp") no-repeat center center;
+    background: url("/src/assets/img/nike-pegasus.webp") no-repeat center center;
     background-size: cover;
     padding: 20px;
     transition: height 0.3s ease;

@@ -4,7 +4,7 @@ import generateProductLink from "../../generateURL/generateURL.js";
 import ProductRating from "../ProductsRaiting/ProductRating.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../store/cartSlice/cartSlice.js";
-import noImage from "../../img/no-image.jpg";
+import noImage from "../../../src/assets/img/no-image.jpg";
 import {fetchProducts} from "../../store/productSlice/productSlice.js";
 import {Helmet} from "react-helmet-async";
 

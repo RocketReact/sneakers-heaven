@@ -4,14 +4,14 @@ import Checkbox from "../Checkout/Checkbox.jsx";
 import TextInputHtml from "../TextInput/TextInputHtml.jsx";
 import ShippingAddress from "../Checkout/ShippingAddress.jsx";
 import {Bag, Summary} from '../Cart/Cart.jsx'
-import payPal from "../../img/paypal_PNG1.png";
+import payPal from "../../../src/assets/img/paypal_PNG1.png";
 import {FaApplePay} from "react-icons/fa";
 import { LuCreditCard } from "react-icons/lu";
 import {FcCheckmark} from "react-icons/fc";
-import GPay from "../../img/google-pay.webp";
+import GPay from "../../../src/assets/img/google-pay.webp";
 import { BsFillShieldLockFill } from "react-icons/bs";
-import cvvVisa from '../../img/ch4_securityCardVisa.png';
-import cvvAmex from '../../img/ch4_securityCardAmex.png';
+import cvvVisa from '../../../src/assets/img/ch4_securityCardVisa.png';
+import cvvAmex from '../../../src/assets/img/ch4_securityCardAmex.png';
 import {
     setSelectedPaymentMethod, setTooltipVisibleCVV, setPaymentFormSubmitted,
     setCardNumber, setCvvCardNumber, setExpiryDateCard,

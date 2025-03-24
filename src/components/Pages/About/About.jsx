@@ -1,8 +1,8 @@
 import { FaHandshake } from "react-icons/fa";
 import { GiOctogonalEye, GiMaterialsScience } from "react-icons/gi";
-import imageSEO from '../../../img/leodicaprio.webp'
-import imageCTO from '../../../img/johansson scarlett.webp'
-import imageDesigner from '../../../img/tom cruise.webp'
+import imageSEO from '../../../../src/assets/img/leodicaprio.webp'
+import imageCTO from '../../../../src/assets/img/johansson scarlett.webp'
+import imageDesigner from '../../../../src/assets/img/tom cruise.webp'
 import { Helmet } from "react-helmet-async";
 
 /**
