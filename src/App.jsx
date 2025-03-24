@@ -20,6 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {HelmetProvider} from "react-helmet-async";
 import Notification from "./components/Notification/Notification.jsx";
+import Layout from "./components/Layout/Layout.jsx";
 
 /**
  * Main application component with routing configuration
@@ -34,8 +35,7 @@ export default function App() {
                 {/* Global notifications listener */}
                 <Notification/>
 
-                {/* Global header */}
-                <HeaderTop/>
+                <Layout>
 
                 {/* Application routes */}
                 <Routes>
@@ -67,6 +67,8 @@ export default function App() {
                     {/* Fallback for unknown routes */}
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
+
+                </Layout>
 
                 {/* Toast notifications container */}
                 <ToastContainer
