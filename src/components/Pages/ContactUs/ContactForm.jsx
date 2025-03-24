@@ -35,7 +35,7 @@ export default function ContactForm() {
 
     return (
         <FormProvider {...methods}>
-            <div className='flex flex-col mr-10 ml-10 items-center justify-center'>
+            <div className='flex flex-col mx-10 items-center justify-center'>
                 {/* SEO metadata */}
                 <Helmet>
                     <title>Contact Us | Sneakers Heaven</title>
@@ -43,7 +43,7 @@ export default function ContactForm() {
                 </Helmet>
 
                 <form
-                    className="max-h-screen mt-10 flex flex-col max-w-xl justify-self-center items-center "
+                    className="flex flex-col max-h-screen mt-10 max-w-xl justify-self-center items-center "
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <h1 className="text-2xl font-extralight">Please Contact Us:</h1>
@@ -85,7 +85,7 @@ export default function ContactForm() {
                     {/* Submit button */}
                     <button
                         type="submit"
-                        className="flex p-3 text-center pr-5 pl-5 mt-5 max-w-30 bg-black text-white rounded-full font-extralight hover:scale-105 duration-200 hover:cursor-pointer active:scale-100"
+                        className="flex p-3 text-center px-5 mt-5 max-w-30 bg-black text-white rounded-full font-extralight hover:scale-105 duration-200 hover:cursor-pointer active:scale-100"
                     >
                         Submit
                     </button>
