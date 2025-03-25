@@ -120,11 +120,11 @@ export default function ProductSingle() {
 
                     {/* Quantity controls */}
                     <div className="
-                    flex flex-wrap gap-4 pr-1 border-2
-                    border-gray-200 max-w-50 px-6 py-3 mb-3 rounded-lg">
+                    flex flex-row gap-4 border-2 items-center justify-center
+                    border-gray-200 max-w-50  py-2 mb-3 rounded-full">
                         <button
                             onClick={handleIncreaseQuantity}
-                            className="hover:cursor-pointer hover:scale-150"
+                            className="btn "
                         >
                             +
                         </button>
@@ -133,7 +133,7 @@ export default function ProductSingle() {
 
                         <button
                             onClick={handleDecreaseQuantity}
-                            className="hover:cursor-pointer hover:scale-150"
+                            className="btn"
                             disabled={!productInCart || productQuantity <= 1}
                         >
                             -
@@ -141,7 +141,7 @@ export default function ProductSingle() {
 
                         <button
                             onClick={handleRemoveFromCart}
-                            className="hover:cursor-pointer hover:scale-150"
+                            className="text-md btnDelete"
                             disabled={!productInCart}
                         >
                             Delete
