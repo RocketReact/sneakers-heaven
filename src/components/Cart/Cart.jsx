@@ -118,7 +118,7 @@ export default function Cart () {
 
             <div className="flex flex-col items-center justify-start md:flex-row md:space-x-35">
                 {/* Cart items section with clear cart button */}
-                <div className='mb-7 justify-items-center'>
+                <div className='flex flex-col mb-7 items-center justify-center'>
                     <Bag />
                     <button
                         className="flex justify-center mt-5 p-2 border
