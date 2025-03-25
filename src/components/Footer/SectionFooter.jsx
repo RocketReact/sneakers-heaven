@@ -11,26 +11,26 @@ export default function SectionFooter({
     const fnToggle = () => {
         setOpen(!isOpen);
     };
+console.log (isOpen)
 
-
-    return <div className='flex flex-col '>
+    return <div
+        className='flex flex-col '>
         <hr className='lg:hidden' />
 
-        <div className='flex flex-row items-center justify-between
+        <div
+            className='flex flex-row items-center justify-between
         mt-6 hover:cursor-pointer lg:hover:cursor-default lg:items-start lg:justify-start
-'
+
+'       onClick={fnToggle}
         >
             <h3>{textSection}</h3>
         <div
             className='lg:hidden'
-            onClick={fnToggle}
+
         >
             <span
-                className={`${isOpen? 'rotate-180' : 'rotate-0'}
-                           text-gray-400 hover:text-gray-600
-                            hover:cursor-pointer mt-1 transition-transform
-                            duration-500 ease-out 
-                           `}
+                className='text-gray-400 hover:text-gray-600 hover:cursor-pointer mt-1 inline-block duration-500 ease-out'
+                style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.5s ease-out' }}
             >
                 ▼
                </span>
